@@ -29,6 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:fontFamily="@font/gotham_rounded"
             android:text="Groce Genie"
             android:textColor="@android:color/white" />
     </androidx.appcompat.widget.Toolbar>
@@ -38,21 +39,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginVertical="16dp"
+        android:layout_marginVertical="8dp"
         android:background="@drawable/background_edittext_serch"
         android:drawableRight="@drawable/ic_search_black_24dp"
-        android:focusable="false"
+        android:fontFamily="@font/gotham_rounded"
         android:hint="What are you looking for (e.g Vegitables)"
         android:paddingVertical="10dp"
         android:paddingStart="16dp"
         android:paddingEnd="8dp"
-        android:textSize="14sp" />
+        android:textSize="12sp" />
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FAFBFC"
+        android:background="@drawable/background_select_tab"
         android:orientation="horizontal"
         android:paddingTop="8dp">
 
@@ -68,6 +69,7 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_groceries"
                 android:drawablePadding="4dp"
+                android:fontFamily="@font/gotham_rounded"
                 android:gravity="center"
                 android:text="Kirana list"
                 android:textColor="@color/colorPrimaryDark" />
@@ -99,6 +101,7 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_favorite"
                 android:drawablePadding="4dp"
+                android:fontFamily="@font/gotham_rounded"
                 android:gravity="center"
                 android:text="Most Loved Items"
                 android:textColor="@color/colorPrimaryDark" />
@@ -122,7 +125,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="16dp"
+            android:layout_marginVertical="8dp"
             android:orientation="vertical">
 
             <androidx.cardview.widget.CardView
@@ -135,7 +138,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="8dp">
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="4dp">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -152,6 +156,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/gotham_rounded"
                             android:text="Kissan tomoto Ketchup"
                             android:textColor="#000000" />
 
@@ -164,6 +169,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/gotham_rounded"
                                 android:padding="6dp"
                                 android:text="₹150"
                                 android:textColor="@android:color/black" />
@@ -171,6 +177,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/gotham_rounded"
                                 android:padding="6dp"
                                 android:text="₹200"
                                 android:textSize="10sp" />
@@ -179,9 +186,11 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:background="#F30000"
+                                android:fontFamily="@font/gotham_rounded"
                                 android:padding="6dp"
                                 android:text="25% OFF"
-                                android:textColor="@android:color/white" />
+                                android:textColor="@android:color/white"
+                                android:textSize="10sp" />
 
                             <View
                                 android:layout_width="16dp"
@@ -202,6 +211,7 @@
                                     android:layout_gravity="center"
                                     android:layout_marginStart="16dp"
                                     android:layout_marginEnd="8dp"
+                                    android:fontFamily="@font/gotham_rounded"
                                     android:gravity="center"
                                     android:text="Add"
                                     android:textColor="@android:color/white"
@@ -233,7 +243,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="8dp">
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="4dp">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -250,6 +261,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/gotham_rounded"
                             android:text="Banana 1kg"
                             android:textColor="#000000" />
 
@@ -262,6 +274,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/gotham_rounded"
                                 android:padding="6dp"
                                 android:text="₹70"
                                 android:textColor="@android:color/black" />
@@ -269,6 +282,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/gotham_rounded"
                                 android:padding="6dp"
                                 android:text="₹100"
                                 android:textSize="10sp" />
@@ -277,9 +291,11 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:background="#F30000"
+                                android:fontFamily="@font/gotham_rounded"
                                 android:padding="6dp"
                                 android:text="30% OFF"
-                                android:textColor="@android:color/white" />
+                                android:textColor="@android:color/white"
+                                android:textSize="10sp" />
 
                             <View
                                 android:layout_width="16dp"
@@ -307,6 +323,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:layout_marginHorizontal="8dp"
+                                    android:fontFamily="@font/gotham_rounded"
                                     android:gravity="center"
                                     android:text="2"
                                     android:textColor="@android:color/white"
@@ -338,7 +355,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="8dp">
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="4dp">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -355,6 +373,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/gotham_rounded"
                             android:text="Almond 1kg"
                             android:textColor="#000000" />
 
@@ -367,6 +386,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/gotham_rounded"
                                 android:padding="6dp"
                                 android:text="₹300"
                                 android:textColor="@android:color/black" />
@@ -374,6 +394,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/gotham_rounded"
                                 android:padding="6dp"
                                 android:text="₹100"
                                 android:textSize="10sp" />
@@ -382,9 +403,11 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:background="#F30000"
+                                android:fontFamily="@font/gotham_rounded"
                                 android:padding="6dp"
                                 android:text="20% OFF"
-                                android:textColor="@android:color/white" />
+                                android:textColor="@android:color/white"
+                                android:textSize="10sp" />
 
                             <View
                                 android:layout_width="16dp"
@@ -412,6 +435,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:layout_marginHorizontal="8dp"
+                                    android:fontFamily="@font/gotham_rounded"
                                     android:gravity="center"
                                     android:text="4"
                                     android:textColor="@android:color/white"
@@ -436,7 +460,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="24dp">
+                android:layout_marginTop="8dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -470,6 +494,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:fontFamily="@font/gotham_rounded"
                                     android:text="Biscuits"
                                     android:textColor="#000000" />
 
@@ -483,6 +508,7 @@
                                     android:layout_height="20dp"
                                     android:layout_gravity="right"
                                     android:background="@color/colorPrimaryDark"
+                                    android:fontFamily="@font/gotham_rounded"
                                     android:text="View Less"
                                     android:textColor="@android:color/white"
                                     android:textSize="10sp" />
@@ -498,6 +524,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:background="#F30000"
+                                    android:fontFamily="@font/gotham_rounded"
                                     android:padding="6dp"
                                     android:text="UP TO 25% OFF"
                                     android:textColor="@android:color/white" />
@@ -519,6 +546,7 @@
                                         android:layout_width="63dp"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
+                                        android:fontFamily="@font/gotham_rounded"
                                         android:gravity="center"
                                         android:text="Add"
                                         android:textColor="@android:color/white"
@@ -536,7 +564,8 @@
                         android:layout_marginVertical="4dp"
                         android:background="@drawable/background_subitem_list"
                         android:orientation="horizontal"
-                        android:padding="8dp">
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="4dp">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -553,6 +582,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/gotham_rounded"
                                 android:text="Sunfeast Dark Fantasy Choco Fil..."
                                 android:textColor="#000000" />
 
@@ -565,6 +595,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:fontFamily="@font/gotham_rounded"
                                     android:padding="6dp"
                                     android:text="₹53"
                                     android:textColor="@android:color/black" />
@@ -572,6 +603,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:fontFamily="@font/gotham_rounded"
                                     android:padding="6dp"
                                     android:text="₹60"
                                     android:textSize="10sp" />
@@ -580,9 +612,11 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:background="#F30000"
+                                    android:fontFamily="@font/gotham_rounded"
                                     android:padding="6dp"
                                     android:text="25% OFF"
-                                    android:textColor="@android:color/white" />
+                                    android:textColor="@android:color/white"
+                                    android:textSize="10sp" />
 
                                 <View
                                     android:layout_width="16dp"
@@ -610,6 +644,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
                                         android:layout_marginHorizontal="8dp"
+                                        android:fontFamily="@font/gotham_rounded"
                                         android:gravity="center"
                                         android:text="4"
                                         android:textColor="@android:color/white"
@@ -635,7 +670,8 @@
                         android:layout_marginVertical="4dp"
                         android:background="@drawable/background_subitem_list"
                         android:orientation="horizontal"
-                        android:padding="8dp">
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="4dp">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -652,6 +688,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/gotham_rounded"
                                 android:text="Parle Monaco Light Salty Classi..."
                                 android:textColor="#000000" />
 
@@ -664,6 +701,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:fontFamily="@font/gotham_rounded"
                                     android:padding="6dp"
                                     android:text="₹59"
                                     android:textColor="@android:color/black" />
@@ -671,6 +709,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:fontFamily="@font/gotham_rounded"
                                     android:padding="6dp"
                                     android:text="₹60"
                                     android:textSize="10sp" />
@@ -679,9 +718,11 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:background="#F30000"
+                                    android:fontFamily="@font/gotham_rounded"
                                     android:padding="6dp"
                                     android:text="1% OFF"
-                                    android:textColor="@android:color/white" />
+                                    android:textColor="@android:color/white"
+                                    android:textSize="10sp" />
 
                                 <View
                                     android:layout_width="16dp"
@@ -702,6 +743,7 @@
                                         android:layout_gravity="center"
                                         android:layout_marginStart="16dp"
                                         android:layout_marginEnd="8dp"
+                                        android:fontFamily="@font/gotham_rounded"
                                         android:gravity="center"
                                         android:text="Add"
                                         android:textColor="@android:color/white"
@@ -729,7 +771,8 @@
                         android:layout_marginVertical="4dp"
                         android:background="@drawable/background_subitem_list"
                         android:orientation="horizontal"
-                        android:padding="8dp">
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="4dp">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -746,6 +789,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/gotham_rounded"
                                 android:text="Parle-G Gold Biscuit"
                                 android:textColor="#000000" />
 
@@ -758,6 +802,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:fontFamily="@font/gotham_rounded"
                                     android:padding="6dp"
                                     android:text="₹79"
                                     android:textColor="@android:color/black" />
@@ -765,6 +810,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:fontFamily="@font/gotham_rounded"
                                     android:padding="6dp"
                                     android:text="₹110"
                                     android:textSize="10sp" />
@@ -773,9 +819,11 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:background="#F30000"
+                                    android:fontFamily="@font/gotham_rounded"
                                     android:padding="6dp"
                                     android:text="25% OFF"
-                                    android:textColor="@android:color/white" />
+                                    android:textColor="@android:color/white"
+                                    android:textSize="10sp" />
 
                                 <View
                                     android:layout_width="16dp"
@@ -803,6 +851,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
                                         android:layout_marginHorizontal="8dp"
+                                        android:fontFamily="@font/gotham_rounded"
                                         android:gravity="center"
                                         android:text="1"
                                         android:textColor="@android:color/white"
@@ -835,19 +884,19 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_gravity="bottom"
-        android:background="#FFFFFF"
+        android:background="@drawable/background_checkout"
         android:orientation="horizontal">
 
         <LinearLayout
-            android:paddingVertical="8dp"
-            android:paddingStart="16dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="5"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingVertical="4dp"
+            android:paddingStart="16dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -860,15 +909,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:fontFamily="@font/gotham_rounded"
                     android:text="Total"
-                    android:textColor="@android:color/black" />
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:fontFamily="@font/gotham_rounded"
                     android:text="Saved"
-                    android:textColor="@android:color/black" />
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
@@ -881,16 +934,18 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/gotham_rounded"
                     android:text=":"
                     android:textColor="@android:color/black"
-                    android:textSize="18sp" />
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/gotham_rounded"
                     android:text=":"
                     android:textColor="@android:color/black"
-                    android:textSize="18sp" />
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
@@ -908,22 +963,26 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/gotham_rounded"
                         android:text="₹550"
                         android:textColor="@android:color/black"
-                        android:textSize="18sp" />
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=" X 2 item" />
+                        android:fontFamily="@font/gotham_rounded"
+                        android:text=" X 2 item"
+                        android:textSize="10sp" />
                 </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/gotham_rounded"
                     android:text="₹150"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="18sp" />
+                    android:textStyle="bold" />
             </LinearLayout>
 
         </LinearLayout>
@@ -933,9 +992,9 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/colorPrimaryDark"
+            android:fontFamily="@font/gotham_rounded"
             android:text="CHECKOUT"
-            android:textColor="@android:color/white"
-            android:textSize="18sp" />
+            android:textColor="@android:color/white" />
     </LinearLayout>
 
 </LinearLayout>
