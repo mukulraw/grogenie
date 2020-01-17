@@ -869,24 +869,26 @@
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
-
-
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="16dp"
+                android:layout_height="4dp"
                 android:layout_weight="1" />
         </LinearLayout>
     </ScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="8dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_gravity="bottom"
-        android:background="@drawable/background_checkout"
+        android:background="#FFFFFF"
         android:orientation="horizontal">
 
         <LinearLayout
