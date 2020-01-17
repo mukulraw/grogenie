@@ -80,7 +80,7 @@ public class SubProductInfoAdtaper extends RecyclerView.Adapter<SubProductInfoAd
         int discount = Integer.valueOf(productInfo.getDiscount());
         final int finalPrice = productTotalPrice - ((productTotalPrice * discount) / 100);
         final int quntyty = Integer.valueOf(productInfo.getQnt());
-        String imageUrl = "https://kaushiktejani.github.io/image/" + productInfo.getImageName() + ".png";
+        String imageUrl = context.getResources().getString(R.string.serverUrl)+"/image/" + productInfo.getImageName() + ".png";
 
         if (0 < discount) {
             this.discount = discount;

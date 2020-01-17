@@ -1,7 +1,9 @@
 package codes.tuton.grocery.Adapter;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,13 +73,20 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     public void onBindViewHolder(@NonNull final CategoryViewHolder i, final int position) {
         final CategoryInfo categoryInfo = categoryInfoList.get(position);
         final ProductCalculationModel productCalculationModel = new ProductCalculationModel();
-        String imageUrl = "https://kaushiktejani.github.io/image/" + categoryInfo.getImage() + ".png";
+        String imageUrl = context.getResources().getString(R.string.serverUrl)+"/image/" + categoryInfo.getImage() + ".png";
         Glide.with(context).load(imageUrl).into(i.imageView);
         i.mTitle.setText(categoryInfo.getCategoryName());
 
         productInfos.addAll(Arrays.asList(categoryInfo.getProduct_info()));
         i.recyclerView.setLayoutManager(new LinearLayoutManager(context));
         i.recyclerView.setAdapter(new SubProductInfoAdtaper(productInfos, totalAmountInterface, context, i.mDiscount));
+
+        LocalBroadcastManager.getInstance(context).registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                productInfos.clear();
+            }
+        }, new IntentFilter("Data_Reset"));
 
         i.expandButton.setOnClickListener(new View.OnClickListener() {
             @Override

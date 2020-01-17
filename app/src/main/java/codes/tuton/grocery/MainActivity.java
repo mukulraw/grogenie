@@ -5,9 +5,11 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -56,11 +58,13 @@ public class MainActivity extends AppCompatActivity {
     private EditText serchEditText;
     private TextView toolbarTitle, totalFinalMount, totalSavedAmount, totalItemTextView;
     private String jsonProductInfo;
-    private List<ProductInfo> productInfoList = new ArrayList<>(), productInfoListFilter;
-    private List<CategoryInfo> categoryInfoList = new ArrayList<>(), categoryInfoListFilter;
+    private List<ProductInfo> productInfoList = new ArrayList<>(), productInfoListFilter = new ArrayList<>();
+    private List<CategoryInfo> categoryInfoList = new ArrayList<>(), categoryInfoListFilter = new ArrayList<>();
     private RecyclerView recyclerViewProductInfo, recyclerViewCategoryInfo;
     private RecyclerView.LayoutManager layoutManager, layoutManagerCate;
     private RecyclerView.Adapter adapterProductInfo, adapterCategoryInf;
+    private List<CategoryInfo> categoryInfosNewData = new ArrayList<>();
+    private List<ProductInfo> productInfosNewData = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +97,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://api.myjson.com/bins/hjlum",
+        //Test Api https://api.myjson.com/bins/hjlum
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, getResources().getString(R.string.serverUrl) + "/ProductData.php",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -102,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
                         Gson gson = new Gson();
                         ProductInfo[] productInfos = gson.fromJson(response, ProductInfo[].class);
                         productInfoList.addAll(Arrays.asList(productInfos));
+                        productInfoListFilter.addAll(productInfoList);
                         adapterProductInfo.notifyDataSetChanged();
                         Log.i(TAG, "Data store into ArrayList");
 
@@ -115,7 +121,8 @@ public class MainActivity extends AppCompatActivity {
         });
         queue.add(stringRequest);
 
-        StringRequest stringRequestProductData = new StringRequest(Request.Method.GET, "https://api.myjson.com/bins/ius5i",
+        //test api https://api.myjson.com/bins/ius5i
+        StringRequest stringRequestProductData = new StringRequest(Request.Method.GET, getResources().getString(R.string.serverUrl) + "/CategoryAllData.php",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -124,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
                         Gson gson = new Gson();
                         CategoryInfo[] categoryInfos = gson.fromJson(response, CategoryInfo[].class);
                         categoryInfoList.addAll(Arrays.asList(categoryInfos));
+                        categoryInfoListFilter.addAll(categoryInfoList);
                         adapterCategoryInf.notifyDataSetChanged();
                         Log.i(TAG, "Data store into ArrayList");
 
@@ -152,7 +160,6 @@ public class MainActivity extends AppCompatActivity {
         }, this);
 
         recyclerViewProductInfo.setLayoutManager(layoutManager);
-        recyclerViewProductInfo.setHasFixedSize(true);
         recyclerViewProductInfo.setAdapter(adapterProductInfo);
 
 
@@ -187,28 +194,30 @@ public class MainActivity extends AppCompatActivity {
 
 
     void filter(String text) {
-
-        productInfoListFilter = new ArrayList<>();
-        categoryInfoListFilter = new ArrayList<>();
-        for (ProductInfo productInfo : productInfoList) {
+        productInfosNewData.clear();
+        for (ProductInfo productInfo : productInfoListFilter) {
             if (productInfo.getPname().contains(text)) {
-                productInfoListFilter.add(productInfo);
+                productInfosNewData.add(productInfo);
             }
         }
 
-        for (CategoryInfo categoryInfo : categoryInfoList) {
+        categoryInfosNewData.clear();
+        for (CategoryInfo categoryInfo : categoryInfoListFilter) {
             if (categoryInfo.getCategoryName().contains(text)) {
-                categoryInfoListFilter.add(categoryInfo);
+                categoryInfosNewData.add(categoryInfo);
             }
-
         }
 
-//        productInfoList = null;
-//        categoryInfoList = null;
-//        productInfoList = productInfoListFilter;
-//        categoryInfoList = categoryInfoListFilter;
-//        adapterCategoryInf.notifyDataSetChanged();
-//        adapterProductInfo.notifyDataSetChanged();
+        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(this);
+        Intent intent = new Intent("Data_Reset");
+        localBroadcastManager.sendBroadcast(intent);
+
+        productInfoList.clear();
+        productInfoList.addAll(productInfosNewData);
+        categoryInfoList.clear();
+        categoryInfoList.addAll(categoryInfosNewData);
+        adapterProductInfo.notifyDataSetChanged();
+        adapterCategoryInf.notifyDataSetChanged();
     }
 
     void bindView() {
