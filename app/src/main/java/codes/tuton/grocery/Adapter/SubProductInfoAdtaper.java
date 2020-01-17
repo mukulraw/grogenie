@@ -1,6 +1,9 @@
 package codes.tuton.grocery.Adapter;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -83,12 +87,36 @@ public class SubProductInfoAdtaper extends RecyclerView.Adapter<SubProductInfoAd
             textViewDiscount.setText("UP TO " + this.discount + "% OFF");
         }
 
+
         i.title.setText(productInfo.getPname());
         i.disountPrice.setText(String.valueOf(finalPrice));
         i.price.setText(String.valueOf(productTotalPrice));
         i.discount.setText(discount + "% OFF");
 
         Glide.with(context).load(imageUrl).into(i.imageView);
+
+        //Register BrodCast Reciver
+        LocalBroadcastManager.getInstance(context).registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (productCalculationModel.getItemCount() == 0 && productCalculationModel.getItemCount() <= quntyty) {
+                    i.removeButton.setVisibility(View.VISIBLE);
+                    productCalculationModel.setItemCount(productCalculationModel.getItemCount() + 1);
+                    i.itemCount.setText(String.valueOf(productCalculationModel.getItemCount()));
+
+                    ProductCalculationModel.totalAmount += Float.valueOf(finalPrice);
+                    ProductCalculationModel.totalItem += 1;
+                    ProductCalculationModel.totalSaved += Float.valueOf(productTotalPrice - finalPrice);
+                } else if (productCalculationModel.getItemCount() < quntyty) {
+                    productCalculationModel.setItemCount(productCalculationModel.getItemCount() + 1);
+                    i.itemCount.setText(String.valueOf(productCalculationModel.getItemCount()));
+                    ProductCalculationModel.totalAmount += Float.valueOf(finalPrice);
+                    ProductCalculationModel.totalItem += 1;
+                    ProductCalculationModel.totalSaved += Float.valueOf(productTotalPrice - finalPrice);
+                }
+                totalAmountInterface.totalCheckoutData("₹" + ProductCalculationModel.totalAmount, " X " + ProductCalculationModel.totalItem + " item", "₹" + ProductCalculationModel.totalSaved);
+            }
+        }, new IntentFilter("ADD_ALL_" + productInfo.getCategoryId()));
 
         i.addButton.setOnClickListener(new View.OnClickListener() {
             @Override

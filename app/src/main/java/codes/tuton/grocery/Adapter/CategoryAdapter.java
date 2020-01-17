@@ -1,6 +1,7 @@
 package codes.tuton.grocery.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -67,7 +69,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     @Override
     public void onBindViewHolder(@NonNull final CategoryViewHolder i, final int position) {
-        CategoryInfo categoryInfo = categoryInfoList.get(position);
+        final CategoryInfo categoryInfo = categoryInfoList.get(position);
         final ProductCalculationModel productCalculationModel = new ProductCalculationModel();
         String imageUrl = "https://kaushiktejani.github.io/image/" + categoryInfo.getImage() + ".png";
         Glide.with(context).load(imageUrl).into(i.imageView);
@@ -93,6 +95,15 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                     i.recyclerView.setVisibility(View.GONE);
                     i.expandButton.setText("VIEW MORE");
                 }
+            }
+        });
+
+        i.mAddAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(context);
+                Intent intent = new Intent("ADD_ALL_" + categoryInfo.getCategoryId());
+                localBroadcastManager.sendBroadcast(intent);
             }
         });
     }
