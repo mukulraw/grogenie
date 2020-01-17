@@ -70,7 +70,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         CategoryInfo categoryInfo = categoryInfoList.get(position);
         final ProductCalculationModel productCalculationModel = new ProductCalculationModel();
         String imageUrl = "https://kaushiktejani.github.io/image/" + categoryInfo.getImage() + ".png";
-//        Glide.with(context).load(imageUrl).into(i.imageView);
+        Glide.with(context).load(imageUrl).into(i.imageView);
         i.mTitle.setText(categoryInfo.getCategoryName());
 
         productInfos.addAll(Arrays.asList(categoryInfo.getProduct_info()));
@@ -83,12 +83,15 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                 if (productCalculationModel.getItemCount() == 0) {
                     productCalculationModel.setItemCount(productCalculationModel.getItemCount() + 1);
                     i.recyclerView.setVisibility(View.GONE);
+                    i.expandButton.setText("VIEW MORE");
                 } else if (productCalculationModel.getItemCount() % 2 == 0 || productCalculationModel.getItemCount() == 2) {
                     productCalculationModel.setItemCount(productCalculationModel.getItemCount() + 1);
                     i.recyclerView.setVisibility(View.VISIBLE);
+                    i.expandButton.setText("VIEW LESS");
                 } else {
                     productCalculationModel.setItemCount(productCalculationModel.getItemCount() + 1);
                     i.recyclerView.setVisibility(View.GONE);
+                    i.expandButton.setText("VIEW MORE");
                 }
             }
         });

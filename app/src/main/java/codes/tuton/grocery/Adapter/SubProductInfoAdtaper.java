@@ -78,9 +78,9 @@ public class SubProductInfoAdtaper extends RecyclerView.Adapter<SubProductInfoAd
         final int quntyty = Integer.valueOf(productInfo.getQnt());
         String imageUrl = "https://kaushiktejani.github.io/image/" + productInfo.getImageName() + ".png";
 
-        if (0 < Integer.valueOf(productInfo.getDiscount())) {
-            discount = Integer.valueOf(productInfo.getDiscount());
-            textViewDiscount.setText(discount+"% OFF");
+        if (0 < discount) {
+            this.discount = discount;
+            textViewDiscount.setText("UP TO " + this.discount + "% OFF");
         }
 
         i.title.setText(productInfo.getPname());

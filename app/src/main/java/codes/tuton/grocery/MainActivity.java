@@ -10,9 +10,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,10 +53,11 @@ import codes.tuton.grocery.model.ProductInfo;
 public class MainActivity extends AppCompatActivity {
     private final String TAG = "Demo";
     private Toolbar toolbar;
+    private EditText serchEditText;
     private TextView toolbarTitle, totalFinalMount, totalSavedAmount, totalItemTextView;
     private String jsonProductInfo;
-    private List<ProductInfo> productInfoList = new ArrayList<>();
-    private List<CategoryInfo> categoryInfoList = new ArrayList<>();
+    private List<ProductInfo> productInfoList = new ArrayList<>(), productInfoListFilter;
+    private List<CategoryInfo> categoryInfoList = new ArrayList<>(), categoryInfoListFilter;
     private RecyclerView recyclerViewProductInfo, recyclerViewCategoryInfo;
     private RecyclerView.LayoutManager layoutManager, layoutManagerCate;
     private RecyclerView.Adapter adapterProductInfo, adapterCategoryInf;
@@ -70,6 +74,23 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         setRecyclerViewProductInfo();
+
+        serchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                filter(s.toString());
+            }
+        });
 
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://api.myjson.com/bins/hjlum",
@@ -94,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
         });
         queue.add(stringRequest);
 
-        StringRequest stringRequestProductData = new StringRequest(Request.Method.GET, "https://api.myjson.com/bins/guj2m",
+        StringRequest stringRequestProductData = new StringRequest(Request.Method.GET, "https://api.myjson.com/bins/ius5i",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -103,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
                         Gson gson = new Gson();
                         CategoryInfo[] categoryInfos = gson.fromJson(response, CategoryInfo[].class);
                         categoryInfoList.addAll(Arrays.asList(categoryInfos));
-//                        adapterCategoryInf.notifyDataSetChanged();
+                        adapterCategoryInf.notifyDataSetChanged();
                         Log.i(TAG, "Data store into ArrayList");
 
                     }
@@ -164,6 +185,32 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+    void filter(String text) {
+
+        productInfoListFilter = new ArrayList<>();
+        categoryInfoListFilter = new ArrayList<>();
+        for (ProductInfo productInfo : productInfoList) {
+            if (productInfo.getPname().contains(text)) {
+                productInfoListFilter.add(productInfo);
+            }
+        }
+
+        for (CategoryInfo categoryInfo : categoryInfoList) {
+            if (categoryInfo.getCategoryName().contains(text)) {
+                categoryInfoListFilter.add(categoryInfo);
+            }
+
+        }
+
+//        productInfoList = null;
+//        categoryInfoList = null;
+//        productInfoList = productInfoListFilter;
+//        categoryInfoList = categoryInfoListFilter;
+//        adapterCategoryInf.notifyDataSetChanged();
+//        adapterProductInfo.notifyDataSetChanged();
+    }
+
     void bindView() {
         toolbar = findViewById(R.id.toolbar);
         toolbarTitle = findViewById(R.id.toolbarTitle);
@@ -171,5 +218,7 @@ public class MainActivity extends AppCompatActivity {
         totalFinalMount = findViewById(R.id.totalAmountTextView);
         totalSavedAmount = findViewById(R.id.savedAmountTextView);
         totalItemTextView = findViewById(R.id.totalItemTextView);
+
+        serchEditText = findViewById(R.id.serchEditText);
     }
 }
