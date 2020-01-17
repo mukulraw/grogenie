@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Grocery</string>
+
+    <string name="URL">http://127.0.0.1</string>
 </resources>
