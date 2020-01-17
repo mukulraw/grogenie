@@ -74,7 +74,7 @@
                         android:background="#F30000"
                         android:fontFamily="@font/gotham_rounded"
                         android:padding="6dp"
-                        android:text="UP TO 25% OFF"
+                        android:text="UP TO 20% OFF"
                         android:textColor="@android:color/white" />
 
                     <View
@@ -106,7 +106,7 @@
             </LinearLayout>
         </LinearLayout>
 
-        <RelativeLayout
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewSunCategory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

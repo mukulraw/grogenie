@@ -41,6 +41,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import codes.tuton.grocery.Adapter.CategoryAdapter;
 import codes.tuton.grocery.Adapter.ProductItemsAdapter;
 import codes.tuton.grocery.Interface.TotalAmountInterface;
 import codes.tuton.grocery.model.CategoryInfo;
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     private List<ProductInfo> productInfoList = new ArrayList<>();
     private List<CategoryInfo> categoryInfoList = new ArrayList<>();
     private RecyclerView recyclerViewProductInfo, recyclerViewCategoryInfo;
-    private RecyclerView.LayoutManager layoutManager;
+    private RecyclerView.LayoutManager layoutManager, layoutManagerCate;
     private RecyclerView.Adapter adapterProductInfo, adapterCategoryInf;
 
     @Override
@@ -102,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
                         Gson gson = new Gson();
                         CategoryInfo[] categoryInfos = gson.fromJson(response, CategoryInfo[].class);
                         categoryInfoList.addAll(Arrays.asList(categoryInfos));
+//                        adapterCategoryInf.notifyDataSetChanged();
                         Log.i(TAG, "Data store into ArrayList");
 
                     }
@@ -131,6 +133,21 @@ public class MainActivity extends AppCompatActivity {
         recyclerViewProductInfo.setLayoutManager(layoutManager);
         recyclerViewProductInfo.setHasFixedSize(true);
         recyclerViewProductInfo.setAdapter(adapterProductInfo);
+
+
+        recyclerViewCategoryInfo = findViewById(R.id.recyclerViewCategoruMain);
+        layoutManagerCate = new LinearLayoutManager(this);
+        recyclerViewCategoryInfo.setLayoutManager(layoutManagerCate);
+        recyclerViewCategoryInfo.setHasFixedSize(true);
+        adapterCategoryInf = new CategoryAdapter(categoryInfoList, this, new TotalAmountInterface() {
+            @Override
+            public void totalCheckoutData(String amount, String totalItem, String saved) {
+                totalFinalMount.setText(amount);
+                totalItemTextView.setText(totalItem);
+                totalSavedAmount.setText(saved);
+            }
+        });
+        recyclerViewCategoryInfo.setAdapter(adapterCategoryInf);
     }
 
     @Override
