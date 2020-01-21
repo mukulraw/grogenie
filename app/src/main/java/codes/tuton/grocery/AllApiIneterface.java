@@ -17,7 +17,11 @@ public interface AllApiIneterface {
     @GET("demo/CategoryAllData.php")
     Call<List<productListBean>> CategoryAllData();
 
-
+    @Multipart
+    @POST("demo/search.php")
+    Call<List<productListBean>> search(
+            @Part("query") String query
+    );
 
 
 }

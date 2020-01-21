@@ -7,22 +7,30 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import codes.tuton.grocery.offlineCartPOJO.offlineCartBean;
 import codes.tuton.grocery.productListPOJO.ProductInfo;
@@ -42,13 +50,14 @@ public class HomeActivity extends AppCompatActivity {
     List<productListBean> list;
     ProductAdapter adapter;
     TextView totalFinalMount, totalSavedAmount, totalItemTextView;
-    offlineCartBean cartBean;
+    EditText search;
+    Button checkout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        cartBean = new offlineCartBean();
 
         list = new ArrayList<>();
         grid = findViewById(R.id.grid);
@@ -56,6 +65,8 @@ public class HomeActivity extends AppCompatActivity {
         totalFinalMount = findViewById(R.id.totalAmountTextView);
         totalSavedAmount = findViewById(R.id.savedAmountTextView);
         totalItemTextView = findViewById(R.id.totalItemTextView);
+        search = findViewById(R.id.editText);
+        checkout = findViewById(R.id.checkOutButton);
 
 
         adapter = new ProductAdapter(this , list);
@@ -81,7 +92,8 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<productListBean>> call, Response<List<productListBean>> response) {
 
-                adapter.setData(response.body());
+                list = response.body();
+                adapter.setData(list);
 
                 progress.setVisibility(View.GONE);
 
@@ -94,6 +106,93 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if (s.length() > 0)
+                {
+                    progress.setVisibility(View.VISIBLE);
+
+                    Bean b = (Bean) getApplicationContext();
+
+                    Retrofit retrofit = new Retrofit.Builder()
+                            .baseUrl(b.baseurl)
+                            .addConverterFactory(ScalarsConverterFactory.create())
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build();
+
+                    AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+
+                    Call<List<productListBean>> call = cr.search(s.toString());
+                    call.enqueue(new Callback<List<productListBean>>() {
+                        @Override
+                        public void onResponse(Call<List<productListBean>> call, Response<List<productListBean>> response) {
+
+                            adapter.setData(response.body());
+
+                            progress.setVisibility(View.GONE);
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<List<productListBean>> call, Throwable t) {
+                            t.printStackTrace();
+                            progress.setVisibility(View.GONE);
+                        }
+                    });
+                }
+                else
+                {
+                    adapter.setData(list);
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        checkout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+
+                List<String> clist = offlineCartBean.cartitems;
+
+                List<String> nlist = new ArrayList<>(clist);
+
+                Set<String> sslist = new HashSet<>(nlist);
+                nlist = new ArrayList<>(sslist);
+
+                List<cartRequestPOJO> reqlist = new ArrayList<>();
+
+                for (int i = 0; i < nlist.size(); i++) {
+
+                    cartRequestPOJO item = new cartRequestPOJO();
+                    item.setPid(nlist.get(i));
+                    item.setQuantity(String.valueOf(offlineCartBean.getCount(nlist.get(i))));
+                    reqlist.add(item);
+
+                }
+
+                Gson gson = new Gson();
+                String json = gson.toJson(reqlist);
+
+                Log.d("reqlist" , json);
+
+                Toast.makeText(HomeActivity.this, json, Toast.LENGTH_LONG).show();
+
+            }
+        });
 
     }
 
@@ -186,7 +285,7 @@ public class HomeActivity extends AppCompatActivity {
 
             if (offlineCartBean.cartitems.contains(item.getPid()))
             {
-                int c = cartBean.getCount(item.getPid());
+                int c = offlineCartBean.getCount(item.getPid());
                 holder.addButton.setVisibility(View.VISIBLE);
                 holder.removeButton.setVisibility(View.VISIBLE);
                 holder.itemCount.setText(String.valueOf(c));
@@ -290,6 +389,8 @@ public class HomeActivity extends AppCompatActivity {
             holder.setIsRecyclable(false);
             final ProductInfo item = list.get(position);
 
+
+
             String imageUrl = context.getResources().getString(R.string.serverUrl)+"/image/" + item.getImageName();
 
             holder.name.setText(item.getPname());
@@ -317,7 +418,7 @@ public class HomeActivity extends AppCompatActivity {
 
             if (offlineCartBean.cartitems.contains(item.getPid()))
             {
-                int c = cartBean.getCount(item.getPid());
+                int c = offlineCartBean.getCount(item.getPid());
                 holder.addButton.setVisibility(View.VISIBLE);
                 holder.removeButton.setVisibility(View.VISIBLE);
                 holder.itemCount.setText(String.valueOf(c));
@@ -390,9 +491,9 @@ public class HomeActivity extends AppCompatActivity {
     void updateCart()
     {
 
-        totalFinalMount.setText("₹" + cartBean.getTotalAmount());
-        totalItemTextView.setText(" X " + cartBean.getTotalItem() + " item");
-        totalSavedAmount.setText("₹" + cartBean.getTotalSaved());
+        totalFinalMount.setText("₹" + offlineCartBean.getTotalAmount());
+        totalItemTextView.setText(" X " + offlineCartBean.getTotalItem() + " item");
+        totalSavedAmount.setText("₹" + offlineCartBean.getTotalSaved());
 
     }
 

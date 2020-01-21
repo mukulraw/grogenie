@@ -11,19 +11,19 @@ public class offlineCartBean {
     public static float totalSaved = 0;
     public static List<String> cartitems = new ArrayList<>();
 
-    public float getTotalAmount() {
+    public static float getTotalAmount() {
         return totalAmount;
     }
 
-    public float getTotalSaved() {
+    public static float getTotalSaved() {
         return totalSaved;
     }
 
-    public int getTotalItem() {
+    public static int getTotalItem() {
         return totalItem;
     }
 
-    public int getCount(String id)
+    public static int getCount(String id)
     {
         int c = 0;
         for (int i = 0; i < cartitems.size(); i++) {
