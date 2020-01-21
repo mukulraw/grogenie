@@ -3,6 +3,9 @@ package codes.tuton.grocery;
 import android.app.Application;
 import android.content.Context;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+
 
 public class Bean extends Application {
     private static Context context;
@@ -20,7 +23,7 @@ public class Bean extends Application {
 
         context = getApplicationContext();
 
-        //ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(this));
+        ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(this));
 
     }
 }

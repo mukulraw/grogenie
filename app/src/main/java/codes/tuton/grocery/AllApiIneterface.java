@@ -1,5 +1,7 @@
 package codes.tuton.grocery;
 
+import java.util.List;
+
 import codes.tuton.grocery.productListPOJO.productListBean;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -13,7 +15,7 @@ import retrofit2.http.Part;
 public interface AllApiIneterface {
 
     @GET("demo/CategoryAllData.php")
-    Call<productListBean> CategoryAllData();
+    Call<List<productListBean>> CategoryAllData();
 
 
 

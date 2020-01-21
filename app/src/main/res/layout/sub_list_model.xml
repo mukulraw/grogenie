@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardProductShow"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:cardCornerRadius="4dp"
-    app:cardUseCompatPadding="true">
+    android:layout_margin="5dp"
+    android:background="@drawable/background_subitem_list"
+    android:layout_height="wrap_content">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/imageProductCard"
@@ -69,8 +66,8 @@
             android:background="@drawable/red_round"
             android:gravity="center"
             android:padding="6dp"
-            android:text="UP TO 25% OFF"
-            android:textColor="#ffffff"
+            android:text="25% OFF"
+            android:textColor="@android:color/white"
             android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="@+id/imageProductCard"
             app:layout_constraintStart_toEndOf="@+id/productAmountTotal" />
@@ -117,35 +114,6 @@
                 android:src="@drawable/ic_add_24dp" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/categoryViewLess"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_gravity="end"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:background="@color/colorPrimaryDark"
-            android:text="View Less"
-            android:textColor="@android:color/white"
-            android:textSize="10sp"
-            android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/grid"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageProductCard" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-</androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
