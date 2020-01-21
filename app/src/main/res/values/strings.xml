@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Grocery</string>
+    <string name="app_name">Groce Genie</string>
 
-    <string name="serverUrl">http://127.0.0.1</string>
+    <string name="serverUrl">https://mrtecks.com/demo</string>
 </resources>
