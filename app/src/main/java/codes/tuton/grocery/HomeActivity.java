@@ -52,6 +52,7 @@ public class HomeActivity extends AppCompatActivity {
     TextView totalFinalMount, totalSavedAmount, totalItemTextView;
     EditText search;
     Button checkout;
+    LinearLayout bottom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +68,7 @@ public class HomeActivity extends AppCompatActivity {
         totalItemTextView = findViewById(R.id.totalItemTextView);
         search = findViewById(R.id.editText);
         checkout = findViewById(R.id.checkOutButton);
+        bottom = findViewById(R.id.linearLayout2);
 
 
         adapter = new ProductAdapter(this , list);
@@ -194,6 +196,12 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateCart();
     }
 
     class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>
@@ -491,9 +499,24 @@ public class HomeActivity extends AppCompatActivity {
     void updateCart()
     {
 
-        totalFinalMount.setText("₹" + offlineCartBean.getTotalAmount());
-        totalItemTextView.setText(" X " + offlineCartBean.getTotalItem() + " item");
-        totalSavedAmount.setText("₹" + offlineCartBean.getTotalSaved());
+        if (offlineCartBean.getTotalItem() > 0)
+        {
+            totalFinalMount.setText("₹" + offlineCartBean.getTotalAmount());
+            totalItemTextView.setText(" X " + offlineCartBean.getTotalItem() + " item");
+            totalSavedAmount.setText("₹" + offlineCartBean.getTotalSaved());
+
+            bottom.setVisibility(View.VISIBLE);
+
+        }
+        else
+        {
+            totalFinalMount.setText("₹" + offlineCartBean.getTotalAmount());
+            totalItemTextView.setText(" X " + offlineCartBean.getTotalItem() + " item");
+            totalSavedAmount.setText("₹" + offlineCartBean.getTotalSaved());
+            bottom.setVisibility(View.GONE);
+        }
+
+
 
     }
 

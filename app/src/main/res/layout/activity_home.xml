@@ -161,6 +161,7 @@
         android:layout_height="60dp"
         android:layout_gravity="bottom"
         android:background="#f5f5f5"
+        android:visibility="gone"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
