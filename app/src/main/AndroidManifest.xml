@@ -15,7 +15,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Checkout"></activity>
+        <activity android:name=".Checkout"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".HomeActivity"
             android:screenOrientation="portrait"

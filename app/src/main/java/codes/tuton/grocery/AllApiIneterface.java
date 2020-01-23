@@ -31,4 +31,26 @@ public interface AllApiIneterface {
             @Part("user_id") String user_id
     );
 
+    @Multipart
+    @POST("demo/addAddress.php")
+    Call<addMessageBean> addAddress(
+            @Part("user_id") String user_id,
+            @Part("flat") String flat,
+            @Part("landmark") String landmark,
+            @Part("city") String city,
+            @Part("area") String area,
+            @Part("mobile") String mobile
+    );
+
+    @Multipart
+    @POST("demo/updateAddress.php")
+    Call<addMessageBean> updateAddress(
+            @Part("user_id") String user_id,
+            @Part("flat") String flat,
+            @Part("landmark") String landmark,
+            @Part("city") String city,
+            @Part("area") String area,
+            @Part("mobile") String mobile
+    );
+
 }
