@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -79,36 +80,7 @@ public class HomeActivity extends AppCompatActivity {
         grid.setAdapter(adapter);
         grid.setLayoutManager(manager);
 
-        progress.setVisibility(View.VISIBLE);
 
-        Bean b = (Bean) getApplicationContext();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(b.baseurl)
-                .addConverterFactory(ScalarsConverterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
-
-        Call<List<productListBean>> call = cr.CategoryAllData();
-        call.enqueue(new Callback<List<productListBean>>() {
-            @Override
-            public void onResponse(Call<List<productListBean>> call, Response<List<productListBean>> response) {
-
-                list = response.body();
-                adapter.setData(list);
-
-                progress.setVisibility(View.GONE);
-
-            }
-
-            @Override
-            public void onFailure(Call<List<productListBean>> call, Throwable t) {
-                t.printStackTrace();
-                progress.setVisibility(View.GONE);
-            }
-        });
 
         search.addTextChangedListener(new TextWatcher() {
             @Override
@@ -193,7 +165,7 @@ public class HomeActivity extends AppCompatActivity {
 
                 Log.d("reqlist" , json);
 
-                Toast.makeText(HomeActivity.this, json, Toast.LENGTH_LONG).show();
+                //Toast.makeText(HomeActivity.this, json, Toast.LENGTH_LONG).show();
 
                 Intent intent = new Intent(HomeActivity.this , Checkout.class);
                 startActivity(intent);
@@ -206,7 +178,42 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        loaddata();
         updateCart();
+    }
+
+    void loaddata()
+    {
+        progress.setVisibility(View.VISIBLE);
+
+        Bean b = (Bean) getApplicationContext();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(b.baseurl)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+
+        Call<List<productListBean>> call = cr.CategoryAllData();
+        call.enqueue(new Callback<List<productListBean>>() {
+            @Override
+            public void onResponse(Call<List<productListBean>> call, Response<List<productListBean>> response) {
+
+                list = response.body();
+                adapter.setData(list);
+
+                progress.setVisibility(View.GONE);
+
+            }
+
+            @Override
+            public void onFailure(Call<List<productListBean>> call, Throwable t) {
+                t.printStackTrace();
+                progress.setVisibility(View.GONE);
+            }
+        });
     }
 
     class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>
@@ -253,7 +260,7 @@ public class HomeActivity extends AppCompatActivity {
             final int finalPrice = productTotalPrice - ((productTotalPrice * discount) / 100);
 
             holder.dprice.setText("₹" + finalPrice);
-            holder.sprice.setText("₹" + productTotalPrice);
+            holder.sprice.setText(Html.fromHtml("₹<strike>" + productTotalPrice + "</strike>"));
 
             if (item.getProductInfo().size() > 0) {
 
@@ -426,7 +433,7 @@ public class HomeActivity extends AppCompatActivity {
             }
 
             holder.dprice.setText("₹" + finalPrice);
-            holder.sprice.setText("₹" + productTotalPrice);
+            holder.sprice.setText(Html.fromHtml("₹<strike>" + productTotalPrice + "</strike>"));
             holder.discount.setText(discount + "% OFF");
 
             if (offlineCartBean.cartitems.contains(item.getPid()))

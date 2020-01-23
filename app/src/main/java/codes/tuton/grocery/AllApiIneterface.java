@@ -2,6 +2,7 @@ package codes.tuton.grocery;
 
 import java.util.List;
 
+import codes.tuton.grocery.cartPOJO.cartBean;
 import codes.tuton.grocery.productListPOJO.productListBean;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -23,5 +24,11 @@ public interface AllApiIneterface {
             @Part("query") String query
     );
 
+    @Multipart
+    @POST("demo/getCartData.php")
+    Call<cartBean> getCartData(
+            @Part("json") String json,
+            @Part("user_id") String user_id
+    );
 
 }
