@@ -3,6 +3,7 @@ package codes.tuton.grocery;
 import java.util.List;
 
 import codes.tuton.grocery.cartPOJO.cartBean;
+import codes.tuton.grocery.checkPromoPOJO.checkPromoBean;
 import codes.tuton.grocery.productListPOJO.productListBean;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -51,6 +52,13 @@ public interface AllApiIneterface {
             @Part("city") String city,
             @Part("area") String area,
             @Part("mobile") String mobile
+    );
+
+    @Multipart
+    @POST("demo/checkPromoCode.php")
+    Call<checkPromoBean> checkPromoCode(
+            @Part("promo") String promo,
+            @Part("user_id") String user_id
     );
 
 }

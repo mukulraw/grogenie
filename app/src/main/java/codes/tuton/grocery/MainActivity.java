@@ -178,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerViewCategoryInfo.setAdapter(adapterCategoryInf);
     }
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_toolbar_top, menu);
         return true;
@@ -190,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Shopping Cart Selected.", Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
 
     void filter(String text) {

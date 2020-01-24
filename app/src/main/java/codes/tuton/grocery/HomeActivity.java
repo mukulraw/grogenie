@@ -56,6 +56,8 @@ public class HomeActivity extends AppCompatActivity {
     EditText search;
     Button checkout;
     LinearLayout bottom;
+    TextView count;
+    ImageButton cart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +74,8 @@ public class HomeActivity extends AppCompatActivity {
         search = findViewById(R.id.editText);
         checkout = findViewById(R.id.checkOutButton);
         bottom = findViewById(R.id.linearLayout2);
+        count = findViewById(R.id.textView19);
+        cart = findViewById(R.id.imageButton2);
 
 
         adapter = new ProductAdapter(this , list);
@@ -169,6 +173,29 @@ public class HomeActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(HomeActivity.this , Checkout.class);
                 startActivity(intent);
+
+            }
+        });
+
+        cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+
+                if (offlineCartBean.getTotalItem() > 0)
+                {
+                    Intent intent = new Intent(HomeActivity.this , Checkout.class);
+                    startActivity(intent);
+                }
+                else
+                {
+                    Toast.makeText(HomeActivity.this, "Cart is Empty", Toast.LENGTH_SHORT).show();
+                }
+
+                //Toast.makeText(HomeActivity.this, json, Toast.LENGTH_LONG).show();
+
+
 
             }
         });
@@ -516,6 +543,7 @@ public class HomeActivity extends AppCompatActivity {
             totalFinalMount.setText("₹" + offlineCartBean.getTotalAmount());
             totalItemTextView.setText(" X " + offlineCartBean.getTotalItem() + " item");
             totalSavedAmount.setText("₹" + offlineCartBean.getTotalSaved());
+            count.setText(String.valueOf(offlineCartBean.getTotalItem()));
 
             bottom.setVisibility(View.VISIBLE);
 
@@ -524,6 +552,7 @@ public class HomeActivity extends AppCompatActivity {
         {
             totalFinalMount.setText("₹" + offlineCartBean.getTotalAmount());
             totalItemTextView.setText(" X " + offlineCartBean.getTotalItem() + " item");
+            count.setText(String.valueOf(offlineCartBean.getTotalItem()));
             totalSavedAmount.setText("₹" + offlineCartBean.getTotalSaved());
             bottom.setVisibility(View.GONE);
         }

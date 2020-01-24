@@ -2,6 +2,7 @@ package codes.tuton.grocery;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -43,6 +44,7 @@ import java.util.Set;
 
 import codes.tuton.grocery.cartPOJO.Cart;
 import codes.tuton.grocery.cartPOJO.cartBean;
+import codes.tuton.grocery.checkPromoPOJO.checkPromoBean;
 import codes.tuton.grocery.offlineCartPOJO.offlineCartBean;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -98,6 +100,7 @@ public class Checkout extends AppCompatActivity {
         promo = findViewById(R.id.editText2);
         apply = findViewById(R.id.button);
         applied = findViewById(R.id.textView15);
+
 
         flat = findViewById(R.id.editText3);
         landmark = findViewById(R.id.editText4);
@@ -168,6 +171,94 @@ public class Checkout extends AppCompatActivity {
         loadCart();
 
         updateSummary();
+
+
+        apply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String pc = promo.getText().toString();
+
+                if (pc.length() > 0)
+                {
+
+                    apply.setEnabled(false);
+                    apply.setClickable(false);
+
+                    promo.setEnabled(false);
+                    promo.setClickable(false);
+
+                    progress.setVisibility(View.VISIBLE);
+
+                    Bean b = (Bean) getApplicationContext();
+
+                    Retrofit retrofit = new Retrofit.Builder()
+                            .baseUrl(b.baseurl)
+                            .addConverterFactory(ScalarsConverterFactory.create())
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build();
+
+                    AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+
+                    Call<checkPromoBean> call = cr.checkPromoCode(pc , android_id);
+
+                    call.enqueue(new Callback<checkPromoBean>() {
+                        @Override
+                        public void onResponse(Call<checkPromoBean> call, Response<checkPromoBean> response) {
+
+                            if (response.body().getStatus().equals("1"))
+                            {
+
+                                float dis = Float.parseFloat(response.body().getData().getDiscount());
+
+                                pvalue = (dis / 100) * tamount;
+
+                                applied.setText("PROMO Code applied worth ₹" + pvalue);
+                                applied.setVisibility(View.VISIBLE);
+
+                                updateSummary();
+
+                                Toast.makeText(Checkout.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+
+                            }
+                            else
+                            {
+
+                                pvalue = 0;
+
+                                Toast.makeText(Checkout.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                apply.setEnabled(true);
+                                apply.setClickable(true);
+                                applied.setVisibility(View.GONE);
+                                promo.setEnabled(true);
+                                promo.setClickable(true);
+                            }
+
+                            progress.setVisibility(View.GONE);
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<checkPromoBean> call, Throwable t) {
+                            pvalue = 0;
+                            progress.setVisibility(View.GONE);
+                            apply.setEnabled(true);
+                            apply.setClickable(true);
+                            applied.setVisibility(View.GONE);
+                            promo.setEnabled(true);
+                            promo.setClickable(true);
+                        }
+                    });
+
+                }
+                else
+                {
+                    Toast.makeText(Checkout.this, "Invalid PROMO code", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -489,7 +580,7 @@ public class Checkout extends AppCompatActivity {
         if (!fdel) {
             gtotal = gtotal + 10;
         }
-        gtotal = gtotal + pvalue;
+        gtotal = gtotal - pvalue;
 
         total.setText("₹" + gtotal);
         grand.setText("₹" + gtotal);
