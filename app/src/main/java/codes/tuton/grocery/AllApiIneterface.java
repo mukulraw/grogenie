@@ -36,6 +36,8 @@ public interface AllApiIneterface {
     @POST("demo/addAddress.php")
     Call<addMessageBean> addAddress(
             @Part("user_id") String user_id,
+            @Part("name") String name,
+            @Part("email") String email,
             @Part("flat") String flat,
             @Part("landmark") String landmark,
             @Part("city") String city,
@@ -47,6 +49,8 @@ public interface AllApiIneterface {
     @POST("demo/updateAddress.php")
     Call<addMessageBean> updateAddress(
             @Part("user_id") String user_id,
+            @Part("name") String name,
+            @Part("email") String email,
             @Part("flat") String flat,
             @Part("landmark") String landmark,
             @Part("city") String city,

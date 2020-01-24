@@ -10,6 +10,12 @@ public class Address {
     @SerializedName("user_id")
     @Expose
     private String userId;
+    @SerializedName("name")
+    @Expose
+    private String name;
+    @SerializedName("email")
+    @Expose
+    private String email;
     @SerializedName("flat")
     @Expose
     private String flat;
@@ -80,5 +86,21 @@ public class Address {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

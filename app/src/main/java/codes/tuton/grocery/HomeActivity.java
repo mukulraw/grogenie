@@ -2,6 +2,8 @@ package codes.tuton.grocery;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -56,8 +58,11 @@ public class HomeActivity extends AppCompatActivity {
     EditText search;
     Button checkout;
     LinearLayout bottom;
-    TextView count;
-    ImageButton cart;
+    TextView count , number;
+    ImageButton cart , menu;
+    DrawerLayout drawer;
+
+    TextView opencart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +81,10 @@ public class HomeActivity extends AppCompatActivity {
         bottom = findViewById(R.id.linearLayout2);
         count = findViewById(R.id.textView19);
         cart = findViewById(R.id.imageButton2);
+        menu = findViewById(R.id.imageButton);
+        drawer = findViewById(R.id.drawer);
+        opencart = findViewById(R.id.cart);
+        number = findViewById(R.id.number);
 
 
         adapter = new ProductAdapter(this , list);
@@ -84,6 +93,15 @@ public class HomeActivity extends AppCompatActivity {
         grid.setAdapter(adapter);
         grid.setLayoutManager(manager);
 
+
+        if (SharePreferenceUtils.getInstance().getString("id").length() > 0)
+        {
+            number.setText(SharePreferenceUtils.getInstance().getString("phone"));
+        }
+        else
+        {
+            number.setText("Login");
+        }
 
 
         search.addTextChangedListener(new TextWatcher() {
@@ -140,6 +158,8 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+
+
         checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -195,6 +215,41 @@ public class HomeActivity extends AppCompatActivity {
 
                 //Toast.makeText(HomeActivity.this, json, Toast.LENGTH_LONG).show();
 
+
+
+            }
+        });
+
+        opencart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (offlineCartBean.getTotalItem() > 0)
+                {
+                    Intent intent = new Intent(HomeActivity.this , Checkout.class);
+                    startActivity(intent);
+                    drawer.closeDrawer(GravityCompat.START);
+                }
+                else
+                {
+                    Toast.makeText(HomeActivity.this, "Cart is Empty", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(drawer.isDrawerOpen(GravityCompat.START))
+                {
+                    drawer.closeDrawer(GravityCompat.START);
+                }
+                else
+                {
+                    drawer.openDrawer(GravityCompat.START);
+                }
 
 
             }

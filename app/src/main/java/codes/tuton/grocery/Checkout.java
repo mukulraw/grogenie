@@ -64,7 +64,7 @@ public class Checkout extends AppCompatActivity {
     EditText promo;
     Button apply;
 
-    EditText flat, landmark, city, area, mobile;
+    EditText name, email, flat, landmark, city, area, mobile;
     Button add;
 
     RecyclerView orders;
@@ -109,6 +109,8 @@ public class Checkout extends AppCompatActivity {
         applied = findViewById(R.id.textView15);
 
 
+        name = findViewById(R.id.editText6);
+        email = findViewById(R.id.editText7);
         flat = findViewById(R.id.editText3);
         landmark = findViewById(R.id.editText4);
         city = findViewById(R.id.autoCompleteTextView);
@@ -179,12 +181,9 @@ public class Checkout extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                if (isChecked)
-                {
+                if (isChecked) {
                     genie = 10;
-                }
-                else
-                {
+                } else {
                     genie = 0;
                 }
 
@@ -202,8 +201,7 @@ public class Checkout extends AppCompatActivity {
 
                 String pc = promo.getText().toString();
 
-                if (pc.length() > 0)
-                {
+                if (pc.length() > 0) {
 
                     apply.setEnabled(false);
                     apply.setClickable(false);
@@ -223,14 +221,13 @@ public class Checkout extends AppCompatActivity {
 
                     AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
 
-                    Call<checkPromoBean> call = cr.checkPromoCode(pc , android_id);
+                    Call<checkPromoBean> call = cr.checkPromoCode(pc, android_id);
 
                     call.enqueue(new Callback<checkPromoBean>() {
                         @Override
                         public void onResponse(Call<checkPromoBean> call, Response<checkPromoBean> response) {
 
-                            if (response.body().getStatus().equals("1"))
-                            {
+                            if (response.body().getStatus().equals("1")) {
 
                                 float dis = Float.parseFloat(response.body().getData().getDiscount());
 
@@ -243,9 +240,7 @@ public class Checkout extends AppCompatActivity {
 
                                 Toast.makeText(Checkout.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
 
-                            }
-                            else
-                            {
+                            } else {
 
                                 pvalue = 0;
 
@@ -273,9 +268,7 @@ public class Checkout extends AppCompatActivity {
                         }
                     });
 
-                }
-                else
-                {
+                } else {
                     Toast.makeText(Checkout.this, "Invalid PROMO code", Toast.LENGTH_SHORT).show();
                 }
 
@@ -291,79 +284,99 @@ public class Checkout extends AppCompatActivity {
 
                 if (te.equals("ADD")) {
 
+                    String n = name.getText().toString();
+                    String e = email.getText().toString();
                     String f = flat.getText().toString();
                     String l = landmark.getText().toString();
                     String c = city.getText().toString();
                     String a = area.getText().toString();
                     String m = mobile.getText().toString();
 
-                    if (f.length() > 0) {
-                        if (l.length() > 0) {
-                            if (c.length() > 0) {
-                                if (a.length() > 0) {
-                                    if (m.length() == 10) {
+
+                    if (n.length() > 0) {
+                        if (e.length() > 0) {
 
 
-                                        progress.setVisibility(View.VISIBLE);
+                            if (f.length() > 0) {
+                                if (l.length() > 0) {
+                                    if (c.length() > 0) {
+                                        if (a.length() > 0) {
+                                            if (m.length() == 10) {
 
-                                        Bean b = (Bean) getApplicationContext();
 
-                                        Retrofit retrofit = new Retrofit.Builder()
-                                                .baseUrl(b.baseurl)
-                                                .addConverterFactory(ScalarsConverterFactory.create())
-                                                .addConverterFactory(GsonConverterFactory.create())
-                                                .build();
+                                                progress.setVisibility(View.VISIBLE);
 
-                                        AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+                                                Bean b = (Bean) getApplicationContext();
 
-                                        Call<addMessageBean> call = cr.addAddress(
-                                                android_id,
-                                                f,
-                                                l,
-                                                c,
-                                                a,
-                                                m
-                                        );
+                                                Retrofit retrofit = new Retrofit.Builder()
+                                                        .baseUrl(b.baseurl)
+                                                        .addConverterFactory(ScalarsConverterFactory.create())
+                                                        .addConverterFactory(GsonConverterFactory.create())
+                                                        .build();
 
-                                        call.enqueue(new Callback<addMessageBean>() {
-                                            @Override
-                                            public void onResponse(Call<addMessageBean> call, Response<addMessageBean> response) {
+                                                AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
 
-                                                loadCart();
+                                                Call<addMessageBean> call = cr.addAddress(
+                                                        android_id,
+                                                        n,
+                                                        e,
+                                                        f,
+                                                        l,
+                                                        c,
+                                                        a,
+                                                        m
+                                                );
 
-                                                progress.setVisibility(View.GONE);
+                                                call.enqueue(new Callback<addMessageBean>() {
+                                                    @Override
+                                                    public void onResponse(Call<addMessageBean> call, Response<addMessageBean> response) {
 
+                                                        loadCart();
+
+                                                        progress.setVisibility(View.GONE);
+
+                                                    }
+
+                                                    @Override
+                                                    public void onFailure(Call<addMessageBean> call, Throwable t) {
+                                                        progress.setVisibility(View.GONE);
+                                                    }
+                                                });
+
+                                            } else {
+                                                Toast.makeText(Checkout.this, "Invalid Mobile Number", Toast.LENGTH_SHORT).show();
                                             }
-
-                                            @Override
-                                            public void onFailure(Call<addMessageBean> call, Throwable t) {
-                                                progress.setVisibility(View.GONE);
-                                            }
-                                        });
-
+                                        } else {
+                                            Toast.makeText(Checkout.this, "Invalid Area", Toast.LENGTH_SHORT).show();
+                                        }
                                     } else {
-                                        Toast.makeText(Checkout.this, "Invalid Mobile Number", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(Checkout.this, "Invalid City", Toast.LENGTH_SHORT).show();
                                     }
                                 } else {
-                                    Toast.makeText(Checkout.this, "Invalid Area", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Checkout.this, "Invalid Landmark and Locality", Toast.LENGTH_SHORT).show();
                                 }
                             } else {
-                                Toast.makeText(Checkout.this, "Invalid City", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Checkout.this, "Invalid Flat no./ Floor/ Building Name", Toast.LENGTH_SHORT).show();
                             }
                         } else {
-                            Toast.makeText(Checkout.this, "Invalid Landmark and Locality", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Checkout.this, "Invalid Email", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        Toast.makeText(Checkout.this, "Invalid Flat no./ Floor/ Building Name", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Checkout.this, "Invalid Name", Toast.LENGTH_SHORT).show();
                     }
 
+
                 } else if (te.equals("CHANGE")) {
+                    name.setEnabled(true);
+                    email.setEnabled(true);
                     flat.setEnabled(true);
                     landmark.setEnabled(true);
                     city.setEnabled(true);
                     area.setEnabled(true);
                     mobile.setEnabled(true);
 
+                    name.setClickable(true);
+                    email.setClickable(true);
                     flat.setClickable(true);
                     landmark.setClickable(true);
                     city.setClickable(true);
@@ -373,70 +386,87 @@ public class Checkout extends AppCompatActivity {
                     add.setText("UPDATE");
                 } else {
 
+
+                    String n = name.getText().toString();
+                    String e = email.getText().toString();
                     String f = flat.getText().toString();
                     String l = landmark.getText().toString();
                     String c = city.getText().toString();
                     String a = area.getText().toString();
                     String m = mobile.getText().toString();
 
-                    if (f.length() > 0) {
-                        if (l.length() > 0) {
-                            if (c.length() > 0) {
-                                if (a.length() > 0) {
-                                    if (m.length() == 10) {
 
 
-                                        progress.setVisibility(View.VISIBLE);
+                    if (n.length() > 0) {
+                        if (e.length() > 0) {
 
-                                        Bean b = (Bean) getApplicationContext();
 
-                                        Retrofit retrofit = new Retrofit.Builder()
-                                                .baseUrl(b.baseurl)
-                                                .addConverterFactory(ScalarsConverterFactory.create())
-                                                .addConverterFactory(GsonConverterFactory.create())
-                                                .build();
+                            if (f.length() > 0) {
+                                if (l.length() > 0) {
+                                    if (c.length() > 0) {
+                                        if (a.length() > 0) {
+                                            if (m.length() == 10) {
 
-                                        AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
 
-                                        Call<addMessageBean> call = cr.updateAddress(
-                                                android_id,
-                                                f,
-                                                l,
-                                                c,
-                                                a,
-                                                m
-                                        );
+                                                progress.setVisibility(View.VISIBLE);
 
-                                        call.enqueue(new Callback<addMessageBean>() {
-                                            @Override
-                                            public void onResponse(Call<addMessageBean> call, Response<addMessageBean> response) {
+                                                Bean b = (Bean) getApplicationContext();
 
-                                                loadCart();
+                                                Retrofit retrofit = new Retrofit.Builder()
+                                                        .baseUrl(b.baseurl)
+                                                        .addConverterFactory(ScalarsConverterFactory.create())
+                                                        .addConverterFactory(GsonConverterFactory.create())
+                                                        .build();
 
-                                                progress.setVisibility(View.GONE);
+                                                AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
 
+                                                Call<addMessageBean> call = cr.updateAddress(
+                                                        android_id,
+                                                        n,
+                                                        e,
+                                                        f,
+                                                        l,
+                                                        c,
+                                                        a,
+                                                        m
+                                                );
+
+                                                call.enqueue(new Callback<addMessageBean>() {
+                                                    @Override
+                                                    public void onResponse(Call<addMessageBean> call, Response<addMessageBean> response) {
+
+                                                        loadCart();
+
+                                                        progress.setVisibility(View.GONE);
+
+                                                    }
+
+                                                    @Override
+                                                    public void onFailure(Call<addMessageBean> call, Throwable t) {
+                                                        progress.setVisibility(View.GONE);
+                                                    }
+                                                });
+
+                                            } else {
+                                                Toast.makeText(Checkout.this, "Invalid Mobile Number", Toast.LENGTH_SHORT).show();
                                             }
-
-                                            @Override
-                                            public void onFailure(Call<addMessageBean> call, Throwable t) {
-                                                progress.setVisibility(View.GONE);
-                                            }
-                                        });
-
+                                        } else {
+                                            Toast.makeText(Checkout.this, "Invalid Area", Toast.LENGTH_SHORT).show();
+                                        }
                                     } else {
-                                        Toast.makeText(Checkout.this, "Invalid Mobile Number", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(Checkout.this, "Invalid City", Toast.LENGTH_SHORT).show();
                                     }
                                 } else {
-                                    Toast.makeText(Checkout.this, "Invalid Area", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Checkout.this, "Invalid Landmark and Locality", Toast.LENGTH_SHORT).show();
                                 }
                             } else {
-                                Toast.makeText(Checkout.this, "Invalid City", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Checkout.this, "Invalid Flat no./ Floor/ Building Name", Toast.LENGTH_SHORT).show();
                             }
                         } else {
-                            Toast.makeText(Checkout.this, "Invalid Landmark and Locality", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Checkout.this, "Invalid Email", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        Toast.makeText(Checkout.this, "Invalid Flat no./ Floor/ Building Name", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Checkout.this, "Invalid Name", Toast.LENGTH_SHORT).show();
                     }
 
                 }
@@ -449,7 +479,6 @@ public class Checkout extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (address) {
-
 
 
                     progress.setVisibility(View.VISIBLE);
@@ -478,8 +507,7 @@ public class Checkout extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<addMessageBean> call, Response<addMessageBean> response) {
 
-                            if (response.body().getStatus().equals("1"))
-                            {
+                            if (response.body().getStatus().equals("1")) {
 
                                 offlineCartBean.totalAmount = 0;
                                 offlineCartBean.totalItem = 0;
@@ -521,9 +549,7 @@ public class Checkout extends AppCompatActivity {
                                     }
                                 });
 
-                            }
-                            else
-                            {
+                            } else {
                                 Toast.makeText(Checkout.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                             }
 
@@ -536,9 +562,6 @@ public class Checkout extends AppCompatActivity {
                             progress.setVisibility(View.GONE);
                         }
                     });
-
-
-
 
 
                 } else {
@@ -601,18 +624,24 @@ public class Checkout extends AppCompatActivity {
                     if (response.body().getAddress().size() > 0) {
                         address = true;
 
+                        name.setText(response.body().getAddress().get(0).getName());
+                        email.setText(response.body().getAddress().get(0).getEmail());
                         flat.setText(response.body().getAddress().get(0).getFlat());
                         landmark.setText(response.body().getAddress().get(0).getLandmark());
                         city.setText(response.body().getAddress().get(0).getCity());
                         area.setText(response.body().getAddress().get(0).getArea());
                         mobile.setText(response.body().getAddress().get(0).getMobile());
 
+                        name.setEnabled(false);
+                        email.setEnabled(false);
                         flat.setEnabled(false);
                         landmark.setEnabled(false);
                         city.setEnabled(false);
                         area.setEnabled(false);
                         mobile.setEnabled(false);
 
+                        name.setClickable(false);
+                        email.setClickable(false);
                         flat.setClickable(false);
                         landmark.setClickable(false);
                         city.setClickable(false);
@@ -624,12 +653,16 @@ public class Checkout extends AppCompatActivity {
                     } else {
                         address = false;
 
+                        name.setEnabled(true);
+                        email.setEnabled(true);
                         flat.setEnabled(true);
                         landmark.setEnabled(true);
                         city.setEnabled(true);
                         area.setEnabled(true);
                         mobile.setEnabled(true);
 
+                        name.setClickable(true);
+                        email.setClickable(true);
                         flat.setClickable(true);
                         landmark.setClickable(true);
                         city.setClickable(true);
@@ -669,9 +702,7 @@ public class Checkout extends AppCompatActivity {
         if (!fdel) {
             dvalue = 10;
             gtotal = gtotal + 10;
-        }
-        else
-        {
+        } else {
             dvalue = 0;
         }
         gtotal = gtotal - pvalue;
