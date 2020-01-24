@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.tv.TvContract;
@@ -22,6 +23,7 @@ import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -74,6 +76,7 @@ public class Checkout extends AppCompatActivity {
     float tamount = 0, gtotal = 0;
     boolean fdel = true;
     float pvalue = 0;
+    float dvalue = 0;
 
     String android_id;
     ProductAdapter adapter;
@@ -83,6 +86,10 @@ public class Checkout extends AppCompatActivity {
     RelativeLayout checkout;
 
     boolean address = false;
+
+    String json = "[]";
+
+    float genie = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,6 +170,22 @@ public class Checkout extends AppCompatActivity {
                 } else {
                     fdel = false;
                     updateSummary();
+                }
+
+            }
+        });
+
+        geniecash.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if (isChecked)
+                {
+                    genie = 10;
+                }
+                else
+                {
+                    genie = 0;
                 }
 
             }
@@ -427,30 +450,96 @@ public class Checkout extends AppCompatActivity {
 
                 if (address) {
 
-                    final Dialog dialog = new Dialog(Checkout.this);
-                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    dialog.setCancelable(true);
-                    dialog.setContentView(R.layout.final_popup);
-                    dialog.show();
 
-                    Button ok = dialog.findViewById(R.id.button3);
-                    Button cs = dialog.findViewById(R.id.button4);
 
-                    ok.setOnClickListener(new View.OnClickListener() {
+                    progress.setVisibility(View.VISIBLE);
+
+                    Bean b = (Bean) getApplicationContext();
+
+                    Retrofit retrofit = new Retrofit.Builder()
+                            .baseUrl(b.baseurl)
+                            .addConverterFactory(ScalarsConverterFactory.create())
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build();
+
+                    AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+
+                    Call<addMessageBean> call = cr.checkout(
+                            android_id,
+                            json,
+                            String.valueOf(tamount),
+                            String.valueOf(genie),
+                            String.valueOf(dvalue),
+                            String.valueOf(pvalue),
+                            String.valueOf(gtotal)
+                    );
+
+                    call.enqueue(new Callback<addMessageBean>() {
                         @Override
-                        public void onClick(View v) {
-                            dialog.dismiss();
+                        public void onResponse(Call<addMessageBean> call, Response<addMessageBean> response) {
+
+                            if (response.body().getStatus().equals("1"))
+                            {
+
+                                offlineCartBean.totalAmount = 0;
+                                offlineCartBean.totalItem = 0;
+                                offlineCartBean.totalSaved = 0;
+                                offlineCartBean.cartitems.clear();
+
+                                Toast.makeText(Checkout.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+
+                                final Dialog dialog = new Dialog(Checkout.this);
+                                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                dialog.setCancelable(true);
+                                dialog.setContentView(R.layout.final_popup);
+                                dialog.show();
+
+                                Button ok = dialog.findViewById(R.id.button3);
+                                Button cs = dialog.findViewById(R.id.button4);
+
+                                ok.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        dialog.dismiss();
+                                        finish();
+                                    }
+                                });
+
+                                cs.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        dialog.dismiss();
+                                        finish();
+                                    }
+                                });
+
+                                dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                                    @Override
+                                    public void onCancel(DialogInterface dialog) {
+                                        finish();
+                                    }
+                                });
+
+                            }
+                            else
+                            {
+                                Toast.makeText(Checkout.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+
+                            progress.setVisibility(View.GONE);
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<addMessageBean> call, Throwable t) {
+                            progress.setVisibility(View.GONE);
                         }
                     });
 
-                    cs.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog.dismiss();
-                            finish();
-                        }
-                    });
+
+
+
 
                 } else {
                     Toast.makeText(Checkout.this, "Please Add an Address", Toast.LENGTH_SHORT).show();
@@ -482,7 +571,7 @@ public class Checkout extends AppCompatActivity {
         }
 
         Gson gson = new Gson();
-        String json = gson.toJson(reqlist);
+        json = gson.toJson(reqlist);
 
         Log.d("reqlist", json);
 
@@ -578,7 +667,12 @@ public class Checkout extends AppCompatActivity {
 
         gtotal = tamount;
         if (!fdel) {
+            dvalue = 10;
             gtotal = gtotal + 10;
+        }
+        else
+        {
+            dvalue = 0;
         }
         gtotal = gtotal - pvalue;
 

@@ -61,4 +61,16 @@ public interface AllApiIneterface {
             @Part("user_id") String user_id
     );
 
+    @Multipart
+    @POST("demo/checkout.php")
+    Call<addMessageBean> checkout(
+            @Part("user_id") String user_id,
+            @Part("products") String products,
+            @Part("amount") String amount,
+            @Part("geniecash") String geniecash,
+            @Part("delivery") String delivery,
+            @Part("promovalue") String promovalue,
+            @Part("grand") String grand
+    );
+
 }
