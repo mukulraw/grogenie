@@ -77,4 +77,18 @@ public interface AllApiIneterface {
             @Part("grand") String grand
     );
 
+    @Multipart
+    @POST("demo/sendOTP.php")
+    Call<loginBean> login(
+            @Part("phone") String phone,
+            @Part("token") String token
+    );
+
+    @Multipart
+    @POST("demo/verifyOTP.php")
+    Call<loginBean> verify(
+            @Part("phone") String phone,
+            @Part("otp") String otp
+    );
+
 }

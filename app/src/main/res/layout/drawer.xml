@@ -118,6 +118,7 @@
         android:layout_height="wrap_content"
         android:padding="20dp"
         android:text="Logout"
+        android:id="@+id/logout"
         android:layout_alignParentBottom="true"
         android:textColor="#ffffff"
         android:gravity="center"

@@ -77,8 +77,6 @@ public class Checkout extends AppCompatActivity {
     boolean fdel = true;
     float pvalue = 0;
     float dvalue = 0;
-
-    String android_id;
     ProductAdapter adapter;
     GridLayoutManager manager;
     List<Cart> list;
@@ -124,8 +122,6 @@ public class Checkout extends AppCompatActivity {
         grand = findViewById(R.id.grand);
         checkout = findViewById(R.id.textView16);
 
-        android_id = Settings.Secure.getString(getContentResolver(),
-                Settings.Secure.ANDROID_ID);
 
         adapter = new ProductAdapter(this, list);
         manager = new GridLayoutManager(this, 1);
@@ -221,7 +217,7 @@ public class Checkout extends AppCompatActivity {
 
                     AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
 
-                    Call<checkPromoBean> call = cr.checkPromoCode(pc, android_id);
+                    Call<checkPromoBean> call = cr.checkPromoCode(pc, SharePreferenceUtils.getInstance().getString("userId"));
 
                     call.enqueue(new Callback<checkPromoBean>() {
                         @Override
@@ -317,7 +313,7 @@ public class Checkout extends AppCompatActivity {
                                                 AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
 
                                                 Call<addMessageBean> call = cr.addAddress(
-                                                        android_id,
+                                                        SharePreferenceUtils.getInstance().getString("userId"),
                                                         n,
                                                         e,
                                                         f,
@@ -421,7 +417,7 @@ public class Checkout extends AppCompatActivity {
                                                 AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
 
                                                 Call<addMessageBean> call = cr.updateAddress(
-                                                        android_id,
+                                                        SharePreferenceUtils.getInstance().getString("userId"),
                                                         n,
                                                         e,
                                                         f,
@@ -478,6 +474,10 @@ public class Checkout extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+
+
+
+
                 if (address) {
 
 
@@ -494,7 +494,7 @@ public class Checkout extends AppCompatActivity {
                     AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
 
                     Call<addMessageBean> call = cr.checkout(
-                            android_id,
+                            SharePreferenceUtils.getInstance().getString("userId"),
                             json,
                             String.valueOf(tamount),
                             String.valueOf(genie),
@@ -611,7 +611,7 @@ public class Checkout extends AppCompatActivity {
 
         AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
 
-        Call<cartBean> call = cr.getCartData(json, android_id);
+        Call<cartBean> call = cr.getCartData(json, SharePreferenceUtils.getInstance().getString("userId"));
 
         call.enqueue(new Callback<cartBean>() {
             @Override
