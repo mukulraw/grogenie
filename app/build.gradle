@@ -42,4 +42,5 @@ dependencies {
     implementation 'com.chaos.view:pinview:1.4.3'
 
     implementation 'com.github.jumadeveloper:networkmanager:0.0.2'
+    implementation 'com.github.stfalcon:smsverifycatcher:0.3.2'
 }

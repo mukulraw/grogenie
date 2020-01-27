@@ -37,6 +37,8 @@ import com.chaos.view.PinView;
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.stfalcon.smsverifycatcher.OnSmsCatchListener;
+import com.stfalcon.smsverifycatcher.SmsVerifyCatcher;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -73,12 +75,31 @@ public class HomeActivity extends AppCompatActivity {
     DrawerLayout drawer;
 
     TextView opencart , logout;
+    SmsVerifyCatcher smsVerifyCatcher;
+
+    PinView oottpp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        smsVerifyCatcher = new SmsVerifyCatcher(this, new OnSmsCatchListener<String>() {
+            @Override
+            public void onSmsCatch(String message) {
+
+                try {
+                    //String code = parseCode(message);//Parse verification code
+                    oottpp.setText(message);
+                }catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+
+                //set code in edit text
+                //then you can send verification code to server
+            }
+        });
 
         list = new ArrayList<>();
         grid = findViewById(R.id.grid);
@@ -131,6 +152,9 @@ public class HomeActivity extends AppCompatActivity {
 
                     EditText mob = dialog.findViewById(R.id.editTextMobile);
                     final PinView pin = dialog.findViewById(R.id.pinView);
+
+                    oottpp = pin;
+
                     Button verify = dialog.findViewById(R.id.buttonContinue);
                     final ProgressBar progressBar = dialog.findViewById(R.id.progress);
 
@@ -382,6 +406,7 @@ public class HomeActivity extends AppCompatActivity {
 
                     EditText mob = dialog.findViewById(R.id.editTextMobile);
                     final PinView pin = dialog.findViewById(R.id.pinView);
+                    oottpp = pin;
                     Button verify = dialog.findViewById(R.id.buttonContinue);
                     final ProgressBar progressBar = dialog.findViewById(R.id.progress);
 
@@ -550,6 +575,7 @@ public class HomeActivity extends AppCompatActivity {
 
                     EditText mob = dialog.findViewById(R.id.editTextMobile);
                     final PinView pin = dialog.findViewById(R.id.pinView);
+                    oottpp = pin;
                     Button verify = dialog.findViewById(R.id.buttonContinue);
                     final ProgressBar progressBar = dialog.findViewById(R.id.progress);
 
@@ -721,6 +747,7 @@ public class HomeActivity extends AppCompatActivity {
 
                     EditText mob = dialog.findViewById(R.id.editTextMobile);
                     final PinView pin = dialog.findViewById(R.id.pinView);
+                    oottpp = pin;
                     Button verify = dialog.findViewById(R.id.buttonContinue);
                     final ProgressBar progressBar = dialog.findViewById(R.id.progress);
 
@@ -904,6 +931,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onStop(){
         Tovuti.from(this).stop();
         super.onStop();
+        smsVerifyCatcher.onStop();
     }
 
     void loaddata()
@@ -1256,6 +1284,21 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        smsVerifyCatcher.onStart();
+    }
+
+    /**
+     * need for Android 6 real time permissions
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        smsVerifyCatcher.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
 }
