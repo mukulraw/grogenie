@@ -41,6 +41,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -367,8 +368,8 @@ public class Checkout extends AppCompatActivity {
                     email.setEnabled(true);
                     flat.setEnabled(true);
                     landmark.setEnabled(true);
-                    city.setEnabled(true);
-                    area.setEnabled(true);
+                    //city.setEnabled(true);
+                    //area.setEnabled(true);
                     mobile.setEnabled(true);
 
                     name.setClickable(true);
@@ -579,7 +580,7 @@ public class Checkout extends AppCompatActivity {
 
         List<String> nlist = new ArrayList<>(clist);
 
-        final Set<String> sslist = new HashSet<>(nlist);
+        final Set<String> sslist = new LinkedHashSet<>(nlist);
         nlist = new ArrayList<>(sslist);
 
         List<cartRequestPOJO> reqlist = new ArrayList<>();
@@ -657,16 +658,16 @@ public class Checkout extends AppCompatActivity {
                         email.setEnabled(true);
                         flat.setEnabled(true);
                         landmark.setEnabled(true);
-                        city.setEnabled(true);
-                        area.setEnabled(true);
+                        //city.setEnabled(true);
+                        //area.setEnabled(true);
                         mobile.setEnabled(true);
 
                         name.setClickable(true);
                         email.setClickable(true);
                         flat.setClickable(true);
                         landmark.setClickable(true);
-                        city.setClickable(true);
-                        area.setClickable(true);
+                        //city.setClickable(true);
+                        //area.setClickable(true);
                         mobile.setClickable(true);
 
                         add.setText("ADD");
