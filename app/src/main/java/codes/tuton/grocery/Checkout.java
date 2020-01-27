@@ -35,6 +35,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.androidstudy.networkmanager.Monitor;
+import com.androidstudy.networkmanager.Tovuti;
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -187,9 +189,9 @@ public class Checkout extends AppCompatActivity {
             }
         });
 
-        loadCart();
 
-        updateSummary();
+
+
 
 
         apply.setOnClickListener(new View.OnClickListener() {
@@ -574,6 +576,28 @@ public class Checkout extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Tovuti.from(this).monitor(new Monitor.ConnectivityListener(){
+            @Override
+            public void onConnectivityChanged(int connectionType, boolean isConnected, boolean isFast){
+                // TODO: Handle the connection...
+                if (isConnected)
+                {
+                    loadCart();
+
+                    updateSummary();
+                }
+                else
+                {
+                    Toast.makeText(Checkout.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+    }
+
     void loadCart() {
 
         List<String> clist = offlineCartBean.cartitems;
@@ -828,6 +852,12 @@ public class Checkout extends AppCompatActivity {
 
             }
         }
+    }
+
+    @Override
+    protected void onStop(){
+        Tovuti.from(this).stop();
+        super.onStop();
     }
 
 }

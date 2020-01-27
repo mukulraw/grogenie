@@ -31,6 +31,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.androidstudy.networkmanager.Monitor;
+import com.androidstudy.networkmanager.Tovuti;
 import com.chaos.view.PinView;
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -877,8 +879,31 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        loaddata();
-        updateCart();
+
+        Tovuti.from(this).monitor(new Monitor.ConnectivityListener(){
+            @Override
+            public void onConnectivityChanged(int connectionType, boolean isConnected, boolean isFast){
+                // TODO: Handle the connection...
+                if (isConnected)
+                {
+                    loaddata();
+                    updateCart();
+                }
+                else
+                {
+                    Toast.makeText(HomeActivity.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
+
+    }
+
+    @Override
+    protected void onStop(){
+        Tovuti.from(this).stop();
+        super.onStop();
     }
 
     void loaddata()
