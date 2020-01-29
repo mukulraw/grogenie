@@ -89,8 +89,11 @@ public class HomeActivity extends AppCompatActivity {
             public void onSmsCatch(String message) {
 
                 try {
+                    Log.d("message" , message);
+
+                    String ot = message.substring(27,33);
                     //String code = parseCode(message);//Parse verification code
-                    oottpp.setText(message);
+                    oottpp.setText(ot);
                 }catch (Exception e)
                 {
                     e.printStackTrace();
@@ -157,6 +160,71 @@ public class HomeActivity extends AppCompatActivity {
 
                     Button verify = dialog.findViewById(R.id.buttonContinue);
                     final ProgressBar progressBar = dialog.findViewById(R.id.progress);
+
+
+                    pin.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                            if (s.length() == 6)
+                            {
+                                progressBar.setVisibility(View.VISIBLE);
+
+                                Bean b = (Bean) getApplicationContext();
+
+                                Retrofit retrofit = new Retrofit.Builder()
+                                        .baseUrl(b.baseurl)
+                                        .addConverterFactory(ScalarsConverterFactory.create())
+                                        .addConverterFactory(GsonConverterFactory.create())
+                                        .build();
+
+                                AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+
+                                Call<loginBean> call = cr.verify(SharePreferenceUtils.getInstance().getString("phone") , s.toString());
+
+                                call.enqueue(new Callback<loginBean>() {
+                                    @Override
+                                    public void onResponse(Call<loginBean> call, Response<loginBean> response) {
+
+                                        if (response.body().getStatus().equals("1"))
+                                        {
+                                            SharePreferenceUtils.getInstance().saveString("userId" , response.body().getUserId());
+                                            SharePreferenceUtils.getInstance().saveString("phone" , response.body().getPhone());
+                                            SharePreferenceUtils.getInstance().saveString("rewards" , response.body().getRewards());
+                                            Toast.makeText(HomeActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+
+                                            Intent intent = new Intent(HomeActivity.this , HomeActivity.class);
+                                            startActivity(intent);
+                                            finishAffinity();
+
+                                        }
+                                        Toast.makeText(HomeActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+
+
+                                        progressBar.setVisibility(View.GONE);
+
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<loginBean> call, Throwable t) {
+                                        progressBar.setVisibility(View.GONE);
+                                    }
+                                });
+                            }
+
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+
+                        }
+                    });
+
 
                     mob.addTextChangedListener(new TextWatcher() {
                         @Override
@@ -289,6 +357,10 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+
+
+
+
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -409,6 +481,69 @@ public class HomeActivity extends AppCompatActivity {
                     oottpp = pin;
                     Button verify = dialog.findViewById(R.id.buttonContinue);
                     final ProgressBar progressBar = dialog.findViewById(R.id.progress);
+
+                    pin.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                            if (s.length() == 6)
+                            {
+                                progressBar.setVisibility(View.VISIBLE);
+
+                                Bean b = (Bean) getApplicationContext();
+
+                                Retrofit retrofit = new Retrofit.Builder()
+                                        .baseUrl(b.baseurl)
+                                        .addConverterFactory(ScalarsConverterFactory.create())
+                                        .addConverterFactory(GsonConverterFactory.create())
+                                        .build();
+
+                                AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+
+                                Call<loginBean> call = cr.verify(SharePreferenceUtils.getInstance().getString("phone") , s.toString());
+
+                                call.enqueue(new Callback<loginBean>() {
+                                    @Override
+                                    public void onResponse(Call<loginBean> call, Response<loginBean> response) {
+
+                                        if (response.body().getStatus().equals("1"))
+                                        {
+                                            SharePreferenceUtils.getInstance().saveString("userId" , response.body().getUserId());
+                                            SharePreferenceUtils.getInstance().saveString("phone" , response.body().getPhone());
+                                            SharePreferenceUtils.getInstance().saveString("rewards" , response.body().getRewards());
+                                            Toast.makeText(HomeActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+
+                                            Intent intent = new Intent(HomeActivity.this , HomeActivity.class);
+                                            startActivity(intent);
+                                            finishAffinity();
+
+                                        }
+                                        Toast.makeText(HomeActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+
+
+                                        progressBar.setVisibility(View.GONE);
+
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<loginBean> call, Throwable t) {
+                                        progressBar.setVisibility(View.GONE);
+                                    }
+                                });
+                            }
+
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+
+                        }
+                    });
 
                     mob.addTextChangedListener(new TextWatcher() {
                         @Override
@@ -578,6 +713,69 @@ public class HomeActivity extends AppCompatActivity {
                     oottpp = pin;
                     Button verify = dialog.findViewById(R.id.buttonContinue);
                     final ProgressBar progressBar = dialog.findViewById(R.id.progress);
+
+                    pin.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                            if (s.length() == 6)
+                            {
+                                progressBar.setVisibility(View.VISIBLE);
+
+                                Bean b = (Bean) getApplicationContext();
+
+                                Retrofit retrofit = new Retrofit.Builder()
+                                        .baseUrl(b.baseurl)
+                                        .addConverterFactory(ScalarsConverterFactory.create())
+                                        .addConverterFactory(GsonConverterFactory.create())
+                                        .build();
+
+                                AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+
+                                Call<loginBean> call = cr.verify(SharePreferenceUtils.getInstance().getString("phone") , s.toString());
+
+                                call.enqueue(new Callback<loginBean>() {
+                                    @Override
+                                    public void onResponse(Call<loginBean> call, Response<loginBean> response) {
+
+                                        if (response.body().getStatus().equals("1"))
+                                        {
+                                            SharePreferenceUtils.getInstance().saveString("userId" , response.body().getUserId());
+                                            SharePreferenceUtils.getInstance().saveString("phone" , response.body().getPhone());
+                                            SharePreferenceUtils.getInstance().saveString("rewards" , response.body().getRewards());
+                                            Toast.makeText(HomeActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+
+                                            Intent intent = new Intent(HomeActivity.this , HomeActivity.class);
+                                            startActivity(intent);
+                                            finishAffinity();
+
+                                        }
+                                        Toast.makeText(HomeActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+
+
+                                        progressBar.setVisibility(View.GONE);
+
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<loginBean> call, Throwable t) {
+                                        progressBar.setVisibility(View.GONE);
+                                    }
+                                });
+                            }
+
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+
+                        }
+                    });
 
                     mob.addTextChangedListener(new TextWatcher() {
                         @Override
@@ -750,6 +948,69 @@ public class HomeActivity extends AppCompatActivity {
                     oottpp = pin;
                     Button verify = dialog.findViewById(R.id.buttonContinue);
                     final ProgressBar progressBar = dialog.findViewById(R.id.progress);
+
+                    pin.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                            if (s.length() == 6)
+                            {
+                                progressBar.setVisibility(View.VISIBLE);
+
+                                Bean b = (Bean) getApplicationContext();
+
+                                Retrofit retrofit = new Retrofit.Builder()
+                                        .baseUrl(b.baseurl)
+                                        .addConverterFactory(ScalarsConverterFactory.create())
+                                        .addConverterFactory(GsonConverterFactory.create())
+                                        .build();
+
+                                AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+
+                                Call<loginBean> call = cr.verify(SharePreferenceUtils.getInstance().getString("phone") , s.toString());
+
+                                call.enqueue(new Callback<loginBean>() {
+                                    @Override
+                                    public void onResponse(Call<loginBean> call, Response<loginBean> response) {
+
+                                        if (response.body().getStatus().equals("1"))
+                                        {
+                                            SharePreferenceUtils.getInstance().saveString("userId" , response.body().getUserId());
+                                            SharePreferenceUtils.getInstance().saveString("phone" , response.body().getPhone());
+                                            SharePreferenceUtils.getInstance().saveString("rewards" , response.body().getRewards());
+                                            Toast.makeText(HomeActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+
+                                            Intent intent = new Intent(HomeActivity.this , HomeActivity.class);
+                                            startActivity(intent);
+                                            finishAffinity();
+
+                                        }
+                                        Toast.makeText(HomeActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+
+
+                                        progressBar.setVisibility(View.GONE);
+
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<loginBean> call, Throwable t) {
+                                        progressBar.setVisibility(View.GONE);
+                                    }
+                                });
+                            }
+
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+
+                        }
+                    });
 
                     mob.addTextChangedListener(new TextWatcher() {
                         @Override
