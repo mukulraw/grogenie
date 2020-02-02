@@ -533,12 +533,15 @@ public class HomeActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
-                    if (holder.grid.getVisibility() == View.VISIBLE) {
-                        holder.grid.setVisibility(View.GONE);
-                        holder.expand.setText("VIEW MORE");
-                    } else {
-                        holder.grid.setVisibility(View.VISIBLE);
-                        holder.expand.setText("VIEW LESS");
+                    if (item.getProductInfo().size() > 0) {
+
+                        if (holder.grid.getVisibility() == View.VISIBLE) {
+                            holder.grid.setVisibility(View.GONE);
+                            holder.expand.setText("VIEW MORE");
+                        } else {
+                            holder.grid.setVisibility(View.VISIBLE);
+                            holder.expand.setText("VIEW LESS");
+                        }
                     }
 
                 }
