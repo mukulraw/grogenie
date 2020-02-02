@@ -129,14 +129,7 @@ public class HomeActivity extends AppCompatActivity {
         grid.setLayoutManager(manager);
 
 
-        if (SharePreferenceUtils.getInstance().getString("userId").length() > 0)
-        {
-            number.setText(SharePreferenceUtils.getInstance().getString("phone"));
-        }
-        else
-        {
-            number.setText("Login");
-        }
+
 
         number.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -193,6 +186,7 @@ public class HomeActivity extends AppCompatActivity {
                     AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
 
                     Call<List<productListBean>> call = cr.search(s.toString());
+
                     call.enqueue(new Callback<List<productListBean>>() {
                         @Override
                         public void onResponse(Call<List<productListBean>> call, Response<List<productListBean>> response) {
@@ -212,7 +206,36 @@ public class HomeActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    adapter.setData(list);
+                    progress.setVisibility(View.VISIBLE);
+
+                    Bean b = (Bean) getApplicationContext();
+
+                    Retrofit retrofit = new Retrofit.Builder()
+                            .baseUrl(b.baseurl)
+                            .addConverterFactory(ScalarsConverterFactory.create())
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build();
+
+                    AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+
+                    Call<List<productListBean>> call = cr.CategoryAllData();
+                    call.enqueue(new Callback<List<productListBean>>() {
+                        @Override
+                        public void onResponse(Call<List<productListBean>> call, Response<List<productListBean>> response) {
+
+                            list = response.body();
+                            adapter.setData(list);
+
+                            progress.setVisibility(View.GONE);
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<List<productListBean>> call, Throwable t) {
+                            t.printStackTrace();
+                            progress.setVisibility(View.GONE);
+                        }
+                    });
                 }
 
             }
@@ -365,6 +388,15 @@ public class HomeActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        if (SharePreferenceUtils.getInstance().getString("userId").length() > 0)
+        {
+            number.setText(SharePreferenceUtils.getInstance().getString("phone"));
+        }
+        else
+        {
+            number.setText("Login");
+        }
+
         Tovuti.from(this).monitor(new Monitor.ConnectivityListener(){
             @Override
             public void onConnectivityChanged(int connectionType, boolean isConnected, boolean isFast){
@@ -497,6 +529,20 @@ public class HomeActivity extends AppCompatActivity {
 
             }
 
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if (holder.grid.getVisibility() == View.VISIBLE) {
+                        holder.grid.setVisibility(View.GONE);
+                        holder.expand.setText("VIEW MORE");
+                    } else {
+                        holder.grid.setVisibility(View.VISIBLE);
+                        holder.expand.setText("VIEW LESS");
+                    }
+
+                }
+            });
 
             holder.expand.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -526,6 +572,24 @@ public class HomeActivity extends AppCompatActivity {
                 holder.removeButton.setVisibility(View.GONE);
                 holder.itemCount.setText("Add");
             }
+
+            holder.itemCount.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if (holder.itemCount.getText().toString().equals("Add"))
+                    {
+                        offlineCartBean.cartitems.add(item.getPid());
+                        offlineCartBean.totalAmount += Float.valueOf(finalPrice);
+                        offlineCartBean.totalItem += 1;
+                        offlineCartBean.totalSaved += Float.valueOf(productTotalPrice - finalPrice);
+                        notifyDataSetChanged();
+
+                        updateCart();
+                    }
+
+                }
+            });
 
             holder.addButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -615,7 +679,7 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
             holder.setIsRecyclable(false);
             final ProductInfo item = list.get(position);
 
@@ -659,6 +723,25 @@ public class HomeActivity extends AppCompatActivity {
                 holder.removeButton.setVisibility(View.GONE);
                 holder.itemCount.setText("Add");
             }
+
+
+            holder.itemCount.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if (holder.itemCount.getText().toString().equals("Add"))
+                    {
+                        offlineCartBean.cartitems.add(item.getPid());
+                        offlineCartBean.totalAmount += Float.valueOf(finalPrice);
+                        offlineCartBean.totalItem += 1;
+                        offlineCartBean.totalSaved += Float.valueOf(productTotalPrice - finalPrice);
+                        notifyDataSetChanged();
+
+                        updateCart();
+                    }
+
+                }
+            });
 
             holder.addButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -761,7 +844,7 @@ public class HomeActivity extends AppCompatActivity {
 
     void login()
     {
-        Dialog dialog = new Dialog(HomeActivity.this);
+        final Dialog dialog = new Dialog(HomeActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setContentView(R.layout.otp_dialog);
@@ -810,9 +893,19 @@ public class HomeActivity extends AppCompatActivity {
                                 SharePreferenceUtils.getInstance().saveString("rewards" , response.body().getRewards());
                                 Toast.makeText(HomeActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
 
-                                Intent intent = new Intent(HomeActivity.this , HomeActivity.class);
-                                startActivity(intent);
-                                finishAffinity();
+                                dialog.dismiss();
+
+                                if (offlineCartBean.getTotalItem() > 0)
+                                {
+                                    Intent intent = new Intent(HomeActivity.this , Checkout.class);
+                                    startActivity(intent);
+                                }
+                                else
+                                {
+                                    Intent intent = new Intent(HomeActivity.this , HomeActivity.class);
+                                    startActivity(intent);
+                                    finishAffinity();
+                                }
 
                             }
                             Toast.makeText(HomeActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
@@ -868,6 +961,7 @@ public class HomeActivity extends AppCompatActivity {
                         public void onResponse(Call<loginBean> call, Response<loginBean> response) {
 
                             SharePreferenceUtils.getInstance().saveString("phone" , response.body().getPhone());
+                            Log.d("message" , response.body().getMessage());
                             Toast.makeText(HomeActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
 
                             progressBar.setVisibility(View.GONE);
@@ -929,9 +1023,21 @@ public class HomeActivity extends AppCompatActivity {
                                     SharePreferenceUtils.getInstance().saveString("rewards" , response.body().getRewards());
                                     Toast.makeText(HomeActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
 
-                                    Intent intent = new Intent(HomeActivity.this , HomeActivity.class);
-                                    startActivity(intent);
-                                    finishAffinity();
+                                    dialog.dismiss();
+
+                                    if (offlineCartBean.getTotalItem() > 0)
+                                    {
+                                        Intent intent = new Intent(HomeActivity.this , Checkout.class);
+                                        startActivity(intent);
+                                    }
+                                    else
+                                    {
+                                        Intent intent = new Intent(HomeActivity.this , HomeActivity.class);
+                                        startActivity(intent);
+                                        finishAffinity();
+                                    }
+
+
 
                                 }
                                 Toast.makeText(HomeActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();

@@ -141,13 +141,13 @@ public class Checkout extends AppCompatActivity {
         ex.add("90 MIN");
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, fr);
+                R.layout.simple_spinner_item, fr);
 
         free.setAdapter(adapter);
 
 
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, ex);
+                R.layout.simple_spinner_item, ex);
         express.setAdapter(adapter2);
 
 
@@ -300,7 +300,6 @@ public class Checkout extends AppCompatActivity {
                                 if (l.length() > 0) {
                                     if (c.length() > 0) {
                                         if (a.length() > 0) {
-                                            if (m.length() == 10) {
 
 
                                                 progress.setVisibility(View.VISIBLE);
@@ -342,9 +341,7 @@ public class Checkout extends AppCompatActivity {
                                                     }
                                                 });
 
-                                            } else {
-                                                Toast.makeText(Checkout.this, "Invalid Mobile Number", Toast.LENGTH_SHORT).show();
-                                            }
+
                                         } else {
                                             Toast.makeText(Checkout.this, "Invalid Area", Toast.LENGTH_SHORT).show();
                                         }
@@ -404,7 +401,6 @@ public class Checkout extends AppCompatActivity {
                                 if (l.length() > 0) {
                                     if (c.length() > 0) {
                                         if (a.length() > 0) {
-                                            if (m.length() == 10) {
 
 
                                                 progress.setVisibility(View.VISIBLE);
@@ -446,9 +442,7 @@ public class Checkout extends AppCompatActivity {
                                                     }
                                                 });
 
-                                            } else {
-                                                Toast.makeText(Checkout.this, "Invalid Mobile Number", Toast.LENGTH_SHORT).show();
-                                            }
+
                                         } else {
                                             Toast.makeText(Checkout.this, "Invalid Area", Toast.LENGTH_SHORT).show();
                                         }
