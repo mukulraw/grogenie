@@ -108,4 +108,10 @@ public interface AllApiIneterface {
             @Part("user_id") String user_id
     );
 
+    @Multipart
+    @POST("demo/getOrderDetails.php")
+    Call<ordersBean> getOrderDetails(
+            @Part("id") String id
+    );
+
 }

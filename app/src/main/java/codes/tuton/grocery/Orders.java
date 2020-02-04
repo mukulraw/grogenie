@@ -262,7 +262,7 @@ public class Orders extends AppCompatActivity {
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-            Previou item = plist.get(position);
+            final Previou item = plist.get(position);
 
             holder.total.setText(String.valueOf(item.getProds().size()));
             float d = Float.parseFloat(item.getDelivery());
@@ -281,6 +281,17 @@ public class Orders extends AppCompatActivity {
             holder.deldate.setText(item.getDeliveryTime());
             holder.grand.setText("₹" + item.getGrand());
 
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent intent = new Intent(context , OrderDetails.class);
+                    intent.putExtra("id" , item.getId());
+                    intent.putExtra("tit" , "GG000" + item.getId());
+                    startActivity(intent);
+
+                }
+            });
 
         }
 
