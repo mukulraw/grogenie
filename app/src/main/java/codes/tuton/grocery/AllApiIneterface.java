@@ -4,6 +4,7 @@ import java.util.List;
 
 import codes.tuton.grocery.cartPOJO.cartBean;
 import codes.tuton.grocery.checkPromoPOJO.checkPromoBean;
+import codes.tuton.grocery.ordersPOJO.ordersBean;
 import codes.tuton.grocery.productListPOJO.productListBean;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -99,6 +100,12 @@ public interface AllApiIneterface {
     Call<loginBean> verify(
             @Part("phone") String phone,
             @Part("otp") String otp
+    );
+
+    @Multipart
+    @POST("demo/getOrders.php")
+    Call<ordersBean> getOrders(
+            @Part("user_id") String user_id
     );
 
 }
