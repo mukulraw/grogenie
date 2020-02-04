@@ -71,10 +71,20 @@ public interface AllApiIneterface {
             @Part("user_id") String user_id,
             @Part("products") String products,
             @Part("amount") String amount,
+            @Part("saving") String saving,
             @Part("geniecash") String geniecash,
             @Part("delivery") String delivery,
+            @Part("delivery_time") String delivery_time,
+            @Part("promo_id") String promo_id,
             @Part("promovalue") String promovalue,
-            @Part("grand") String grand
+            @Part("grand") String grand,
+            @Part("name") String name,
+            @Part("email") String email,
+            @Part("flat") String flat,
+            @Part("landmark") String landmark,
+            @Part("city") String city,
+            @Part("area") String area,
+            @Part("mobile") String mobile
     );
 
     @Multipart

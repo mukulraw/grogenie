@@ -74,7 +74,7 @@ public class HomeActivity extends AppCompatActivity {
     ImageButton cart , menu;
     DrawerLayout drawer;
 
-    TextView opencart , logout;
+    TextView opencart , logout , orders;
     SmsVerifyCatcher smsVerifyCatcher;
 
     PinView oottpp;
@@ -120,6 +120,7 @@ public class HomeActivity extends AppCompatActivity {
         opencart = findViewById(R.id.cart);
         number = findViewById(R.id.number);
         logout = findViewById(R.id.logout);
+        orders = findViewById(R.id.orders);
 
 
         adapter = new ProductAdapter(this , list);
@@ -364,6 +365,33 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
+
+        orders.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (SharePreferenceUtils.getInstance().getString("userId").length() > 0)
+                {
+                    Intent intent = new Intent(HomeActivity.this , Orders.class);
+                    startActivity(intent);
+                    drawer.closeDrawer(GravityCompat.START);
+                }
+                else
+                {
+                    Toast.makeText(HomeActivity.this, "Please login to continue", Toast.LENGTH_SHORT).show();
+                    drawer.closeDrawer(GravityCompat.START);
+
+                    login();
+
+                }
+
+
+
+
+            }
+        });
+
+
 
         menu.setOnClickListener(new View.OnClickListener() {
             @Override

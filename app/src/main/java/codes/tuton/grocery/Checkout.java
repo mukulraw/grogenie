@@ -79,6 +79,7 @@ public class Checkout extends AppCompatActivity {
     float tamount = 0, gtotal = 0;
     boolean fdel = true;
     float pvalue = 0;
+    String pid = "";
     float dvalue = 0;
     ProductAdapter adapter;
     GridLayoutManager manager;
@@ -232,6 +233,8 @@ public class Checkout extends AppCompatActivity {
 
                                 pvalue = (dis / 100) * tamount;
 
+                                pid = response.body().getData().getPid();
+
                                 applied.setText("PROMO Code applied worth ₹" + pvalue);
                                 applied.setVisibility(View.VISIBLE);
 
@@ -242,6 +245,7 @@ public class Checkout extends AppCompatActivity {
                             } else {
 
                                 pvalue = 0;
+                                pid = "";
 
                                 Toast.makeText(Checkout.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                 apply.setEnabled(true);
@@ -258,6 +262,7 @@ public class Checkout extends AppCompatActivity {
                         @Override
                         public void onFailure(Call<checkPromoBean> call, Throwable t) {
                             pvalue = 0;
+                            pid = "";
                             progress.setVisibility(View.GONE);
                             apply.setEnabled(true);
                             apply.setClickable(true);
@@ -494,10 +499,20 @@ public class Checkout extends AppCompatActivity {
                             SharePreferenceUtils.getInstance().getString("userId"),
                             json,
                             String.valueOf(tamount),
+                            String.valueOf(offlineCartBean.getTotalSaved()),
                             String.valueOf(genie),
                             String.valueOf(dvalue),
+                            "",
+                            pid,
                             String.valueOf(pvalue),
-                            String.valueOf(gtotal)
+                            String.valueOf(gtotal),
+                            name.getText().toString(),
+                            email.getText().toString(),
+                            flat.getText().toString(),
+                            landmark.getText().toString(),
+                            city.getText().toString(),
+                            area.getText().toString(),
+                            mobile.getText().toString()
                     );
 
                     call.enqueue(new Callback<addMessageBean>() {
