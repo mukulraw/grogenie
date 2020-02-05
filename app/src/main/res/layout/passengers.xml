@@ -33,7 +33,7 @@
                     android:maxLines="10"
                     android:scrollHorizontally="false"
                     android:singleLine="false"
-                    android:text="1."
+                    android:text="Q."
                     android:textStyle="bold"
                     android:textSize="12sp" />
 
@@ -45,7 +45,7 @@
                     android:layout_marginLeft="2dp"
                     android:scrollHorizontally="false"
                     android:singleLine="false"
-                    android:text="@string/dummyQue1"
+                    android:text="What is minimum order value?"
                     android:textSize="12sp" />
             </LinearLayout>
             <LinearLayout
@@ -60,7 +60,7 @@
                     android:maxLines="10"
                     android:scrollHorizontally="false"
                     android:singleLine="false"
-                    android:text="Ans."
+                    android:text="A."
                     android:textStyle="bold"
                     android:textSize="12sp" />
 
@@ -72,7 +72,7 @@
                     android:scrollHorizontally="false"
                     android:singleLine="false"
                     android:layout_marginLeft="2dp"
-                    android:text="@string/dummyAns1"
+                    android:text="There is no minimum order value"
                     android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
@@ -95,7 +95,7 @@
                     android:maxLines="10"
                     android:scrollHorizontally="false"
                     android:singleLine="false"
-                    android:text="2."
+                    android:text="Q."
                     android:textSize="12sp"
                     android:textStyle="bold"/>
 
@@ -107,7 +107,7 @@
                     android:layout_marginLeft="2dp"
                     android:scrollHorizontally="false"
                     android:singleLine="false"
-                    android:text="@string/dummyQue1"
+                    android:text="Do you deliver in entire Pune?"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -123,7 +123,7 @@
                     android:maxLines="10"
                     android:scrollHorizontally="false"
                     android:singleLine="false"
-                    android:text="Ans."
+                    android:text="A."
                     android:textStyle="bold"
                     android:textSize="12sp" />
 
@@ -135,7 +135,7 @@
                     android:layout_marginLeft="2dp"
                     android:scrollHorizontally="false"
                     android:singleLine="false"
-                    android:text="@string/dummyAns1"
+                    android:text="No, right now we are focusing on Kondwa only."
                     android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
@@ -157,7 +157,7 @@
                     android:maxLines="10"
                     android:scrollHorizontally="false"
                     android:singleLine="false"
-                    android:text="3."
+                    android:text="Q."
                     android:textStyle="bold"
                     android:textSize="12sp" />
 
@@ -169,7 +169,7 @@
                     android:layout_marginLeft="2dp"
                     android:scrollHorizontally="false"
                     android:singleLine="false"
-                    android:text="@string/dummyQue1"
+                    android:text="How to pay online?"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -185,7 +185,7 @@
                     android:maxLines="10"
                     android:scrollHorizontally="false"
                     android:singleLine="false"
-                    android:text="Ans."
+                    android:text="A."
                     android:textStyle="bold"
                     android:textSize="12sp" />
 
@@ -197,135 +197,9 @@
                     android:layout_marginLeft="2dp"
                     android:scrollHorizontally="false"
                     android:singleLine="false"
-                    android:text="@string/dummyAns1"
+                    android:text="We are serving Cash on delivery or you can pay through your card on delivery."
                     android:textSize="12sp" />
             </LinearLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:paddingVertical="5dp"
-            android:background="@drawable/bottom_border"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv13"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:maxLines="10"
-                    android:scrollHorizontally="false"
-                    android:singleLine="false"
-                    android:text="4."
-                    android:textStyle="bold"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/tv14"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:maxLines="10"
-                    android:scrollHorizontally="false"
-                    android:singleLine="false"
-                    android:layout_marginLeft="2dp"
-                    android:text="@string/dummyQue1"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv15"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:maxLines="10"
-                    android:scrollHorizontally="false"
-                    android:singleLine="false"
-                    android:text="Ans."
-                    android:textStyle="bold"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/tv16"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:maxLines="10"
-                    android:scrollHorizontally="false"
-                    android:singleLine="false"
-                    android:layout_marginLeft="2dp"
-                    android:text="@string/dummyAns1"
-                    android:textSize="12sp" />
-            </LinearLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:paddingVertical="5dp"
-            android:background="@drawable/bottom_border"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv17"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:maxLines="10"
-                    android:scrollHorizontally="false"
-                    android:singleLine="false"
-                    android:text="5."
-                    android:textStyle="bold"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/tv18"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:maxLines="10"
-                    android:scrollHorizontally="false"
-                    android:singleLine="false"
-                    android:layout_marginLeft="2dp"
-                    android:text="@string/dummyQue1"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_marginBottom="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv19"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:maxLines="10"
-                    android:scrollHorizontally="false"
-                    android:singleLine="false"
-                    android:text="Ans."
-                    android:textStyle="bold"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/tv20"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:maxLines="10"
-                    android:layout_marginLeft="2dp"
-                    android:scrollHorizontally="false"
-                    android:singleLine="false"
-                    android:text="@string/dummyAns1"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

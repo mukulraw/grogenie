@@ -74,7 +74,7 @@ public class HomeActivity extends AppCompatActivity {
     ImageButton cart , menu;
     DrawerLayout drawer;
 
-    TextView opencart , logout , orders , support;
+    TextView opencart , logout , orders , support , share;
     SmsVerifyCatcher smsVerifyCatcher;
 
     PinView oottpp;
@@ -121,6 +121,7 @@ public class HomeActivity extends AppCompatActivity {
         number = findViewById(R.id.number);
         logout = findViewById(R.id.logout);
         orders = findViewById(R.id.orders);
+        share = findViewById(R.id.share);
         support = findViewById(R.id.support);
 
 
@@ -157,7 +158,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 SharePreferenceUtils.getInstance().deletePref();
-                Intent intent = new Intent(HomeActivity.this , HomeActivity.class);
+                Intent intent = new Intent(HomeActivity.this , Splash.class);
                 startActivity(intent);
                 finishAffinity();
 
@@ -331,6 +332,20 @@ public class HomeActivity extends AppCompatActivity {
                 //Toast.makeText(HomeActivity.this, json, Toast.LENGTH_LONG).show();
 
 
+
+            }
+        });
+
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                final String appPackageName = getPackageName();
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "Download GroceGenie from: https://play.google.com/store/apps/details?id=" + appPackageName);
+                sendIntent.setType("text/plain");
+                startActivity(sendIntent);
 
             }
         });

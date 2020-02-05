@@ -1,11 +1,13 @@
 package codes.tuton.grocery;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -203,6 +205,82 @@ public class Orders extends AppCompatActivity {
                 }
             });
 
+            holder.help.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent intent = new Intent(context , Support.class);
+                    startActivity(intent);
+
+                }
+            });
+
+            holder.cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+                    builder.setTitle("Cancel Order");
+                    builder.setMessage("Are you sure you want to cancel this order?");
+
+                    builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Do nothing but close the dialog
+                            progress.setVisibility(View.VISIBLE);
+
+                            dialog.dismiss();
+
+                            Bean b = (Bean) getApplicationContext();
+
+                            Retrofit retrofit = new Retrofit.Builder()
+                                    .baseUrl(b.baseurl)
+                                    .addConverterFactory(ScalarsConverterFactory.create())
+                                    .addConverterFactory(GsonConverterFactory.create())
+                                    .build();
+
+                            AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+
+                            Call<addMessageBean> call = cr.cancelOrder(
+                                    item.getId()
+                            );
+
+                            call.enqueue(new Callback<addMessageBean>() {
+                                @Override
+                                public void onResponse(Call<addMessageBean> call, Response<addMessageBean> response) {
+
+                                    onResume();
+
+                                }
+
+                                @Override
+                                public void onFailure(Call<addMessageBean> call, Throwable t) {
+
+                                }
+                            });
+
+
+                        }
+                    });
+
+                    builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            // Do nothing
+                            dialog.dismiss();
+                        }
+                    });
+
+                    AlertDialog alert = builder.create();
+                    alert.show();
+
+                }
+            });
+
+
 
         }
 
@@ -297,6 +375,18 @@ public class Orders extends AppCompatActivity {
                 }
             });
 
+            holder.status.setText(item.getStatus());
+
+            holder.help.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent intent = new Intent(context , Support.class);
+                    startActivity(intent);
+
+                }
+            });
+
         }
 
         @Override
@@ -306,7 +396,7 @@ public class Orders extends AppCompatActivity {
 
         class ViewHolder extends RecyclerView.ViewHolder
         {
-            TextView total , delcharges , orderid , deldate , grand;
+            TextView total , delcharges , orderid , deldate , grand , status;
             Button cancel , help;
 
 
@@ -320,6 +410,7 @@ public class Orders extends AppCompatActivity {
                 grand = itemView.findViewById(R.id.textView30);
                 cancel = itemView.findViewById(R.id.button5);
                 help = itemView.findViewById(R.id.button6);
+                status = itemView.findViewById(R.id.textView27);
 
 
             }

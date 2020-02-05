@@ -121,4 +121,10 @@ public interface AllApiIneterface {
             @Part("message") String message
     );
 
+    @Multipart
+    @POST("demo/cancelOrder.php")
+    Call<addMessageBean> cancelOrder(
+            @Part("id") String id
+    );
+
 }
