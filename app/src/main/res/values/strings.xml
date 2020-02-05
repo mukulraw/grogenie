@@ -2,4 +2,6 @@
     <string name="app_name">GroceGenie</string>
 
     <string name="serverUrl">https://mrtecks.com/demo</string>
+    <string name="dummyQue1">Lorem Ipsum is simply dummy text of the printing?</string>
+    <string name="dummyAns1">Lorem Ipsum is simply dummy text of the printing?</string>
 </resources>

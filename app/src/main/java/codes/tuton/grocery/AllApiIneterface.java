@@ -114,4 +114,11 @@ public interface AllApiIneterface {
             @Part("id") String id
     );
 
+    @Multipart
+    @POST("demo/addFeedback.php")
+    Call<addMessageBean> addFeedback(
+            @Part("user_id") String user_id,
+            @Part("message") String message
+    );
+
 }

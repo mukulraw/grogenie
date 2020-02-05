@@ -74,7 +74,7 @@ public class HomeActivity extends AppCompatActivity {
     ImageButton cart , menu;
     DrawerLayout drawer;
 
-    TextView opencart , logout , orders;
+    TextView opencart , logout , orders , support;
     SmsVerifyCatcher smsVerifyCatcher;
 
     PinView oottpp;
@@ -121,6 +121,7 @@ public class HomeActivity extends AppCompatActivity {
         number = findViewById(R.id.number);
         logout = findViewById(R.id.logout);
         orders = findViewById(R.id.orders);
+        support = findViewById(R.id.support);
 
 
         adapter = new ProductAdapter(this , list);
@@ -373,6 +374,32 @@ public class HomeActivity extends AppCompatActivity {
                 if (SharePreferenceUtils.getInstance().getString("userId").length() > 0)
                 {
                     Intent intent = new Intent(HomeActivity.this , Orders.class);
+                    startActivity(intent);
+                    drawer.closeDrawer(GravityCompat.START);
+                }
+                else
+                {
+                    Toast.makeText(HomeActivity.this, "Please login to continue", Toast.LENGTH_SHORT).show();
+                    drawer.closeDrawer(GravityCompat.START);
+
+                    login();
+
+                }
+
+
+
+
+            }
+        });
+
+
+        support.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (SharePreferenceUtils.getInstance().getString("userId").length() > 0)
+                {
+                    Intent intent = new Intent(HomeActivity.this , Support.class);
                     startActivity(intent);
                     drawer.closeDrawer(GravityCompat.START);
                 }

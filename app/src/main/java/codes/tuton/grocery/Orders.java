@@ -181,6 +181,10 @@ public class Orders extends AppCompatActivity {
             {
                 holder.indicator.setCurrentStep(2);
             }
+            else if(item.getStatus().equals("placed"))
+            {
+                holder.indicator.setCurrentStep(0);
+            }
             else
             {
                 holder.indicator.setCurrentStep(3);

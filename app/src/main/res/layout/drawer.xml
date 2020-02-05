@@ -105,6 +105,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Customer Support"
+        android:id="@+id/support"
         android:drawablePadding="10dp"
         android:drawableStart="@drawable/ic_support"
         android:padding="16dp"
