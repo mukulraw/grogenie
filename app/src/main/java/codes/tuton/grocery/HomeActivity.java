@@ -74,7 +74,7 @@ public class HomeActivity extends AppCompatActivity {
     ImageButton cart , menu;
     DrawerLayout drawer;
 
-    TextView opencart , logout , orders , support , share;
+    TextView opencart , logout , orders , support , share , kirana;
     SmsVerifyCatcher smsVerifyCatcher;
 
     PinView oottpp;
@@ -123,6 +123,7 @@ public class HomeActivity extends AppCompatActivity {
         orders = findViewById(R.id.orders);
         share = findViewById(R.id.share);
         support = findViewById(R.id.support);
+        kirana = findViewById(R.id.kirana);
 
 
         adapter = new ProductAdapter(this , list);
@@ -150,6 +151,15 @@ public class HomeActivity extends AppCompatActivity {
         });
 
 
+
+        kirana.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                drawer.closeDrawer(GravityCompat.START);
+
+            }
+        });
 
 
 

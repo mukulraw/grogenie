@@ -3,6 +3,7 @@ package codes.tuton.grocery;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -85,7 +86,7 @@ public class Checkout extends AppCompatActivity {
     GridLayoutManager manager;
     List<Cart> list;
 
-    RelativeLayout checkout;
+    ConstraintLayout checkout;
 
     boolean address = false;
 
@@ -137,7 +138,7 @@ public class Checkout extends AppCompatActivity {
         List<String> fr = new ArrayList<>();
         List<String> ex = new ArrayList<>();
 
-        fr.add("8PM-10PM");
+        fr.add("8-10PM");
 
         ex.add("90 MIN");
 

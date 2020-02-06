@@ -149,16 +149,28 @@ public class Orders extends AppCompatActivity {
             final Active item = alist.get(position);
 
             holder.total.setText(String.valueOf(item.getProds().size()));
-            float d = Float.parseFloat(item.getDelivery());
 
-            if (d > 0)
+
+            try {
+                float d = Float.parseFloat(item.getDelivery());
+
+                if (d > 0)
+                {
+                    holder.delcharges.setText("₹" + item.getDelivery());
+                }
+                else
+                {
+                    holder.delcharges.setText("Free");
+                }
+
+            }catch (Exception e)
             {
-                holder.delcharges.setText("₹" + item.getDelivery());
-            }
-            else
-            {
+                e.printStackTrace();
                 holder.delcharges.setText("Free");
             }
+
+
+
 
             holder.orderid.setText("GG000" + item.getId());
 
@@ -166,30 +178,31 @@ public class Orders extends AppCompatActivity {
             holder.grand.setText("₹" + item.getGrand());
 
             String[] labels = {
+                    "Placed",
                     "Accepted",
                     "In transit",
                     "Delivered"
             };
 
 
-            holder.indicator.setStepCount(3);
+            holder.indicator.setStepCount(4);
             holder.indicator.setLabels(labels);
 
             if (item.getStatus().equals("accepted"))
             {
-                holder.indicator.setCurrentStep(1);
+                holder.indicator.setCurrentStep(2);
             }
             else if (item.getStatus().equals("intransit"))
             {
-                holder.indicator.setCurrentStep(2);
+                holder.indicator.setCurrentStep(3);
             }
             else if(item.getStatus().equals("placed"))
             {
-                holder.indicator.setCurrentStep(0);
+                holder.indicator.setCurrentStep(1);
             }
             else
             {
-                holder.indicator.setCurrentStep(3);
+                holder.indicator.setCurrentStep(4);
             }
 
 
@@ -347,14 +360,21 @@ public class Orders extends AppCompatActivity {
             final Previou item = plist.get(position);
 
             holder.total.setText(String.valueOf(item.getProds().size()));
-            float d = Float.parseFloat(item.getDelivery());
+            try {
+                float d = Float.parseFloat(item.getDelivery());
 
-            if (d > 0)
+                if (d > 0)
+                {
+                    holder.delcharges.setText("₹" + item.getDelivery());
+                }
+                else
+                {
+                    holder.delcharges.setText("Free");
+                }
+
+            }catch (Exception e)
             {
-                holder.delcharges.setText("₹" + item.getDelivery());
-            }
-            else
-            {
+                e.printStackTrace();
                 holder.delcharges.setText("Free");
             }
 

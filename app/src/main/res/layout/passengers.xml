@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <View
@@ -13,10 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="10dp">
 
         <LinearLayout
-            android:paddingVertical="5dp"
             android:background="@drawable/bottom_border"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -42,7 +41,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="10"
-                    android:layout_marginLeft="2dp"
+                    android:layout_marginStart="2dp"
                     android:scrollHorizontally="false"
                     android:singleLine="false"
                     android:text="What is minimum order value?"
@@ -71,14 +70,14 @@
                     android:maxLines="10"
                     android:scrollHorizontally="false"
                     android:singleLine="false"
-                    android:layout_marginLeft="2dp"
+                    android:layout_marginStart="2dp"
                     android:text="There is no minimum order value"
+                    android:paddingBottom="10dp"
                     android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
-            android:paddingVertical="5dp"
             android:background="@drawable/bottom_border"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -104,7 +103,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="10"
-                    android:layout_marginLeft="2dp"
+                    android:layout_marginStart="2dp"
+                    android:paddingTop="10dp"
                     android:scrollHorizontally="false"
                     android:singleLine="false"
                     android:text="Do you deliver in entire Pune?"
@@ -132,15 +132,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="10"
-                    android:layout_marginLeft="2dp"
+                    android:layout_marginStart="2dp"
                     android:scrollHorizontally="false"
                     android:singleLine="false"
                     android:text="No, right now we are focusing on Kondwa only."
+                    android:paddingBottom="10dp"
                     android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
-            android:paddingVertical="5dp"
             android:background="@drawable/bottom_border"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -166,7 +166,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="10"
-                    android:layout_marginLeft="2dp"
+                    android:layout_marginStart="2dp"
+                    android:paddingTop="10dp"
                     android:scrollHorizontally="false"
                     android:singleLine="false"
                     android:text="How to pay online?"
@@ -194,10 +195,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="10"
-                    android:layout_marginLeft="2dp"
+                    android:layout_marginStart="2dp"
                     android:scrollHorizontally="false"
                     android:singleLine="false"
                     android:text="We are serving Cash on delivery or you can pay through your card on delivery."
+                    android:paddingBottom="10dp"
                     android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
