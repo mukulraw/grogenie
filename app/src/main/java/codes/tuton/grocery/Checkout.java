@@ -21,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -94,6 +95,8 @@ public class Checkout extends AppCompatActivity {
 
     float genie = 0;
 
+    String fd , ed;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -135,8 +138,8 @@ public class Checkout extends AppCompatActivity {
         orders.setLayoutManager(manager);
 
 
-        List<String> fr = new ArrayList<>();
-        List<String> ex = new ArrayList<>();
+        final List<String> fr = new ArrayList<>();
+        final List<String> ex = new ArrayList<>();
 
         fr.add("8-10PM");
 
@@ -158,6 +161,34 @@ public class Checkout extends AppCompatActivity {
             public void onClick(View v) {
 
                 finish();
+
+            }
+        });
+
+        free.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                fd = fr.get(position);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        express.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                ed = ex.get(position);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
@@ -483,6 +514,16 @@ public class Checkout extends AppCompatActivity {
 
                 if (address) {
 
+                    String dt = "";
+
+                    if (fdel)
+                    {
+                        dt = fd;
+                    }
+                    else
+                    {
+                        dt = ed;
+                    }
 
                     progress.setVisibility(View.VISIBLE);
 
@@ -503,7 +544,7 @@ public class Checkout extends AppCompatActivity {
                             String.valueOf(offlineCartBean.getTotalSaved()),
                             String.valueOf(genie),
                             String.valueOf(dvalue),
-                            "",
+                            dt,
                             pid,
                             String.valueOf(pvalue),
                             String.valueOf(gtotal),

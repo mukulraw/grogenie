@@ -72,7 +72,9 @@ public class Orders extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                finish();
+                Intent intent = new Intent(Orders.this , HomeActivity.class);
+                startActivity(intent);
+                finishAffinity();
 
             }
         });
