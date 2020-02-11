@@ -669,9 +669,13 @@ TabLayout tabs;
             ImageLoader loader = ImageLoader.getInstance();
             loader.displayImage(imageUrl, holder.image, options);
 
-            final int productTotalPrice = Integer.valueOf(item.getSellingPrice());
-            int discount = Integer.valueOf(item.getDiscount());
-            final int finalPrice = productTotalPrice - ((productTotalPrice * discount) / 100);
+
+
+            final float productTotalPrice = Float.parseFloat(item.getUnitPriceKg());
+            final float finalPrice = Float.parseFloat(item.getSellingPrice());
+            float da = productTotalPrice - finalPrice;
+
+
 
             holder.dprice.setText("₹" + finalPrice);
             holder.sprice.setText(Html.fromHtml("₹<strike>" + productTotalPrice + "</strike>"));
@@ -685,6 +689,25 @@ TabLayout tabs;
                 holder.total.setVisibility(View.VISIBLE);
                 holder.addLayout.setVisibility(View.GONE);
 
+                float dis = 0;
+
+                for (int i = 0 ; i < item.getProductInfo().size() ; i++)
+                {
+                    final float productTotalPrice2 = Float.parseFloat(item.getProductInfo().get(i).getUnitPriceKg());
+                    final float finalPrice2 = Float.parseFloat(item.getProductInfo().get(i).getSellingPrice());
+                    float da2 = productTotalPrice2 - finalPrice2;
+                    float discount2 = (da2 / productTotalPrice2) * 100;
+
+                    if (dis <= discount2) {
+                        dis = discount2;
+                        Log.d("dduucc" , String.valueOf(dis));
+                        //this.textViewDiscount.setText("UP TO " + this.discount + "% OFF");
+                        holder.discount.setText("UP TO " + (int)dis + "% OFF");
+                    }
+
+                }
+
+
                 SublistAdapter adapter1 = new SublistAdapter(context, item.getProductInfo(), holder.discount);
                 GridLayoutManager manager = new GridLayoutManager(context, 1);
                 holder.grid.setAdapter(adapter1);
@@ -692,6 +715,9 @@ TabLayout tabs;
 
 
             } else {
+
+                float discount = (da / productTotalPrice) * 100;
+
                 holder.dprice.setVisibility(View.VISIBLE);
                 holder.sprice.setVisibility(View.VISIBLE);
                 holder.expand.setVisibility(View.GONE);
@@ -699,7 +725,16 @@ TabLayout tabs;
                 holder.total.setVisibility(View.GONE);
                 holder.addLayout.setVisibility(View.VISIBLE);
 
-                holder.discount.setText(discount + "% OFF");
+                if ((int)discount < 1)
+                {
+                    holder.discount.setVisibility(View.INVISIBLE);
+                }
+                else
+                {
+                    holder.discount.setVisibility(View.VISIBLE);
+                }
+
+                holder.discount.setText((int)discount + "% OFF");
 
             }
 
@@ -840,7 +875,7 @@ TabLayout tabs;
         Context context;
         List<ProductInfo> list = new ArrayList<>();
         private TextView textViewDiscount;
-        private int discount1 = 0;
+        private float discount1 = 0;
 
         SublistAdapter(Context context, List<ProductInfo> list , TextView textViewDiscount)
         {
@@ -875,20 +910,31 @@ TabLayout tabs;
 
 
 
-            final int productTotalPrice = Integer.valueOf(item.getSellingPrice());
-            int discount = Integer.valueOf(item.getDiscount());
-            final int finalPrice = productTotalPrice - ((productTotalPrice * discount) / 100);
+            final float productTotalPrice = Float.parseFloat(item.getUnitPriceKg());
+            final float finalPrice = Float.parseFloat(item.getSellingPrice());
+            float da = productTotalPrice - finalPrice;
+            float discount = (da / productTotalPrice) * 100;
 
             if (this.discount1 <= discount) {
                 this.discount1 = discount;
                 Log.d("dduucc" , String.valueOf(this.discount1));
                 //this.textViewDiscount.setText("UP TO " + this.discount + "% OFF");
-                this.textViewDiscount.setText("UP TO " + this.discount1 + "% OFF");
+                this.textViewDiscount.setText("UP TO " + (int)this.discount1 + "% OFF");
             }
 
             holder.dprice.setText("₹" + finalPrice);
             holder.sprice.setText(Html.fromHtml("₹<strike>" + productTotalPrice + "</strike>"));
-            holder.discount.setText(discount + "% OFF");
+
+            if ((int)discount < 1)
+            {
+                holder.discount.setVisibility(View.INVISIBLE);
+            }
+            else
+            {
+                holder.discount.setVisibility(View.VISIBLE);
+            }
+
+            holder.discount.setText((int)discount + "% OFF");
 
             if (offlineCartBean.cartitems.contains(item.getPid()))
             {

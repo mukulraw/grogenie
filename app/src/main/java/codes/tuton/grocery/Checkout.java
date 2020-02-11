@@ -43,10 +43,14 @@ import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import codes.tuton.grocery.cartPOJO.Cart;
@@ -141,21 +145,201 @@ public class Checkout extends AppCompatActivity {
         final List<String> fr = new ArrayList<>();
         final List<String> ex = new ArrayList<>();
 
-        fr.add("9-11PM");
 
-        ex.add("8-9AM");
-        ex.add("9-10AM");
-        ex.add("10-11AM");
-        ex.add("11-12AM");
-        ex.add("12-1PM");
-        ex.add("1-2PM");
-        ex.add("2-3PM");
-        ex.add("3-4PM");
-        ex.add("4-5PM");
-        ex.add("5-6PM");
-        ex.add("6-7PM");
-        ex.add("7-8PM");
-        ex.add("9-11PM");
+
+
+        String time1 = "08:00";
+        String time2 = "09:00";
+        String time3 = "10:00";
+        String time4 = "11:00";
+        String time5 = "12:00";
+        String time6 = "13:00";
+        String time7 = "14:00";
+        String time8 = "15:00";
+        String time9 = "16:00";
+        String time10 = "17:00";
+        String time11 = "18:00";
+        String time12 = "19:00";
+        String time13 = "21:00";
+
+
+        Date date1 = null;
+        Date date2 = null;
+        Date date3 = null;
+        Date date4 = null;
+        Date date5 = null;
+        Date date6 = null;
+        Date date7 = null;
+        Date date8 = null;
+        Date date9 = null;
+        Date date10 = null;
+        Date date11 = null;
+        Date date12 = null;
+        Date date13 = null;
+        Date date14 = null;
+        Date cd = null;
+
+        String currentTime = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+
+        try {
+            cd = dateFormat.parse(currentTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+        try {
+            date1 = dateFormat.parse(time1);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+            date2 = dateFormat.parse(time2);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+            date3 = dateFormat.parse(time3);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+            date4 = dateFormat.parse(time4);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+            date5 = dateFormat.parse(time5);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+            date6 = dateFormat.parse(time6);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+            date7 = dateFormat.parse(time7);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+            date8 = dateFormat.parse(time8);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+            date9 = dateFormat.parse(time9);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+            date10 = dateFormat.parse(time10);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+            date11 = dateFormat.parse(time11);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+            date12 = dateFormat.parse(time12);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+            date13 = dateFormat.parse(time13);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        /*try {
+            date14 = dateFormat.parse(time14);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }*/
+
+
+        if (date1.compareTo(cd) > 0)
+        {
+            ex.add("8-9AM");
+        }
+        if (date2.compareTo(cd) > 0)
+        {
+            ex.add("9-10AM");
+        }
+        if (date3.compareTo(cd) > 0)
+        {
+            ex.add("10-11AM");
+        }
+        if (date4.compareTo(cd) > 0)
+        {
+            ex.add("11-12AM");
+        }
+        if (date5.compareTo(cd) > 0)
+        {
+            ex.add("12-1PM");
+        }
+        if (date6.compareTo(cd) > 0)
+        {
+            ex.add("1-2PM");
+        }
+        if (date7.compareTo(cd) > 0)
+        {
+            ex.add("2-3PM");
+        }
+        if (date8.compareTo(cd) > 0)
+        {
+            ex.add("3-4PM");
+        }
+        if (date9.compareTo(cd) > 0)
+        {
+            ex.add("4-5PM");
+        }
+        if (date10.compareTo(cd) > 0)
+        {
+            ex.add("5-6PM");
+        }
+        if (date11.compareTo(cd) > 0)
+        {
+            ex.add("6-7PM");
+        }
+        if (date12.compareTo(cd) > 0)
+        {
+            ex.add("7-8PM");
+        }
+        if (date13.compareTo(cd) > 0)
+        {
+            ex.add("9-11PM");
+        }
+        else
+        {
+            ex.add("Tomorrow");
+        }
+
+
+
+        if (date13.compareTo(cd) > 0)
+        {
+            fr.add("9-11PM");
+        }
+        else
+        {
+            fr.add("Tomorrow");
+        }
+
+
+
+
+
+
+
+
+
+
+
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 R.layout.simple_spinner_item, fr);
