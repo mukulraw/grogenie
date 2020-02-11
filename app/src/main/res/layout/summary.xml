@@ -169,14 +169,13 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:background="@color/colorPrimary"
         android:text="APPLY"
         android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="@+id/editText2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+        app:layout_constraintTop_toTopOf="@+id/editText2" />
 
     <EditText
         android:id="@+id/editText2"
@@ -186,12 +185,13 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/primary_stroke"
         android:hint="Apply Coupon"
-        android:textSize="14sp"
         android:inputType="textCapCharacters"
         android:padding="10dp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@+id/button"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+        app:layout_constraintTop_toBottomOf="@+id/textView39" />
 
     <TextView
         android:id="@+id/textView10"
@@ -244,4 +244,18 @@
         android:textColor="@color/colorAccent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText2" />
+
+    <TextView
+        android:id="@+id/textView39"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:visibility="gone"
+        android:gravity="center"
+        android:text="Order will be delivered tomorrow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 </androidx.constraintlayout.widget.ConstraintLayout>

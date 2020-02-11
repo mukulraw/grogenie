@@ -91,6 +91,8 @@ public class Checkout extends AppCompatActivity {
     GridLayoutManager manager;
     List<Cart> list;
 
+    TextView tomorrow;
+
     ConstraintLayout checkout;
 
     boolean address = false;
@@ -117,6 +119,7 @@ public class Checkout extends AppCompatActivity {
         promo = findViewById(R.id.editText2);
         apply = findViewById(R.id.button);
         applied = findViewById(R.id.textView15);
+        tomorrow = findViewById(R.id.textView39);
 
 
         name = findViewById(R.id.editText6);
@@ -324,10 +327,12 @@ public class Checkout extends AppCompatActivity {
         if (date13.compareTo(cd) > 0)
         {
             fr.add("9-11PM");
+            tomorrow.setVisibility(View.GONE);
         }
         else
         {
             fr.add("Tomorrow");
+            tomorrow.setVisibility(View.VISIBLE);
         }
 
 
