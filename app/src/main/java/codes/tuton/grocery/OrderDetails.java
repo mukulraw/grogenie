@@ -220,7 +220,7 @@ public class OrderDetails extends AppCompatActivity {
             holder.itemCount.setVisibility(View.GONE);
             holder.sprice.setVisibility(View.GONE);
 
-            holder.dprice.setText("X " + item.getQuantity());
+            holder.dprice.setText("₹" + item.getAmount() +" X " + item.getQuantity());
 
 
         }

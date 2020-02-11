@@ -127,4 +127,7 @@ public interface AllApiIneterface {
             @Part("id") String id
     );
 
+    @GET("demo/getBanners.php")
+    Call<List<bannerBean>> getBanners();
+
 }

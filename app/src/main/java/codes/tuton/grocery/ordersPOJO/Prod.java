@@ -22,6 +22,9 @@ public class Prod {
     @SerializedName("quantity")
     @Expose
     private String quantity;
+    @SerializedName("amount")
+    @Expose
+    private String amount;
 
     public String getId() {
         return id;
@@ -69,5 +72,13 @@ public class Prod {
 
     public void setQuantity(String quantity) {
         this.quantity = quantity;
+    }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
     }
 }

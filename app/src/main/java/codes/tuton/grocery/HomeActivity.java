@@ -1,11 +1,16 @@
 package codes.tuton.grocery;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -13,6 +18,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
@@ -50,6 +56,7 @@ import java.util.concurrent.TimeUnit;
 import codes.tuton.grocery.offlineCartPOJO.offlineCartBean;
 import codes.tuton.grocery.productListPOJO.ProductInfo;
 import codes.tuton.grocery.productListPOJO.productListBean;
+import me.relex.circleindicator.CircleIndicator;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -73,6 +80,8 @@ public class HomeActivity extends AppCompatActivity {
     TextView count , number;
     ImageButton cart , menu;
     DrawerLayout drawer;
+    CircleIndicator indicator;
+    ViewPager pager;
 
     TextView opencart , logout , orders , support , share , kirana;
     SmsVerifyCatcher smsVerifyCatcher;
@@ -107,6 +116,8 @@ public class HomeActivity extends AppCompatActivity {
         list = new ArrayList<>();
         grid = findViewById(R.id.grid);
         progress = findViewById(R.id.progressBar);
+        pager = findViewById(R.id.viewPager);
+        indicator = findViewById(R.id.textView12);
         totalFinalMount = findViewById(R.id.totalAmountTextView);
         totalSavedAmount = findViewById(R.id.savedAmountTextView);
         totalItemTextView = findViewById(R.id.totalItemTextView);
@@ -462,6 +473,43 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+
+
+        progress.setVisibility(View.VISIBLE);
+
+        Bean b = (Bean) getApplicationContext();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(b.baseurl)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+
+        Call<List<bannerBean>> call = cr.getBanners();
+
+        call.enqueue(new Callback<List<bannerBean>>() {
+            @Override
+            public void onResponse(Call<List<bannerBean>> call, Response<List<bannerBean>> response) {
+
+                BannerAdapter adapter = new BannerAdapter(getSupportFragmentManager() , FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT , response.body());
+
+                pager.setAdapter(adapter);
+                indicator.setViewPager(pager);
+
+
+                progress.setVisibility(View.GONE);
+
+            }
+
+            @Override
+            public void onFailure(Call<List<bannerBean>> call, Throwable t) {
+                progress.setVisibility(View.GONE);
+            }
+        });
+
+
     }
 
     @Override
@@ -590,6 +638,7 @@ public class HomeActivity extends AppCompatActivity {
                 holder.sprice.setVisibility(View.GONE);
                 holder.expand.setVisibility(View.VISIBLE);
                 holder.grid.setVisibility(View.VISIBLE);
+                holder.total.setVisibility(View.VISIBLE);
                 holder.addLayout.setVisibility(View.GONE);
 
                 SublistAdapter adapter1 = new SublistAdapter(context, item.getProductInfo(), holder.discount);
@@ -603,11 +652,14 @@ public class HomeActivity extends AppCompatActivity {
                 holder.sprice.setVisibility(View.VISIBLE);
                 holder.expand.setVisibility(View.GONE);
                 holder.grid.setVisibility(View.GONE);
+                holder.total.setVisibility(View.GONE);
                 holder.addLayout.setVisibility(View.VISIBLE);
 
                 holder.discount.setText(discount + "% OFF");
 
             }
+
+            holder.total.setText(item.getProductInfo().size() + " Items");
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -714,7 +766,7 @@ public class HomeActivity extends AppCompatActivity {
         {
             Button expand;
             ImageView image;
-            TextView sprice , dprice , name , discount , itemCount;
+            TextView sprice , dprice , name , discount , itemCount , total;
             RecyclerView grid;
             LinearLayout addLayout;
             ImageButton addButton, removeButton;
@@ -728,6 +780,7 @@ public class HomeActivity extends AppCompatActivity {
                 name = itemView.findViewById(R.id.titleProductInfo);
                 discount = itemView.findViewById(R.id.productDiscount);
                 expand = itemView.findViewById(R.id.categoryViewLess);
+                total = itemView.findViewById(R.id.total);
                 grid = itemView.findViewById(R.id.grid);
                 addLayout = itemView.findViewById(R.id.linearLayout3);
                 addButton = itemView.findViewById(R.id.itemPlusButton);
@@ -934,7 +987,8 @@ public class HomeActivity extends AppCompatActivity {
         dialog.setCancelable(true);
         dialog.show();
 
-        EditText mob = dialog.findViewById(R.id.editTextMobile);
+        final EditText mob = dialog.findViewById(R.id.editTextMobile);
+        final TextView resend = dialog.findViewById(R.id.resend);
         final PinView pin = dialog.findViewById(R.id.pinView);
         oottpp = pin;
         Button verify = dialog.findViewById(R.id.buttonContinue);
@@ -1013,6 +1067,65 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+
+        resend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (resend.getText().toString().equals("RESEND"))
+                {
+                    progressBar.setVisibility(View.VISIBLE);
+
+                    Bean b = (Bean) getApplicationContext();
+
+                    Retrofit retrofit = new Retrofit.Builder()
+                            .baseUrl(b.baseurl)
+                            .addConverterFactory(ScalarsConverterFactory.create())
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build();
+
+                    AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+
+                    Call<loginBean> call = cr.login(mob.getText().toString() , SharePreferenceUtils.getInstance().getString("token"));
+
+                    call.enqueue(new Callback<loginBean>() {
+                        @Override
+                        public void onResponse(Call<loginBean> call, Response<loginBean> response) {
+
+                            resend.setVisibility(View.VISIBLE);
+
+                            new CountDownTimer(100000, 1000) {
+
+                                public void onTick(long millisUntilFinished) {
+                                    resend.setText("RESEND OTP in " + millisUntilFinished / 1000);
+                                }
+
+                                public void onFinish() {
+                                    resend.setText("RESEND");
+                                }
+                            }.start();
+
+                            SharePreferenceUtils.getInstance().saveString("phone" , response.body().getPhone());
+                            Log.d("message" , response.body().getMessage());
+                            Toast.makeText(HomeActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+
+                            progressBar.setVisibility(View.GONE);
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<loginBean> call, Throwable t) {
+                            progressBar.setVisibility(View.GONE);
+                        }
+                    });
+
+                }
+
+
+            }
+        });
+
+
         mob.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -1042,6 +1155,19 @@ public class HomeActivity extends AppCompatActivity {
                     call.enqueue(new Callback<loginBean>() {
                         @Override
                         public void onResponse(Call<loginBean> call, Response<loginBean> response) {
+
+                            resend.setVisibility(View.VISIBLE);
+
+                            new CountDownTimer(100000, 1000) {
+
+                                public void onTick(long millisUntilFinished) {
+                                    resend.setText("RESEND OTP in " + millisUntilFinished / 1000);
+                                }
+
+                                public void onFinish() {
+                                    resend.setText("RESEND");
+                                }
+                            }.start();
 
                             SharePreferenceUtils.getInstance().saveString("phone" , response.body().getPhone());
                             Log.d("message" , response.body().getMessage());
@@ -1151,6 +1277,59 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    class BannerAdapter extends FragmentStatePagerAdapter
+    {
+
+        List<bannerBean> list = new ArrayList<>();
+
+        BannerAdapter(@NonNull FragmentManager fm, int behavior, List<bannerBean> list) {
+            super(fm, behavior);
+            this.list = list;
+        }
+
+
+        @NonNull
+        @Override
+        public Fragment getItem(int position) {
+
+            String url = list.get(position).getBanner();
+
+            page frag = new page();
+            Bundle b = new Bundle();
+            b.putString("url" , url);
+            frag.setArguments(b);
+            return frag;
+        }
+
+        @Override
+        public int getCount() {
+            return list.size();
+        }
+    }
+
+    public static class page extends Fragment
+    {
+        ImageView image;
+        String url;
+
+        @Nullable
+        @Override
+        public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+            View view = inflater.inflate(R.layout.page , container , false);
+
+            url = getArguments().getString("url");
+
+            image = view.findViewById(R.id.imageView3);
+
+            DisplayImageOptions options = new DisplayImageOptions.Builder().cacheOnDisk(true).cacheInMemory(true).resetViewBeforeLoading(false).build();
+
+            ImageLoader loader = ImageLoader.getInstance();
+            loader.displayImage(getResources().getString(R.string.serverUrl) + "/image/" + url , image , options);
+
+            return view;
+        }
     }
 
 }

@@ -141,9 +141,21 @@ public class Checkout extends AppCompatActivity {
         final List<String> fr = new ArrayList<>();
         final List<String> ex = new ArrayList<>();
 
-        fr.add("8-10PM");
+        fr.add("9-11PM");
 
-        ex.add("90 MIN");
+        ex.add("8-9AM");
+        ex.add("9-10AM");
+        ex.add("10-11AM");
+        ex.add("11-12AM");
+        ex.add("12-1PM");
+        ex.add("1-2PM");
+        ex.add("2-3PM");
+        ex.add("3-4PM");
+        ex.add("4-5PM");
+        ex.add("5-6PM");
+        ex.add("6-7PM");
+        ex.add("7-8PM");
+        ex.add("9-11PM");
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 R.layout.simple_spinner_item, fr);
@@ -214,7 +226,7 @@ public class Checkout extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 if (isChecked) {
-                    genie = 10;
+                    genie = 0;
                 } else {
                     genie = 0;
                 }
