@@ -17,11 +17,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextWatcher;
+import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +44,7 @@ import android.widget.Toast;
 import com.androidstudy.networkmanager.Monitor;
 import com.androidstudy.networkmanager.Tovuti;
 import com.chaos.view.PinView;
+import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -82,7 +87,7 @@ public class HomeActivity extends AppCompatActivity {
     DrawerLayout drawer;
     CircleIndicator indicator;
     ViewPager pager;
-
+TabLayout tabs;
     TextView opencart , logout , orders , support , share , kirana;
     SmsVerifyCatcher smsVerifyCatcher;
 
@@ -116,6 +121,7 @@ public class HomeActivity extends AppCompatActivity {
         list = new ArrayList<>();
         grid = findViewById(R.id.grid);
         progress = findViewById(R.id.progressBar);
+        tabs = findViewById(R.id.linearLayout);
         pager = findViewById(R.id.viewPager);
         indicator = findViewById(R.id.textView12);
         totalFinalMount = findViewById(R.id.totalAmountTextView);
@@ -144,6 +150,8 @@ public class HomeActivity extends AppCompatActivity {
         grid.setLayoutManager(manager);
 
 
+        tabs.addTab(tabs.newTab().setText(getPageTitle1()));
+        tabs.addTab(tabs.newTab().setText(getPageTitle2()));
 
 
         number.setOnClickListener(new View.OnClickListener() {
@@ -637,7 +645,7 @@ public class HomeActivity extends AppCompatActivity {
                 holder.dprice.setVisibility(View.GONE);
                 holder.sprice.setVisibility(View.GONE);
                 holder.expand.setVisibility(View.VISIBLE);
-                holder.grid.setVisibility(View.VISIBLE);
+                //holder.grid.setVisibility(View.VISIBLE);
                 holder.total.setVisibility(View.VISIBLE);
                 holder.addLayout.setVisibility(View.GONE);
 
@@ -1330,6 +1338,29 @@ public class HomeActivity extends AppCompatActivity {
 
             return view;
         }
+    }
+
+
+    CharSequence getPageTitle1()
+    {
+        Drawable image = getResources().getDrawable(R.drawable.ic_groceries);
+        image.setBounds(0, 0, image.getIntrinsicWidth(), image.getIntrinsicHeight());
+        // Replace blank spaces with image icon
+        SpannableString sb = new SpannableString("   Kirana List");
+        ImageSpan imageSpan = new ImageSpan(image, ImageSpan.ALIGN_CENTER);
+        sb.setSpan(imageSpan, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return sb;
+    }
+
+    CharSequence getPageTitle2()
+    {
+        Drawable image = getResources().getDrawable(R.drawable.ic_favorite);
+        image.setBounds(0, 0, image.getIntrinsicWidth(), image.getIntrinsicHeight());
+        // Replace blank spaces with image icon
+        SpannableString sb = new SpannableString("   Most Loved Items");
+        ImageSpan imageSpan = new ImageSpan(image, ImageSpan.ALIGN_CENTER);
+        sb.setSpan(imageSpan, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return sb;
     }
 
 }

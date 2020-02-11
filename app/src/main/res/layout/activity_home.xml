@@ -94,8 +94,9 @@
                     android:background="@drawable/background_edittext_serch"
                     android:drawableEnd="@drawable/ic_search_black_24dp"
                     android:drawablePadding="10dp"
-                    android:hint="What are you looking for (e.g Vegetables)"
+                    android:hint="What are you looking for"
                     android:inputType="textPersonName"
+                    android:lines="1"
                     android:padding="10dp"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -104,77 +105,17 @@
                     app:layout_constraintTop_toBottomOf="@+id/viewPager" />
 
 
-                <LinearLayout
+                <com.google.android.material.tabs.TabLayout
                     android:id="@+id/linearLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:background="@drawable/background_select_tab"
-                    android:orientation="horizontal"
-                    android:paddingTop="8dp"
+                    app:tabGravity="fill"
+                    app:tabMode="fixed"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/editText">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawableLeft="@drawable/ic_groceries"
-                            android:drawablePadding="4dp"
-                            android:fontFamily="@font/gotham_rounded"
-                            android:gravity="center"
-                            android:text="Kirana list"
-                            android:textColor="@color/colorPrimaryDark" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="2dp"
-                            android:layout_marginHorizontal="18dp"
-                            android:layout_marginTop="4dp"
-                            android:background="@color/colorPrimaryDark" />
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="4dp"
-                        android:background="#707070" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawableLeft="@drawable/ic_favorite"
-                            android:drawablePadding="4dp"
-                            android:fontFamily="@font/gotham_rounded"
-                            android:gravity="center"
-                            android:text="Most Loved Items"
-                            android:textColor="@color/colorPrimaryDark" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="2dp"
-                            android:layout_marginHorizontal="18dp"
-                            android:layout_marginTop="4dp"
-                            android:background="@color/colorPrimaryDark"
-                            android:visibility="gone" />
-
-                    </LinearLayout>
-                </LinearLayout>
+                    app:layout_constraintTop_toBottomOf="@+id/editText"/>
 
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -206,7 +147,7 @@
                 <androidx.viewpager.widget.ViewPager
                     android:id="@+id/viewPager"
                     android:layout_width="0dp"
-                    android:layout_height="200dp"
+                    android:layout_height="150dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
