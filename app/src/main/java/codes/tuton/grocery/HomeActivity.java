@@ -88,7 +88,7 @@ public class HomeActivity extends AppCompatActivity {
     CircleIndicator indicator;
     ViewPager pager;
 TabLayout tabs;
-    TextView opencart , logout , orders , support , share , kirana;
+    TextView opencart , logout , orders , support , share , kirana , loved;
     SmsVerifyCatcher smsVerifyCatcher;
 
     PinView oottpp;
@@ -123,6 +123,7 @@ TabLayout tabs;
         progress = findViewById(R.id.progressBar);
         tabs = findViewById(R.id.linearLayout);
         pager = findViewById(R.id.viewPager);
+        loved = findViewById(R.id.loved);
         indicator = findViewById(R.id.textView12);
         totalFinalMount = findViewById(R.id.totalAmountTextView);
         totalSavedAmount = findViewById(R.id.savedAmountTextView);
@@ -176,10 +177,20 @@ TabLayout tabs;
             public void onClick(View v) {
 
                 drawer.closeDrawer(GravityCompat.START);
+                tabs.getTabAt(0).select();
 
             }
         });
 
+        loved.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                drawer.closeDrawer(GravityCompat.START);
+                tabs.getTabAt(1).select();
+
+            }
+        });
 
 
         logout.setOnClickListener(new View.OnClickListener() {
@@ -282,7 +293,14 @@ TabLayout tabs;
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
 
-
+                if (tab.getPosition() == 0)
+                {
+                    loaddata();
+                }
+                else
+                {
+                    loaddata();
+                }
 
             }
 

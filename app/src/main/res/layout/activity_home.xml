@@ -112,6 +112,7 @@
                     android:layout_marginTop="8dp"
                     android:background="@drawable/background_select_tab"
                     app:tabGravity="fill"
+                    app:tabIndicatorHeight="6dp"
                     app:tabMode="fixed"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
