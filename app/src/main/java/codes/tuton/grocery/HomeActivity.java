@@ -662,7 +662,7 @@ TabLayout tabs;
 
 
 
-            String imageUrl = context.getResources().getString(R.string.serverUrl) + "/image/" + item.getImageName();
+            String imageUrl = context.getResources().getString(R.string.serverUrl) + "/admin/upload/" + item.getImageName();
 
             holder.name.setText(item.getPname());
             DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).build();
@@ -900,7 +900,7 @@ TabLayout tabs;
 
 
 
-            String imageUrl = context.getResources().getString(R.string.serverUrl)+"/image/" + item.getImageName();
+            String imageUrl = context.getResources().getString(R.string.serverUrl)+"/admin/upload/" + item.getImageName();
 
             holder.name.setText(item.getPname());
             DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).build();
@@ -1416,7 +1416,7 @@ TabLayout tabs;
             DisplayImageOptions options = new DisplayImageOptions.Builder().cacheOnDisk(true).cacheInMemory(true).resetViewBeforeLoading(false).build();
 
             ImageLoader loader = ImageLoader.getInstance();
-            loader.displayImage(getResources().getString(R.string.serverUrl) + "/image/" + url , image , options);
+            loader.displayImage(getResources().getString(R.string.serverUrl) + "/admin/upload/" + url , image , options);
 
             return view;
         }

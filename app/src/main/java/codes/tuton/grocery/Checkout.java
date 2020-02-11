@@ -1018,7 +1018,7 @@ public class Checkout extends AppCompatActivity {
             final Cart item = list.get(position);
 
 
-            String imageUrl = context.getResources().getString(R.string.serverUrl) + "/image/" + item.getImageName();
+            String imageUrl = context.getResources().getString(R.string.serverUrl) + "/admin/upload/" + item.getImageName();
 
             holder.name.setText(item.getPname());
             DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).build();
