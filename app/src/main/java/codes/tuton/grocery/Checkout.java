@@ -121,6 +121,7 @@ public class Checkout extends AppCompatActivity {
         applied = findViewById(R.id.textView15);
         tomorrow = findViewById(R.id.textView39);
 
+        Log.d("asdasd", "asdasd");
 
         name = findViewById(R.id.editText6);
         email = findViewById(R.id.editText7);
@@ -977,8 +978,8 @@ public class Checkout extends AppCompatActivity {
 
         gtotal = tamount;
         if (!fdel) {
-            dvalue = 10;
-            gtotal = gtotal + 10;
+            dvalue = 100;
+            gtotal = gtotal + 100;
         } else {
             dvalue = 0;
         }

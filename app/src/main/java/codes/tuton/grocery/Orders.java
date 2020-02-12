@@ -174,7 +174,7 @@ public class Orders extends AppCompatActivity {
 
 
 
-            holder.orderid.setText("GG000" + item.getId());
+            holder.orderid.setText("GRCGN0" + item.getId());
 
             holder.deldate.setText(item.getDeliveryTime());
             holder.grand.setText("₹" + item.getGrand());

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <View
@@ -19,10 +19,12 @@
             android:background="@drawable/bottom_border"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="14dp"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <TextView
@@ -49,7 +51,9 @@
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="14dp"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="10dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -72,7 +76,6 @@
                     android:singleLine="false"
                     android:layout_marginStart="2dp"
                     android:text="There is no minimum order value"
-                    android:paddingBottom="10dp"
                     android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
@@ -81,10 +84,12 @@
             android:background="@drawable/bottom_border"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="14dp"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <TextView
@@ -104,7 +109,6 @@
                     android:layout_height="wrap_content"
                     android:maxLines="10"
                     android:layout_marginStart="2dp"
-                    android:paddingTop="10dp"
                     android:scrollHorizontally="false"
                     android:singleLine="false"
                     android:text="How to pay online?"
@@ -113,7 +117,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="28dp"
+                android:layout_marginBottom="10dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -133,7 +138,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="2dp"
                     android:text="@string/we_are_serving_cash_on_delivery_or_you_can_pay_through_your_card_on_delivery"
-                    android:paddingBottom="10dp"
                     android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
@@ -146,7 +150,8 @@
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="14dp"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <TextView
@@ -166,7 +171,6 @@
                     android:layout_height="wrap_content"
                     android:maxLines="10"
                     android:layout_marginStart="2dp"
-                    android:paddingTop="10dp"
                     android:scrollHorizontally="false"
                     android:singleLine="false"
                     android:text="Do you deliver in entire Pune?"
@@ -175,7 +179,9 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="14dp"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <TextView
@@ -198,7 +204,6 @@
                     android:scrollHorizontally="false"
                     android:singleLine="false"
                     android:text="No, right now we are focusing on Kondwa only."
-                    android:paddingBottom="10dp"
                     android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>

@@ -80,7 +80,7 @@ public class HomeActivity extends AppCompatActivity {
     ProductAdapter adapter;
     TextView totalFinalMount, totalSavedAmount, totalItemTextView;
     EditText search;
-    Button checkout;
+    Button checkout , collapse;
     LinearLayout bottom;
     TextView count , number;
     ImageButton cart , menu;
@@ -121,6 +121,7 @@ TabLayout tabs;
         list = new ArrayList<>();
         grid = findViewById(R.id.grid);
         progress = findViewById(R.id.progressBar);
+        collapse = findViewById(R.id.button7);
         tabs = findViewById(R.id.linearLayout);
         pager = findViewById(R.id.viewPager);
         loved = findViewById(R.id.loved);
@@ -234,7 +235,13 @@ TabLayout tabs;
                         @Override
                         public void onResponse(Call<List<productListBean>> call, Response<List<productListBean>> response) {
 
-                            adapter.setData(response.body());
+                            List<Boolean> coll = new ArrayList<>();
+
+                            for (int i = 0; i < response.body().size(); i++) {
+                                coll.add(false);
+                            }
+
+                            adapter.setData(response.body() , coll);
 
                             progress.setVisibility(View.GONE);
 
@@ -266,8 +273,14 @@ TabLayout tabs;
                         @Override
                         public void onResponse(Call<List<productListBean>> call, Response<List<productListBean>> response) {
 
+                            List<Boolean> coll = new ArrayList<>();
+
+                            for (int i = 0; i < response.body().size(); i++) {
+                                coll.add(false);
+                            }
+
                             list = response.body();
-                            adapter.setData(list);
+                            adapter.setData(list , coll);
 
                             progress.setVisibility(View.GONE);
 
@@ -518,6 +531,15 @@ TabLayout tabs;
         });
 
 
+        collapse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                adapter.collapseall();
+
+            }
+        });
+
 
         progress.setVisibility(View.VISIBLE);
 
@@ -569,7 +591,10 @@ TabLayout tabs;
             number.setText("Login");
         }
 
-        Tovuti.from(this).monitor(new Monitor.ConnectivityListener(){
+        loaddata();
+        updateCart();
+
+        /*Tovuti.from(this).monitor(new Monitor.ConnectivityListener(){
             @Override
             public void onConnectivityChanged(int connectionType, boolean isConnected, boolean isFast){
                 // TODO: Handle the connection...
@@ -584,14 +609,14 @@ TabLayout tabs;
                 }
 
             }
-        });
+        });*/
 
 
     }
 
     @Override
     protected void onStop(){
-        Tovuti.from(this).stop();
+        //Tovuti.from(this).stop();
         super.onStop();
         smsVerifyCatcher.onStop();
     }
@@ -615,8 +640,14 @@ TabLayout tabs;
             @Override
             public void onResponse(Call<List<productListBean>> call, Response<List<productListBean>> response) {
 
+                List<Boolean> coll = new ArrayList<>();
+
+                for (int i = 0; i < response.body().size(); i++) {
+                    coll.add(false);
+                }
+
                 list = response.body();
-                adapter.setData(list);
+                adapter.setData(list , coll);
 
                 progress.setVisibility(View.GONE);
 
@@ -634,6 +665,7 @@ TabLayout tabs;
     {
         Context context;
         List<productListBean> list = new ArrayList<>();
+        List<Boolean> coll = new ArrayList<>();
 
         ProductAdapter(Context context, List<productListBean> list)
         {
@@ -641,10 +673,27 @@ TabLayout tabs;
             this.list = list;
         }
 
-        void setData(List<productListBean> list)
+        void setData(List<productListBean> list , List<Boolean> coll)
         {
             this.list = list;
+            this.coll = coll;
             notifyDataSetChanged();
+        }
+
+        void collapseall()
+        {
+            for (int i = 0; i < coll.size(); i++) {
+
+                coll.set(i , false);
+
+            }
+            notifyDataSetChanged();
+            checkCollapse();
+        }
+
+        List<Boolean> getColl()
+        {
+            return coll;
         }
 
         @NonNull
@@ -656,10 +705,9 @@ TabLayout tabs;
         }
 
         @Override
-        public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
             holder.setIsRecyclable(false);
             final productListBean item = list.get(position);
-
 
 
             String imageUrl = context.getResources().getString(R.string.serverUrl) + "/admin/upload/" + item.getImageName();
@@ -748,10 +796,14 @@ TabLayout tabs;
 
                         if (holder.grid.getVisibility() == View.VISIBLE) {
                             holder.grid.setVisibility(View.GONE);
+                            coll.set(position , false);
                             holder.expand.setText("VIEW MORE");
+                            checkCollapse();
                         } else {
                             holder.grid.setVisibility(View.VISIBLE);
+                            coll.set(position , true);
                             holder.expand.setText("VIEW LESS");
+                            checkCollapse();
                         }
                     }
 
@@ -764,10 +816,14 @@ TabLayout tabs;
 
                     if (holder.grid.getVisibility() == View.VISIBLE) {
                         holder.grid.setVisibility(View.GONE);
+                        coll.set(position , false);
                         holder.expand.setText("VIEW MORE");
+                        checkCollapse();
                     } else {
                         holder.grid.setVisibility(View.VISIBLE);
+                        coll.set(position , true);
                         holder.expand.setText("VIEW LESS");
+                        checkCollapse();
                     }
 
                 }
@@ -1443,6 +1499,21 @@ TabLayout tabs;
         ImageSpan imageSpan = new ImageSpan(image, ImageSpan.ALIGN_CENTER);
         sb.setSpan(imageSpan, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         return sb;
+    }
+
+    void checkCollapse()
+    {
+        List<Boolean> coll = adapter.getColl();
+
+        if (coll.contains(true))
+        {
+            collapse.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            collapse.setVisibility(View.GONE);
+        }
+
     }
 
 }
