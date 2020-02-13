@@ -103,6 +103,8 @@ public class Checkout extends AppCompatActivity {
 
     String fd , ed;
 
+    int min = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -712,117 +714,156 @@ public class Checkout extends AppCompatActivity {
 
 
 
+                if (tamount > min)
+                {
+                    if (address) {
 
+                        String dt = "";
 
-                if (address) {
-
-                    String dt = "";
-
-                    if (fdel)
-                    {
-                        dt = fd;
-                    }
-                    else
-                    {
-                        dt = ed;
-                    }
-
-                    progress.setVisibility(View.VISIBLE);
-
-                    Bean b = (Bean) getApplicationContext();
-
-                    Retrofit retrofit = new Retrofit.Builder()
-                            .baseUrl(b.baseurl)
-                            .addConverterFactory(ScalarsConverterFactory.create())
-                            .addConverterFactory(GsonConverterFactory.create())
-                            .build();
-
-                    AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
-
-                    Call<addMessageBean> call = cr.checkout(
-                            SharePreferenceUtils.getInstance().getString("userId"),
-                            json,
-                            String.valueOf(tamount),
-                            String.valueOf(offlineCartBean.getTotalSaved()),
-                            String.valueOf(genie),
-                            String.valueOf(dvalue),
-                            dt,
-                            pid,
-                            String.valueOf(pvalue),
-                            String.valueOf(gtotal),
-                            name.getText().toString(),
-                            email.getText().toString(),
-                            flat.getText().toString(),
-                            landmark.getText().toString(),
-                            city.getText().toString(),
-                            area.getText().toString(),
-                            mobile.getText().toString()
-                    );
-
-                    call.enqueue(new Callback<addMessageBean>() {
-                        @Override
-                        public void onResponse(Call<addMessageBean> call, Response<addMessageBean> response) {
-
-                            if (response.body().getStatus().equals("1")) {
-
-                                offlineCartBean.totalAmount = 0;
-                                offlineCartBean.totalItem = 0;
-                                offlineCartBean.totalSaved = 0;
-                                offlineCartBean.cartitems.clear();
-
-                                Toast.makeText(Checkout.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-
-                                final Dialog dialog = new Dialog(Checkout.this);
-                                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                                dialog.setCancelable(true);
-                                dialog.setContentView(R.layout.final_popup);
-                                dialog.show();
-
-                                Button ok = dialog.findViewById(R.id.button3);
-                                Button cs = dialog.findViewById(R.id.button4);
-
-                                ok.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        dialog.dismiss();
-                                        finish();
-                                    }
-                                });
-
-                                cs.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        dialog.dismiss();
-                                        finish();
-                                    }
-                                });
-
-                                dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                                    @Override
-                                    public void onCancel(DialogInterface dialog) {
-                                        finish();
-                                    }
-                                });
-
-                            } else {
-                                Toast.makeText(Checkout.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-
-                            progress.setVisibility(View.GONE);
-
+                        if (fdel)
+                        {
+                            dt = fd;
+                        }
+                        else
+                        {
+                            dt = ed;
                         }
 
+                        progress.setVisibility(View.VISIBLE);
+
+                        Bean b = (Bean) getApplicationContext();
+
+                        Retrofit retrofit = new Retrofit.Builder()
+                                .baseUrl(b.baseurl)
+                                .addConverterFactory(ScalarsConverterFactory.create())
+                                .addConverterFactory(GsonConverterFactory.create())
+                                .build();
+
+                        AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+
+                        Call<addMessageBean> call = cr.checkout(
+                                SharePreferenceUtils.getInstance().getString("userId"),
+                                json,
+                                String.valueOf(tamount),
+                                String.valueOf(offlineCartBean.getTotalSaved()),
+                                String.valueOf(genie),
+                                String.valueOf(dvalue),
+                                dt,
+                                pid,
+                                String.valueOf(pvalue),
+                                String.valueOf(gtotal),
+                                name.getText().toString(),
+                                email.getText().toString(),
+                                flat.getText().toString(),
+                                landmark.getText().toString(),
+                                city.getText().toString(),
+                                area.getText().toString(),
+                                mobile.getText().toString()
+                        );
+
+                        call.enqueue(new Callback<addMessageBean>() {
+                            @Override
+                            public void onResponse(Call<addMessageBean> call, Response<addMessageBean> response) {
+
+                                if (response.body().getStatus().equals("1")) {
+
+                                    offlineCartBean.totalAmount = 0;
+                                    offlineCartBean.totalItem = 0;
+                                    offlineCartBean.totalSaved = 0;
+                                    offlineCartBean.cartitems.clear();
+
+                                    Toast.makeText(Checkout.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+
+                                    final Dialog dialog = new Dialog(Checkout.this);
+                                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                    dialog.setCancelable(true);
+                                    dialog.setContentView(R.layout.final_popup);
+                                    dialog.show();
+
+                                    Button ok = dialog.findViewById(R.id.button3);
+                                    Button cs = dialog.findViewById(R.id.button4);
+
+                                    ok.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            dialog.dismiss();
+                                            finish();
+                                        }
+                                    });
+
+                                    cs.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            dialog.dismiss();
+                                            finish();
+                                        }
+                                    });
+
+                                    dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                                        @Override
+                                        public void onCancel(DialogInterface dialog) {
+                                            finish();
+                                        }
+                                    });
+
+                                } else {
+                                    Toast.makeText(Checkout.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+
+                                progress.setVisibility(View.GONE);
+
+                            }
+
+                            @Override
+                            public void onFailure(Call<addMessageBean> call, Throwable t) {
+                                progress.setVisibility(View.GONE);
+                            }
+                        });
+
+
+                    } else {
+                        Toast.makeText(Checkout.this, "Please Add an Address", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else
+                {
+                    final Dialog dialog = new Dialog(Checkout.this);
+                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    dialog.setCancelable(true);
+                    dialog.setContentView(R.layout.final_popup2);
+                    dialog.show();
+
+                    Button ok = dialog.findViewById(R.id.button3);
+                    Button cs = dialog.findViewById(R.id.button4);
+
+                    ok.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onFailure(Call<addMessageBean> call, Throwable t) {
-                            progress.setVisibility(View.GONE);
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                            finish();
                         }
                     });
 
+                    cs.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                            finish();
+                        }
+                    });
 
-                } else {
-                    Toast.makeText(Checkout.this, "Please Add an Address", Toast.LENGTH_SHORT).show();
+                    dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialog) {
+                            finish();
+                        }
+                    });
                 }
+
+
+
 
             }
         });
@@ -898,6 +939,15 @@ public class Checkout extends AppCompatActivity {
                 if (response.body().getCart().size() > 0) {
                     list = response.body().getCart();
                     adapter.setData(list);
+
+                    if (response.body().getOffer().equals("yes"))
+                    {
+                        min = 1500;
+                    }
+                    else
+                    {
+                        min = 0;
+                    }
 
                     if (response.body().getAddress().size() > 0) {
                         address = true;

@@ -12,6 +12,9 @@ public class cartBean {
     @SerializedName("address")
     @Expose
     private List<Address> address = null;
+    @SerializedName("offer")
+    @Expose
+    private String offer;
 
     public List<Cart> getCart() {
         return cart;
@@ -27,5 +30,13 @@ public class cartBean {
 
     public void setAddress(List<Address> address) {
         this.address = address;
+    }
+
+    public String getOffer() {
+        return offer;
+    }
+
+    public void setOffer(String offer) {
+        this.offer = offer;
     }
 }

@@ -20,6 +20,9 @@ public interface AllApiIneterface {
     @GET("demo/CategoryAllData.php")
     Call<List<productListBean>> CategoryAllData();
 
+    @GET("demo/loved.php")
+    Call<List<productListBean>> loved();
+
     @Multipart
     @POST("demo/search.php")
     Call<List<productListBean>> search(

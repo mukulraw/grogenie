@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Cart {
+
     @SerializedName("Pid")
     @Expose
     private String pid;
@@ -34,6 +35,9 @@ public class Cart {
     @SerializedName("ImageName")
     @Expose
     private String imageName;
+    @SerializedName("offer")
+    @Expose
+    private String offer;
 
     public String getPid() {
         return pid;
@@ -113,5 +117,13 @@ public class Cart {
 
     public void setImageName(String imageName) {
         this.imageName = imageName;
+    }
+
+    public String getOffer() {
+        return offer;
+    }
+
+    public void setOffer(String offer) {
+        this.offer = offer;
     }
 }

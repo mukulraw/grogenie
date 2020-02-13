@@ -88,10 +88,12 @@ public class HomeActivity extends AppCompatActivity {
     CircleIndicator indicator;
     ViewPager pager;
 TabLayout tabs;
-    TextView opencart , logout , orders , support , share , kirana , loved;
+    TextView opencart , logout , orders , support , share , kirana , loved , smess;
     SmsVerifyCatcher smsVerifyCatcher;
 
     PinView oottpp;
+
+    boolean kir = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +126,7 @@ TabLayout tabs;
         collapse = findViewById(R.id.button7);
         tabs = findViewById(R.id.linearLayout);
         pager = findViewById(R.id.viewPager);
+        smess = findViewById(R.id.smess);
         loved = findViewById(R.id.loved);
         indicator = findViewById(R.id.textView12);
         totalFinalMount = findViewById(R.id.totalAmountTextView);
@@ -235,6 +238,15 @@ TabLayout tabs;
                         @Override
                         public void onResponse(Call<List<productListBean>> call, Response<List<productListBean>> response) {
 
+                            if (response.body().size() > 0)
+                            {
+                                smess.setVisibility(View.GONE);
+                            }
+                            else
+                            {
+                                smess.setVisibility(View.VISIBLE);
+                            }
+
                             List<Boolean> coll = new ArrayList<>();
 
                             for (int i = 0; i < response.body().size(); i++) {
@@ -256,42 +268,89 @@ TabLayout tabs;
                 }
                 else
                 {
-                    progress.setVisibility(View.VISIBLE);
 
-                    Bean b = (Bean) getApplicationContext();
 
-                    Retrofit retrofit = new Retrofit.Builder()
-                            .baseUrl(b.baseurl)
-                            .addConverterFactory(ScalarsConverterFactory.create())
-                            .addConverterFactory(GsonConverterFactory.create())
-                            .build();
+                    if (kir)
+                    {
+                        progress.setVisibility(View.VISIBLE);
 
-                    AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+                        Bean b = (Bean) getApplicationContext();
 
-                    Call<List<productListBean>> call = cr.CategoryAllData();
-                    call.enqueue(new Callback<List<productListBean>>() {
-                        @Override
-                        public void onResponse(Call<List<productListBean>> call, Response<List<productListBean>> response) {
+                        Retrofit retrofit = new Retrofit.Builder()
+                                .baseUrl(b.baseurl)
+                                .addConverterFactory(ScalarsConverterFactory.create())
+                                .addConverterFactory(GsonConverterFactory.create())
+                                .build();
 
-                            List<Boolean> coll = new ArrayList<>();
+                        AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
 
-                            for (int i = 0; i < response.body().size(); i++) {
-                                coll.add(false);
+                        Call<List<productListBean>> call = cr.CategoryAllData();
+                        call.enqueue(new Callback<List<productListBean>>() {
+                            @Override
+                            public void onResponse(Call<List<productListBean>> call, Response<List<productListBean>> response) {
+
+                                List<Boolean> coll = new ArrayList<>();
+
+                                for (int i = 0; i < response.body().size(); i++) {
+                                    coll.add(false);
+                                }
+
+                                list = response.body();
+                                adapter.setData(list , coll);
+                                smess.setVisibility(View.GONE);
+                                progress.setVisibility(View.GONE);
+
                             }
 
-                            list = response.body();
-                            adapter.setData(list , coll);
+                            @Override
+                            public void onFailure(Call<List<productListBean>> call, Throwable t) {
+                                t.printStackTrace();
+                                progress.setVisibility(View.GONE);
+                            }
+                        });
+                    }
+                    else
+                    {
+                        progress.setVisibility(View.VISIBLE);
 
-                            progress.setVisibility(View.GONE);
+                        Bean b = (Bean) getApplicationContext();
 
-                        }
+                        Retrofit retrofit = new Retrofit.Builder()
+                                .baseUrl(b.baseurl)
+                                .addConverterFactory(ScalarsConverterFactory.create())
+                                .addConverterFactory(GsonConverterFactory.create())
+                                .build();
 
-                        @Override
-                        public void onFailure(Call<List<productListBean>> call, Throwable t) {
-                            t.printStackTrace();
-                            progress.setVisibility(View.GONE);
-                        }
-                    });
+                        AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+
+                        Call<List<productListBean>> call = cr.loved();
+                        call.enqueue(new Callback<List<productListBean>>() {
+                            @Override
+                            public void onResponse(Call<List<productListBean>> call, Response<List<productListBean>> response) {
+
+                                List<Boolean> coll = new ArrayList<>();
+
+                                for (int i = 0; i < response.body().size(); i++) {
+                                    coll.add(false);
+                                }
+
+                                list = response.body();
+                                adapter.setData(list , coll);
+                                smess.setVisibility(View.GONE);
+                                progress.setVisibility(View.GONE);
+
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<productListBean>> call, Throwable t) {
+                                t.printStackTrace();
+                                progress.setVisibility(View.GONE);
+                            }
+                        });
+                    }
+
+
+
                 }
 
             }
@@ -308,11 +367,13 @@ TabLayout tabs;
 
                 if (tab.getPosition() == 0)
                 {
+                    kir = true;
                     loaddata();
                 }
                 else
                 {
-                    loaddata();
+                    kir = false;
+                    loaddata2();
                 }
 
             }
@@ -621,6 +682,46 @@ TabLayout tabs;
         smsVerifyCatcher.onStop();
     }
 
+    void loaddata2()
+    {
+        progress.setVisibility(View.VISIBLE);
+
+        Bean b = (Bean) getApplicationContext();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(b.baseurl)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+
+        Call<List<productListBean>> call = cr.loved();
+        call.enqueue(new Callback<List<productListBean>>() {
+            @Override
+            public void onResponse(Call<List<productListBean>> call, Response<List<productListBean>> response) {
+
+                List<Boolean> coll = new ArrayList<>();
+
+                for (int i = 0; i < response.body().size(); i++) {
+                    coll.add(false);
+                }
+
+                list = response.body();
+                adapter.setData(list , coll);
+
+                progress.setVisibility(View.GONE);
+
+            }
+
+            @Override
+            public void onFailure(Call<List<productListBean>> call, Throwable t) {
+                t.printStackTrace();
+                progress.setVisibility(View.GONE);
+            }
+        });
+    }
+
     void loaddata()
     {
         progress.setVisibility(View.VISIBLE);
@@ -648,7 +749,7 @@ TabLayout tabs;
 
                 list = response.body();
                 adapter.setData(list , coll);
-
+                smess.setVisibility(View.GONE);
                 progress.setVisibility(View.GONE);
 
             }
