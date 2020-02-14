@@ -36,6 +36,9 @@ public class productListBean {
     @SerializedName("ImageName")
     @Expose
     private String imageName;
+    @SerializedName("offer")
+    @Expose
+    private String offer;
     @SerializedName("product_info")
     @Expose
     private List<ProductInfo> productInfo = null;
@@ -120,6 +123,14 @@ public class productListBean {
         this.imageName = imageName;
     }
 
+    public String getOffer() {
+        return offer;
+    }
+
+    public void setOffer(String offer) {
+        this.offer = offer;
+    }
+
     public List<ProductInfo> getProductInfo() {
         return productInfo;
     }
@@ -127,4 +138,5 @@ public class productListBean {
     public void setProductInfo(List<ProductInfo> productInfo) {
         this.productInfo = productInfo;
     }
+
 }

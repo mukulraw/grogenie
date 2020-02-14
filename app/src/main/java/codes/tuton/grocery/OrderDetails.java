@@ -129,7 +129,7 @@ public class OrderDetails extends AppCompatActivity {
                     delcharges.setText("Free");
                 }
 
-                orderid.setText("GRCGN0" + item.getId());
+                orderid.setText("GG" + String.format("%04d" , Integer.parseInt(item.getId())));
 
                 deldate.setText(item.getDeliveryTime());
                 grand.setText("₹" + item.getGrand());

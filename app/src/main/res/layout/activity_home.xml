@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/drawer"
+    tools:openDrawer="start"
     tools:context=".HomeActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -76,16 +77,20 @@
 
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/button7"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar2">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
 
                 <EditText
                     android:id="@+id/editText"
@@ -122,17 +127,16 @@
                     app:tabMode="fixed" />
 
                 <TextView
+                    android:id="@+id/smess"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="No search result found"
-                    android:id="@+id/smess"
-                    android:visibility="gone"
                     android:padding="30dp"
+                    android:text="No search result found"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-                    />
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/grid"
@@ -142,7 +146,7 @@
                     android:paddingStart="8dp"
                     android:paddingTop="8dp"
                     android:paddingEnd="8dp"
-                    android:paddingBottom="16dp"
+                    android:paddingBottom="40dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -327,17 +331,18 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:text="collapse all"
             android:background="@drawable/primary_round"
-            android:textColor="#ffffff"
-            android:minHeight="0dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
             android:minWidth="0dp"
+            android:minHeight="0dp"
             android:paddingStart="20dp"
+            android:paddingTop="5dp"
             android:paddingEnd="20dp"
+            android:paddingBottom="5dp"
+            android:text="collapse all"
+            android:textColor="#ffffff"
+            android:textSize="12sp"
             android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+            app:layout_constraintBottom_toBottomOf="@+id/nestedScrollView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 

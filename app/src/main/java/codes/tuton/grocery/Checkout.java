@@ -167,6 +167,8 @@ public class Checkout extends AppCompatActivity {
         String time11 = "18:00";
         String time12 = "19:00";
         String time13 = "21:00";
+        String time14 = "06:30";
+        String time15 = "15:30";
 
 
         Date date1 = null;
@@ -183,6 +185,7 @@ public class Checkout extends AppCompatActivity {
         Date date12 = null;
         Date date13 = null;
         Date date14 = null;
+        Date date15 = null;
         Date cd = null;
 
         String currentTime = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
@@ -261,11 +264,16 @@ public class Checkout extends AppCompatActivity {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        /*try {
+        try {
             date14 = dateFormat.parse(time14);
         } catch (ParseException e) {
             e.printStackTrace();
-        }*/
+        }
+        try {
+            date15 = dateFormat.parse(time15);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
 
         if (date1.compareTo(cd) > 0)
@@ -327,14 +335,20 @@ public class Checkout extends AppCompatActivity {
 
 
 
-        if (date13.compareTo(cd) > 0)
+        if (date14.compareTo(cd) > 0)
         {
-            fr.add("9-11PM");
+            fr.add("Today 8-11AM");
+            tomorrow.setVisibility(View.GONE);
+        }
+        if (date15.compareTo(cd) > 0)
+        {
+            fr.add("Today 5-8PM");
             tomorrow.setVisibility(View.GONE);
         }
         else
         {
-            fr.add("Tomorrow");
+            fr.add("Tomorrow 8-11AM");
+            fr.add("Tomorrow 5-8PM");
             tomorrow.setVisibility(View.VISIBLE);
         }
 
@@ -714,7 +728,7 @@ public class Checkout extends AppCompatActivity {
 
 
 
-                if (tamount > min)
+                if (tamount >= min)
                 {
                     if (address) {
 
@@ -761,51 +775,15 @@ public class Checkout extends AppCompatActivity {
                                 mobile.getText().toString()
                         );
 
+
+
+
+
                         call.enqueue(new Callback<addMessageBean>() {
                             @Override
                             public void onResponse(Call<addMessageBean> call, Response<addMessageBean> response) {
 
                                 if (response.body().getStatus().equals("1")) {
-
-                                    offlineCartBean.totalAmount = 0;
-                                    offlineCartBean.totalItem = 0;
-                                    offlineCartBean.totalSaved = 0;
-                                    offlineCartBean.cartitems.clear();
-
-                                    Toast.makeText(Checkout.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-
-                                    final Dialog dialog = new Dialog(Checkout.this);
-                                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                                    dialog.setCancelable(true);
-                                    dialog.setContentView(R.layout.final_popup);
-                                    dialog.show();
-
-                                    Button ok = dialog.findViewById(R.id.button3);
-                                    Button cs = dialog.findViewById(R.id.button4);
-
-                                    ok.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            dialog.dismiss();
-                                            finish();
-                                        }
-                                    });
-
-                                    cs.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            dialog.dismiss();
-                                            finish();
-                                        }
-                                    });
-
-                                    dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                                        @Override
-                                        public void onCancel(DialogInterface dialog) {
-                                            finish();
-                                        }
-                                    });
 
                                 } else {
                                     Toast.makeText(Checkout.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
@@ -818,6 +796,47 @@ public class Checkout extends AppCompatActivity {
                             @Override
                             public void onFailure(Call<addMessageBean> call, Throwable t) {
                                 progress.setVisibility(View.GONE);
+                            }
+                        });
+
+
+                        offlineCartBean.totalAmount = 0;
+                        offlineCartBean.totalItem = 0;
+                        offlineCartBean.totalSaved = 0;
+                        offlineCartBean.cartitems.clear();
+
+                        Toast.makeText(Checkout.this, "Order posted successfully", Toast.LENGTH_SHORT).show();
+
+                        final Dialog dialog = new Dialog(Checkout.this);
+                        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        dialog.setCancelable(true);
+                        dialog.setContentView(R.layout.final_popup);
+                        dialog.show();
+
+                        Button ok = dialog.findViewById(R.id.button3);
+                        Button cs = dialog.findViewById(R.id.button4);
+
+                        ok.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                                finish();
+                            }
+                        });
+
+                        cs.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                                finish();
+                            }
+                        });
+
+                        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                            @Override
+                            public void onCancel(DialogInterface dialog) {
+                                finish();
                             }
                         });
 
@@ -1028,8 +1047,8 @@ public class Checkout extends AppCompatActivity {
 
         gtotal = tamount;
         if (!fdel) {
-            dvalue = 100;
-            gtotal = gtotal + 100;
+            dvalue = 50;
+            gtotal = gtotal + 50;
         } else {
             dvalue = 0;
         }

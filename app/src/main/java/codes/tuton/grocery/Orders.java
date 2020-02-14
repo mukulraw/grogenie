@@ -174,7 +174,7 @@ public class Orders extends AppCompatActivity {
 
 
 
-            holder.orderid.setText("GRCGN0" + item.getId());
+            holder.orderid.setText("GG" + String.format("%04d" , Integer.parseInt(item.getId())));
 
             holder.deldate.setText(item.getDeliveryTime());
             holder.grand.setText("₹" + item.getGrand());
@@ -214,7 +214,7 @@ public class Orders extends AppCompatActivity {
 
                     Intent intent = new Intent(context , OrderDetails.class);
                     intent.putExtra("id" , item.getId());
-                    intent.putExtra("tit" , "GG000" + item.getId());
+                    intent.putExtra("tit" , "GG" + String.format("%04d" , Integer.parseInt(item.getId())));
                     startActivity(intent);
 
                 }
@@ -380,7 +380,7 @@ public class Orders extends AppCompatActivity {
                 holder.delcharges.setText("Free");
             }
 
-            holder.orderid.setText("GG000" + item.getId());
+            holder.orderid.setText("GG" + String.format("%04d" , Integer.parseInt(item.getId())));
 
             holder.deldate.setText(item.getDeliveryTime());
             holder.grand.setText("₹" + item.getGrand());
@@ -391,7 +391,7 @@ public class Orders extends AppCompatActivity {
 
                     Intent intent = new Intent(context , OrderDetails.class);
                     intent.putExtra("id" , item.getId());
-                    intent.putExtra("tit" , "GG000" + item.getId());
+                    intent.putExtra("tit" , "GG" + String.format("%04d" , Integer.parseInt(item.getId())));
                     startActivity(intent);
 
                 }

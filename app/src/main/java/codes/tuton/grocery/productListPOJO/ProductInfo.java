@@ -34,6 +34,15 @@ public class ProductInfo {
     @SerializedName("ImageName")
     @Expose
     private String imageName;
+    @SerializedName("type")
+    @Expose
+    private String type;
+    @SerializedName("offer")
+    @Expose
+    private String offer;
+    @SerializedName("offerprice")
+    @Expose
+    private String offerprice;
 
     public String getPid() {
         return pid;
@@ -113,5 +122,29 @@ public class ProductInfo {
 
     public void setImageName(String imageName) {
         this.imageName = imageName;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getOffer() {
+        return offer;
+    }
+
+    public void setOffer(String offer) {
+        this.offer = offer;
+    }
+
+    public String getOfferprice() {
+        return offerprice;
+    }
+
+    public void setOfferprice(String offerprice) {
+        this.offerprice = offerprice;
     }
 }

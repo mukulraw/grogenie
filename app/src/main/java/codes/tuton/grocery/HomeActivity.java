@@ -16,6 +16,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ import android.text.TextWatcher;
 import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -205,6 +207,18 @@ TabLayout tabs;
                 Intent intent = new Intent(HomeActivity.this , Splash.class);
                 startActivity(intent);
                 finishAffinity();
+
+            }
+        });
+
+        search.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+
+                if (!hasFocus)
+                {
+                    search.setText("");
+                }
 
             }
         });
@@ -752,6 +766,8 @@ TabLayout tabs;
                 smess.setVisibility(View.GONE);
                 progress.setVisibility(View.GONE);
 
+                collapse.setVisibility(View.GONE);
+
             }
 
             @Override
@@ -838,23 +854,36 @@ TabLayout tabs;
                 holder.total.setVisibility(View.VISIBLE);
                 holder.addLayout.setVisibility(View.GONE);
 
-                float dis = 0;
-
-                for (int i = 0 ; i < item.getProductInfo().size() ; i++)
+                if (item.getOffer().equals("no"))
                 {
-                    final float productTotalPrice2 = Float.parseFloat(item.getProductInfo().get(i).getUnitPriceKg());
-                    final float finalPrice2 = Float.parseFloat(item.getProductInfo().get(i).getSellingPrice());
-                    float da2 = productTotalPrice2 - finalPrice2;
-                    float discount2 = (da2 / productTotalPrice2) * 100;
 
-                    if (dis <= discount2) {
-                        dis = discount2;
-                        Log.d("dduucc" , String.valueOf(dis));
-                        //this.textViewDiscount.setText("UP TO " + this.discount + "% OFF");
-                        holder.discount.setText("UP TO " + (int)dis + "% OFF");
+                    holder.offertext.setVisibility(View.GONE);
+
+                    float dis = 0;
+
+                    for (int i = 0 ; i < item.getProductInfo().size() ; i++)
+                    {
+                        final float productTotalPrice2 = Float.parseFloat(item.getProductInfo().get(i).getUnitPriceKg());
+                        final float finalPrice2 = Float.parseFloat(item.getProductInfo().get(i).getSellingPrice());
+                        float da2 = productTotalPrice2 - finalPrice2;
+                        float discount2 = (da2 / productTotalPrice2) * 100;
+
+                        if (dis <= discount2) {
+                            dis = discount2;
+                            Log.d("dduucc" , String.valueOf(dis));
+                            //this.textViewDiscount.setText("UP TO " + this.discount + "% OFF");
+                            holder.discount.setText("UP TO " + (int)dis + "% OFF");
+                        }
+
                     }
-
                 }
+                else
+                {
+                    holder.offertext.setVisibility(View.VISIBLE);
+                    holder.discount.setText("OFFER");
+                }
+
+
 
 
                 SublistAdapter adapter1 = new SublistAdapter(context, item.getProductInfo(), holder.discount);
@@ -1002,7 +1031,7 @@ TabLayout tabs;
         {
             Button expand;
             ImageView image;
-            TextView sprice , dprice , name , discount , itemCount , total;
+            TextView sprice , dprice , name , discount , itemCount , total , offertext;
             RecyclerView grid;
             LinearLayout addLayout;
             ImageButton addButton, removeButton;
@@ -1022,6 +1051,7 @@ TabLayout tabs;
                 addButton = itemView.findViewById(R.id.itemPlusButton);
                 removeButton = itemView.findViewById(R.id.itemMinusButton);
                 itemCount = itemView.findViewById(R.id.itemCoutnButton);
+                offertext = itemView.findViewById(R.id.textView40);
 
             }
         }
@@ -1072,12 +1102,9 @@ TabLayout tabs;
             float da = productTotalPrice - finalPrice;
             float discount = (da / productTotalPrice) * 100;
 
-            if (this.discount1 <= discount) {
-                this.discount1 = discount;
-                Log.d("dduucc" , String.valueOf(this.discount1));
-                //this.textViewDiscount.setText("UP TO " + this.discount + "% OFF");
-                this.textViewDiscount.setText("UP TO " + (int)this.discount1 + "% OFF");
-            }
+
+
+
 
             holder.dprice.setText("₹" + finalPrice);
             holder.sprice.setText(Html.fromHtml("₹<strike>" + productTotalPrice + "</strike>"));
@@ -1091,10 +1118,28 @@ TabLayout tabs;
                 holder.discount.setVisibility(View.VISIBLE);
             }
 
-            holder.discount.setText((int)discount + "% OFF");
+
+
+            if (item.getOffer().equals("no"))
+            {
+                if (this.discount1 <= discount) {
+                    this.discount1 = discount;
+                    Log.d("dduucc" , String.valueOf(this.discount1));
+                    //this.textViewDiscount.setText("UP TO " + this.discount + "% OFF");
+                    this.textViewDiscount.setText("UP TO " + (int)this.discount1 + "% OFF");
+                }
+
+                holder.discount.setText((int)discount + "% OFF");
+            }
+            else
+            {
+                this.textViewDiscount.setText("OFFER");
+                holder.discount.setText("OFFER");
+            }
 
             if (offlineCartBean.cartitems.contains(item.getPid()))
             {
+
                 int c = offlineCartBean.getCount(item.getPid());
                 holder.addButton.setVisibility(View.VISIBLE);
                 holder.removeButton.setVisibility(View.VISIBLE);
@@ -1130,13 +1175,39 @@ TabLayout tabs;
                 @Override
                 public void onClick(View v) {
 
-                    offlineCartBean.cartitems.add(item.getPid());
-                    offlineCartBean.totalAmount += Float.valueOf(finalPrice);
-                    offlineCartBean.totalItem += 1;
-                    offlineCartBean.totalSaved += Float.valueOf(productTotalPrice - finalPrice);
-                    notifyDataSetChanged();
 
-                    updateCart();
+                    if (item.getOffer().equals("no"))
+                    {
+                        offlineCartBean.cartitems.add(item.getPid());
+                        offlineCartBean.totalAmount += Float.valueOf(finalPrice);
+                        offlineCartBean.totalItem += 1;
+                        offlineCartBean.totalSaved += Float.valueOf(productTotalPrice - finalPrice);
+                        notifyDataSetChanged();
+
+                        updateCart();
+                    }
+                    else
+                    {
+
+                        if (offlineCartBean.cartitems.contains(item.getPid()))
+                        {
+                            Toast.makeText(context, "You can only add 1 quantity per item", Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                        {
+                            offlineCartBean.cartitems.add(item.getPid());
+                            offlineCartBean.totalAmount += Float.valueOf(finalPrice);
+                            offlineCartBean.totalItem += 1;
+                            offlineCartBean.totalSaved += Float.valueOf(productTotalPrice - finalPrice);
+                            notifyDataSetChanged();
+
+                            updateCart();
+                        }
+
+                    }
+
+
+
 
                 }
             });
@@ -1615,6 +1686,23 @@ TabLayout tabs;
             collapse.setVisibility(View.GONE);
         }
 
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            View view = getCurrentFocus();
+            if (view != null && view instanceof EditText) {
+                Rect r = new Rect();
+                view.getGlobalVisibleRect(r);
+                int rawX = (int)ev.getRawX();
+                int rawY = (int)ev.getRawY();
+                if (!r.contains(rawX, rawY)) {
+                    view.clearFocus();
+                }
+            }
+        }
+        return super.dispatchTouchEvent(ev);
     }
 
 }

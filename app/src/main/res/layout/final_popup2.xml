@@ -21,16 +21,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_tick" />
+            app:srcCompat="@drawable/ic_error" />
 
         <TextView
             android:id="@+id/textView17"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Thank You"
+            android:text="Condition Not Met"
             android:textColor="#FF7043"
-            android:textSize="24sp"
+            android:textSize="22sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -44,7 +44,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
             android:gravity="center"
-            android:text="Minimum order value is ₹1500"
+            android:text="To avail the 1₹ 1kg offer minimum order value must be ₹1500"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView17" />
