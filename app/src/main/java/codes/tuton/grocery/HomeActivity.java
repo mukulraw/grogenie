@@ -1095,12 +1095,22 @@ TabLayout tabs;
             loader.displayImage(imageUrl , holder.image , options);
 
 
-
+            final float finalPrice;
 
             final float productTotalPrice = Float.parseFloat(item.getUnitPriceKg());
-            final float finalPrice = Float.parseFloat(item.getSellingPrice());
+            if (item.getOffer().equals("no"))
+            {
+                finalPrice = Float.parseFloat(item.getSellingPrice());
+            }
+            else
+            {
+                finalPrice = 1;
+            }
+
+
             float da = productTotalPrice - finalPrice;
             float discount = (da / productTotalPrice) * 100;
+
 
 
 
