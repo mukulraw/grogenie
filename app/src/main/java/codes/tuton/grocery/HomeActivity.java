@@ -46,6 +46,8 @@ import android.widget.Toast;
 import com.androidstudy.networkmanager.Monitor;
 import com.androidstudy.networkmanager.Tovuti;
 import com.chaos.view.PinView;
+import com.github.javiersantos.appupdater.AppUpdater;
+import com.github.javiersantos.appupdater.enums.Display;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -101,6 +103,10 @@ TabLayout tabs;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        AppUpdater appUpdater = new AppUpdater(this);
+        appUpdater.setDisplay(Display.NOTIFICATION);
+        appUpdater.start();
 
         smsVerifyCatcher = new SmsVerifyCatcher(this, new OnSmsCatchListener<String>() {
             @Override

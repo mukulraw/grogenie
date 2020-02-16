@@ -7,4 +7,5 @@
     <color name="colorBackground">#FBEAEB</color>
     <color name="lightblack">#171717</color>
     <color name="view">#C7C3C3</color>
+    <color name="transparent">#00000000</color>
 </resources>

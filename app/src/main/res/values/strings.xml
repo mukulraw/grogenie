@@ -5,4 +5,6 @@
     <string name="dummyQue1">Lorem Ipsum is simply dummy text of the printing?</string>
     <string name="dummyAns1">Lorem Ipsum is simply dummy text of the printing?</string>
     <string name="we_are_serving_cash_on_delivery_or_you_can_pay_through_your_card_on_delivery">We are serving Cash on delivery or you can pay through your card on delivery.</string>
+    <string name="alarm_notification">alarm_notification</string>
+    <string name="default_notification_channel_id">123</string>
 </resources>
