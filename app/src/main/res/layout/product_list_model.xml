@@ -162,7 +162,7 @@
             android:layout_marginEnd="8dp"
             android:gravity="center"
             android:text="Offer is valid on or above ₹1500 order"
-            android:textColor="@color/colorPrimary"
+            android:textColor="#F30000"
             android:textSize="12sp"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"

@@ -31,6 +31,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -68,7 +69,6 @@ public class Checkout extends AppCompatActivity {
 
     TextView amount, saving, total, applied;
     CheckBox geniecash;
-    RadioGroup delivery;
     Spinner free, express;
     EditText promo;
     Button apply;
@@ -105,17 +105,22 @@ public class Checkout extends AppCompatActivity {
 
     int min = 0;
 
+    RadioButton f , e;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
         list = new ArrayList<>();
 
+
         amount = findViewById(R.id.textView3);
         saving = findViewById(R.id.textView5);
         total = findViewById(R.id.textView11);
         geniecash = findViewById(R.id.textView7);
-        delivery = findViewById(R.id.radioGroup);
+        f = findViewById(R.id.f);
+        e = findViewById(R.id.e);
+
         free = findViewById(R.id.free);
         express = findViewById(R.id.express);
         promo = findViewById(R.id.editText2);
@@ -150,6 +155,8 @@ public class Checkout extends AppCompatActivity {
 
         final List<String> fr = new ArrayList<>();
         final List<String> ex = new ArrayList<>();
+
+
 
 
 
@@ -411,7 +418,33 @@ public class Checkout extends AppCompatActivity {
             }
         });
 
-        delivery.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        f.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if (isChecked)
+                {
+                    e.setChecked(false);
+                    fdel = true;
+                    updateSummary();
+                }
+
+            }
+        });
+
+        e.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked)
+                {
+                    f.setChecked(false);
+                    fdel = false;
+                    updateSummary();
+                }
+            }
+        });
+
+        /*delivery.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
 
@@ -425,7 +458,7 @@ public class Checkout extends AppCompatActivity {
                 }
 
             }
-        });
+        });*/
 
         geniecash.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
