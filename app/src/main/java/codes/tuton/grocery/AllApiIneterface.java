@@ -63,7 +63,7 @@ public interface AllApiIneterface {
     );
 
     @Multipart
-    @POST("demo/checkPromoCode.php")
+    @POST("demo/checkPromo.php")
     Call<checkPromoBean> checkPromoCode(
             @Part("promo") String promo,
             @Part("user_id") String user_id

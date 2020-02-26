@@ -41,6 +41,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:textSize="16sp"
+        android:visibility="gone"
         android:textColor="@color/colorPrimaryDark"
         android:text="Designed and Developed by MRTecks"
         app:layout_constraintBottom_toBottomOf="parent"

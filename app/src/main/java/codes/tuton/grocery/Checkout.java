@@ -1,5 +1,6 @@
 package codes.tuton.grocery;
 
+import androidx.annotation.IntegerRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -107,8 +108,10 @@ public class Checkout extends AppCompatActivity {
 
     RadioButton f , e;
 
+    boolean offer = false;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
         list = new ArrayList<>();
@@ -309,7 +312,7 @@ public class Checkout extends AppCompatActivity {
         }
         if (date7.compareTo(cd) > 0)
         {
-            ex.add("2-3PM");
+            ex.add("1-2PM");
         }
         if (date8.compareTo(cd) > 0)
         {
@@ -503,6 +506,8 @@ public class Checkout extends AppCompatActivity {
                             .build();
 
                     AllApiIneterface cr = retrofit.create(AllApiIneterface.class);
+Log.d("promo" , pc);
+Log.d("uid" , SharePreferenceUtils.getInstance().getString("userId"));
 
                     Call<checkPromoBean> call = cr.checkPromoCode(pc, SharePreferenceUtils.getInstance().getString("userId"));
 
@@ -514,7 +519,21 @@ public class Checkout extends AppCompatActivity {
 
                                 float dis = Float.parseFloat(response.body().getData().getDiscount());
 
-                                pvalue = (dis / 100) * tamount;
+                                pvalue = dis;
+
+                                int dd = Integer.parseInt(response.body().getData().getMinimum());
+
+                                if (offer)
+                                {
+                                    if (dd > min)
+                                    {
+                                        min = dd;
+                                    }
+                                }
+                                else
+                                {
+                                    min = dd;
+                                }
 
                                 pid = response.body().getData().getPid();
 
@@ -528,6 +547,7 @@ public class Checkout extends AppCompatActivity {
                             } else {
 
                                 pvalue = 0;
+                                min = 0;
                                 pid = "";
 
                                 Toast.makeText(Checkout.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
@@ -545,6 +565,7 @@ public class Checkout extends AppCompatActivity {
                         @Override
                         public void onFailure(Call<checkPromoBean> call, Throwable t) {
                             pvalue = 0;
+                            min = 0;
                             pid = "";
                             progress.setVisibility(View.GONE);
                             apply.setEnabled(true);
@@ -760,7 +781,6 @@ public class Checkout extends AppCompatActivity {
             public void onClick(View v) {
 
 
-
                 if (tamount >= min)
                 {
                     if (address) {
@@ -880,38 +900,82 @@ public class Checkout extends AppCompatActivity {
                 }
                 else
                 {
-                    final Dialog dialog = new Dialog(Checkout.this);
-                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    dialog.setCancelable(true);
-                    dialog.setContentView(R.layout.final_popup2);
-                    dialog.show();
 
-                    Button ok = dialog.findViewById(R.id.button3);
-                    Button cs = dialog.findViewById(R.id.button4);
+                    if (pvalue > 0)
+                    {
+                        final Dialog dialog = new Dialog(Checkout.this);
+                        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        dialog.setCancelable(true);
+                        dialog.setContentView(R.layout.final_popup2);
+                        dialog.show();
 
-                    ok.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog.dismiss();
-                            finish();
-                        }
-                    });
+                        Button ok = dialog.findViewById(R.id.button3);
+                        Button cs = dialog.findViewById(R.id.button4);
+                        TextView text = dialog.findViewById(R.id.textView18);
 
-                    cs.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog.dismiss();
-                            finish();
-                        }
-                    });
+                        text.setText("To use the offers, min. order value must be ₹" + min);
 
-                    dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                        @Override
-                        public void onCancel(DialogInterface dialog) {
-                            finish();
-                        }
-                    });
+                        ok.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                                finish();
+                            }
+                        });
+
+                        cs.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                                finish();
+                            }
+                        });
+
+                        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                            @Override
+                            public void onCancel(DialogInterface dialog) {
+                                finish();
+                            }
+                        });
+                    }
+                    else
+                    {
+                        final Dialog dialog = new Dialog(Checkout.this);
+                        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        dialog.setCancelable(true);
+                        dialog.setContentView(R.layout.final_popup2);
+                        dialog.show();
+
+                        Button ok = dialog.findViewById(R.id.button3);
+                        Button cs = dialog.findViewById(R.id.button4);
+
+                        ok.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                                finish();
+                            }
+                        });
+
+                        cs.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                                finish();
+                            }
+                        });
+
+                        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                            @Override
+                            public void onCancel(DialogInterface dialog) {
+                                finish();
+                            }
+                        });
+                    }
+
+
                 }
 
 
@@ -995,10 +1059,12 @@ public class Checkout extends AppCompatActivity {
                     if (response.body().getOffer().equals("yes"))
                     {
                         min = 1500;
+                        offer = true;
                     }
                     else
                     {
                         min = 0;
+                        offer = false;
                     }
 
                     if (response.body().getAddress().size() > 0) {

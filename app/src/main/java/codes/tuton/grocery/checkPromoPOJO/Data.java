@@ -10,6 +10,9 @@ public class Data {
     @SerializedName("pid")
     @Expose
     private String pid;
+    @SerializedName("minimum")
+    @Expose
+    private String minimum;
 
     public String getDiscount() {
         return discount;
@@ -25,5 +28,13 @@ public class Data {
 
     public void setPid(String pid) {
         this.pid = pid;
+    }
+
+    public String getMinimum() {
+        return minimum;
+    }
+
+    public void setMinimum(String minimum) {
+        this.minimum = minimum;
     }
 }
