@@ -185,6 +185,7 @@ public class Orders extends AppCompatActivity {
                     "Delivered"
             };
 
+            holder.date.setText(item.getCreated());
 
             holder.indicator.setStepCount(4);
             holder.indicator.setLabels(labels);
@@ -305,7 +306,7 @@ public class Orders extends AppCompatActivity {
 
         class ViewHolder extends RecyclerView.ViewHolder
         {
-            TextView total , delcharges , orderid , deldate , grand;
+            TextView total , delcharges , orderid , deldate , grand , date;
             Button cancel , help;
             StepperIndicator indicator;
 
@@ -320,6 +321,7 @@ public class Orders extends AppCompatActivity {
                 grand = itemView.findViewById(R.id.textView30);
                 cancel = itemView.findViewById(R.id.button5);
                 help = itemView.findViewById(R.id.button6);
+                date = itemView.findViewById(R.id.textView43);
 
 
             }
@@ -379,6 +381,8 @@ public class Orders extends AppCompatActivity {
                 holder.delcharges.setText("Free");
             }
 
+            holder.date.setText(item.getCreated());
+
             holder.orderid.setText("GG" + String.format("%04d" , Integer.parseInt(item.getId())));
 
             holder.deldate.setText(item.getDeliveryTime());
@@ -417,7 +421,7 @@ public class Orders extends AppCompatActivity {
 
         class ViewHolder extends RecyclerView.ViewHolder
         {
-            TextView total , delcharges , orderid , deldate , grand , status;
+            TextView total , delcharges , orderid , deldate , grand , status , date;
             Button cancel , help;
 
 
@@ -432,6 +436,7 @@ public class Orders extends AppCompatActivity {
                 cancel = itemView.findViewById(R.id.button5);
                 help = itemView.findViewById(R.id.button6);
                 status = itemView.findViewById(R.id.textView27);
+                date = itemView.findViewById(R.id.textView45);
 
 
             }

@@ -34,7 +34,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class OrderDetails extends AppCompatActivity {
 
-    TextView amount , saving , genie , orderid , delcharges , deldate , status , grand;
+    TextView amount , saving , genie , orderid , delcharges , deldate , status , grand , date;
     EditText name, email, flat, landmark, city, area, mobile;
 
     RecyclerView orders;
@@ -66,6 +66,7 @@ public class OrderDetails extends AppCompatActivity {
         delcharges = findViewById(R.id.textView34);
         deldate = findViewById(R.id.textView8);
         status = findViewById(R.id.textView37);
+        date = findViewById(R.id.textView47);
 
         name = findViewById(R.id.editText6);
         email = findViewById(R.id.editText7);
@@ -131,6 +132,7 @@ public class OrderDetails extends AppCompatActivity {
                 deldate.setText(item.getDeliveryTime());
                 grand.setText("₹" + item.getGrand());
 
+                date.setText(item.getCreated());
 
                 saving.setText(item.getSaving());
                 genie.setText(item.getGeniecash());
