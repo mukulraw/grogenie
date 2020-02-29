@@ -8,6 +8,50 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:723362617491:android:2e69c49abd5c2be6565566",
+        "android_client_info": {
+          "package_name": "app.tuton.grocery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "723362617491-3k89n9f5e7v7o8cgscrq44morih7at7m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.tuton.grocery",
+            "certificate_hash": "ccddf5fe438e61fd600262d7b39d4af46defab0c"
+          }
+        },
+        {
+          "client_id": "723362617491-fhcuki724n6h2mfnn7slo6vcul0jc19o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMPZpJp5CUBraCP_H6FHQ2imp-iBym_hg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "723362617491-fhcuki724n6h2mfnn7slo6vcul0jc19o.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "723362617491-gfuktjhp5rg79undr0sgc15vtjljf1l6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.nsezconnect"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:723362617491:android:b78df5674a530ff7565566",
         "android_client_info": {
           "package_name": "codes.tuton.grocery"

@@ -30,6 +30,23 @@
             android:textStyle="bold" />
 
         <EditText
+            android:id="@+id/reffer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textSize="16sp"
+            android:padding="14sp"
+            android:textAllCaps="true"
+            android:gravity="center"
+            android:inputType="textCapCharacters"
+            android:visibility="visible"
+            android:layout_marginStart="12sp"
+            android:layout_marginEnd="12sp"
+            android:background="@drawable/blue_border_with_white_bg"
+            android:hint="Referral Code" />
+
+
+        <EditText
             android:id="@+id/editTextMobile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -83,19 +100,6 @@
             app:viewType="rectangle"
             style="@style/PinWidget.PinView" />
 
-        <EditText
-            android:id="@+id/reffer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:textSize="16sp"
-            android:padding="14sp"
-            android:digits="0123456789"
-            android:visibility="gone"
-            android:layout_marginStart="12sp"
-            android:layout_marginEnd="12sp"
-            android:background="@drawable/blue_border_with_white_bg"
-            android:hint="Referal Code" />
 
         <Button
             android:id="@+id/buttonContinue"
