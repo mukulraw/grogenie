@@ -1435,7 +1435,7 @@ TabLayout tabs;
 
                             resend.setVisibility(View.VISIBLE);
 
-                            new CountDownTimer(100000, 1000) {
+                            new CountDownTimer(60000, 1000) {
 
                                 public void onTick(long millisUntilFinished) {
                                     resend.setText("RESEND OTP in " + millisUntilFinished / 1000);
@@ -1499,7 +1499,7 @@ TabLayout tabs;
 
                             resend.setVisibility(View.VISIBLE);
 
-                            new CountDownTimer(100000, 1000) {
+                            new CountDownTimer(60000, 1000) {
 
                                 public void onTick(long millisUntilFinished) {
                                     resend.setText("RESEND OTP in " + millisUntilFinished / 1000);
