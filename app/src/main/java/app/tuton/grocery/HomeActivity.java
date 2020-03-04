@@ -15,6 +15,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
@@ -45,6 +46,11 @@ import android.widget.Toast;
 import com.chaos.view.PinView;
 import com.github.javiersantos.appupdater.AppUpdater;
 import com.github.javiersantos.appupdater.enums.Display;
+import com.google.android.gms.auth.api.phone.SmsRetriever;
+import com.google.android.gms.auth.api.phone.SmsRetrieverClient;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
@@ -70,7 +76,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements
+        SMSReceiver.OTPReceiveListener {
 
     RecyclerView grid;
     ProgressBar progress;
@@ -88,10 +95,10 @@ public class HomeActivity extends AppCompatActivity {
     ViewPager pager;
 TabLayout tabs;
     TextView opencart , logout , orders , support , share , kirana , loved , smess;
-    SmsVerifyCatcher smsVerifyCatcher;
+    //SmsVerifyCatcher smsVerifyCatcher;
 
     PinView oottpp;
-
+    private SMSReceiver smsReceiver;
     boolean kir = true;
 
     @Override
@@ -103,7 +110,7 @@ TabLayout tabs;
         appUpdater.setDisplay(Display.NOTIFICATION);
         appUpdater.start();
 
-        smsVerifyCatcher = new SmsVerifyCatcher(this, new OnSmsCatchListener<String>() {
+        /*smsVerifyCatcher = new SmsVerifyCatcher(this, new OnSmsCatchListener<String>() {
             @Override
             public void onSmsCatch(String message) {
 
@@ -121,7 +128,7 @@ TabLayout tabs;
                 //set code in edit text
                 //then you can send verification code to server
             }
-        });
+        });*/
 
         list = new ArrayList<>();
         grid = findViewById(R.id.grid);
@@ -157,6 +164,7 @@ TabLayout tabs;
         grid.setAdapter(adapter);
         grid.setLayoutManager(manager);
 
+        startSMSListener();
 
         tabs.addTab(tabs.newTab().setText(getPageTitle1()));
         tabs.addTab(tabs.newTab().setText(getPageTitle2()));
@@ -701,12 +709,12 @@ TabLayout tabs;
 
     }
 
-    @Override
+    /*@Override
     protected void onStop(){
         //Tovuti.from(this).stop();
         super.onStop();
         smsVerifyCatcher.onStop();
-    }
+    }*/
 
     void loaddata2()
     {
@@ -789,6 +797,72 @@ TabLayout tabs;
             }
         });
     }
+
+    @Override
+    public void onOTPReceived(String message) {
+        showToast("OTP Received: " + message);
+
+        String ot = message.substring(61 , 67);
+        oottpp.setText(ot);
+
+        if (smsReceiver != null) {
+            unregisterReceiver(smsReceiver);
+            smsReceiver = null;
+        }
+    }
+
+    private void showToast(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onOTPTimeOut() {
+        showToast("OTP Time out");
+    }
+
+    @Override
+    public void onOTPReceivedError(String error) {
+        showToast(error);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (smsReceiver != null) {
+            unregisterReceiver(smsReceiver);
+        }
+    }
+
+    private void startSMSListener() {
+        try {
+            smsReceiver = new SMSReceiver();
+            smsReceiver.setOTPListener(this);
+
+            IntentFilter intentFilter = new IntentFilter();
+            intentFilter.addAction(SmsRetriever.SMS_RETRIEVED_ACTION);
+            this.registerReceiver(smsReceiver, intentFilter);
+
+            SmsRetrieverClient client = SmsRetriever.getClient(this);
+
+            Task<Void> task = client.startSmsRetriever();
+            task.addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    // API successfully started
+                }
+            });
+
+            task.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    // Fail to start API
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>
     {
@@ -1303,20 +1377,20 @@ TabLayout tabs;
 
     }
 
-    @Override
+    /*@Override
     protected void onStart() {
         super.onStart();
         smsVerifyCatcher.onStart();
-    }
+    }*/
 
     /**
      * need for Android 6 real time permissions
      */
-    @Override
+    /*@Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         smsVerifyCatcher.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
+    }*/
 
     void login()
     {

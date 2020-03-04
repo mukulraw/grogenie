@@ -24,6 +24,8 @@ public class Splash extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        AppSignatureHashHelper appSignatureHashHelper = new AppSignatureHashHelper(this);
+        Log.d("TAG", "HashKey: " + appSignatureHashHelper.getAppSignatures().get(0));
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
