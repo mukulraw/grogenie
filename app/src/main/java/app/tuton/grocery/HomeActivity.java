@@ -800,9 +800,9 @@ TabLayout tabs;
 
     @Override
     public void onOTPReceived(String message) {
-        showToast("OTP Received: " + message);
+        //showToast("OTP Received: " + message);
 
-        String ot = message.substring(61 , 67);
+        String ot = message.substring(60 , 66);
         oottpp.setText(ot);
 
         if (smsReceiver != null) {
