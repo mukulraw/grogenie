@@ -58,6 +58,8 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.stfalcon.smsverifycatcher.OnSmsCatchListener;
 import com.stfalcon.smsverifycatcher.SmsVerifyCatcher;
+import com.treebo.internetavailabilitychecker.InternetAvailabilityChecker;
+import com.treebo.internetavailabilitychecker.InternetConnectivityListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -77,7 +79,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class HomeActivity extends AppCompatActivity implements
-        SMSReceiver.OTPReceiveListener {
+        SMSReceiver.OTPReceiveListener, InternetConnectivityListener {
 
     RecyclerView grid;
     ProgressBar progress;
@@ -101,10 +103,14 @@ TabLayout tabs;
     private SMSReceiver smsReceiver;
     boolean kir = true;
 
+    InternetAvailabilityChecker mInternetAvailabilityChecker;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        InternetAvailabilityChecker.init(this);
 
         AppUpdater appUpdater = new AppUpdater(this);
         appUpdater.setDisplay(Display.NOTIFICATION);
@@ -129,6 +135,9 @@ TabLayout tabs;
                 //then you can send verification code to server
             }
         });*/
+
+        mInternetAvailabilityChecker = InternetAvailabilityChecker.getInstance();
+        mInternetAvailabilityChecker.addInternetConnectivityListener(this);
 
         list = new ArrayList<>();
         grid = findViewById(R.id.grid);
@@ -828,6 +837,9 @@ TabLayout tabs;
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        mInternetAvailabilityChecker.removeInternetConnectivityChangeListener(this);
+
         if (smsReceiver != null) {
             unregisterReceiver(smsReceiver);
         }
@@ -861,6 +873,21 @@ TabLayout tabs;
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onInternetConnectivityChanged(boolean isConnected) {
+
+        if (isConnected)
+        {
+            loaddata();
+            updateCart();
+        }
+        else
+        {
+            Toast.makeText(HomeActivity.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
 

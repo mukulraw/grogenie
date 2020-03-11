@@ -53,4 +53,5 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth-api-phone:17.3.0'
 
     implementation 'com.github.javiersantos:AppUpdater:2.7'
+    implementation 'com.treebo:internetavailabilitychecker:1.0.4'
 }
