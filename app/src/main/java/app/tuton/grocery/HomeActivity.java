@@ -826,7 +826,7 @@ TabLayout tabs;
 
     @Override
     public void onOTPTimeOut() {
-        showToast("OTP Time out");
+        //showToast("OTP Time out");
     }
 
     @Override
