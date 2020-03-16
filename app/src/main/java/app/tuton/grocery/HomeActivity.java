@@ -52,6 +52,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -87,7 +88,7 @@ public class HomeActivity extends AppCompatActivity implements
     List<productListBean> list;
     ProductAdapter adapter;
     TextView totalFinalMount, totalSavedAmount, totalItemTextView;
-    EditText search;
+    TextInputEditText search;
     Button checkout , collapse;
     LinearLayout bottom;
     TextView count , number;
@@ -151,7 +152,7 @@ TabLayout tabs;
         totalFinalMount = findViewById(R.id.totalAmountTextView);
         totalSavedAmount = findViewById(R.id.savedAmountTextView);
         totalItemTextView = findViewById(R.id.totalItemTextView);
-        search = findViewById(R.id.editText);
+        search = findViewById(R.id.search);
         checkout = findViewById(R.id.checkOutButton);
         bottom = findViewById(R.id.linearLayout2);
         count = findViewById(R.id.textView19);
@@ -240,7 +241,7 @@ TabLayout tabs;
             }
         });
 
-        search.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        /*search.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
 
@@ -250,7 +251,7 @@ TabLayout tabs;
                 }
 
             }
-        });
+        });*/
 
         search.addTextChangedListener(new TextWatcher() {
             @Override
@@ -685,6 +686,8 @@ TabLayout tabs;
     @Override
     protected void onResume() {
         super.onResume();
+
+        search.setText("");
 
         if (SharePreferenceUtils.getInstance().getString("userId").length() > 0)
         {
