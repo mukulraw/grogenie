@@ -137,8 +137,7 @@ TabLayout tabs;
             }
         });*/
 
-        mInternetAvailabilityChecker = InternetAvailabilityChecker.getInstance();
-        mInternetAvailabilityChecker.addInternetConnectivityListener(this);
+
 
         list = new ArrayList<>();
         grid = findViewById(R.id.grid);
@@ -178,7 +177,8 @@ TabLayout tabs;
 
         tabs.addTab(tabs.newTab().setText(getPageTitle1()));
         tabs.addTab(tabs.newTab().setText(getPageTitle2()));
-
+        mInternetAvailabilityChecker = InternetAvailabilityChecker.getInstance();
+        mInternetAvailabilityChecker.addInternetConnectivityListener(this);
 
         number.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -813,8 +813,8 @@ TabLayout tabs;
     @Override
     public void onOTPReceived(String message) {
         //showToast("OTP Received: " + message);
-
-        String ot = message.substring(60 , 66);
+Log.d("otp" , message);
+        String ot = message.substring(43 , 49);
         oottpp.setText(ot);
 
         if (smsReceiver != null) {
@@ -834,7 +834,7 @@ TabLayout tabs;
 
     @Override
     public void onOTPReceivedError(String error) {
-        showToast(error);
+        //showToast(error);
     }
 
     @Override
