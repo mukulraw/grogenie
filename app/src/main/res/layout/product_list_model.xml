@@ -161,7 +161,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:gravity="center"
-            android:text="Offer is valid on or above ₹1500 order"
+            android:text="This category products are available only for orders above ₹1500"
             android:textColor="#F30000"
             android:textSize="12sp"
             android:visibility="gone"
