@@ -16,27 +16,27 @@ import retrofit2.http.Part;
 
 public interface AllApiIneterface {
 
-    @GET("demo/CategoryAllData.php")
+    @GET("api/CategoryAllData.php")
     Call<List<productListBean>> CategoryAllData();
 
-    @GET("demo/loved.php")
+    @GET("api/loved.php")
     Call<List<productListBean>> loved();
 
     @Multipart
-    @POST("demo/search.php")
+    @POST("api/search.php")
     Call<List<productListBean>> search(
             @Part("query") String query
     );
 
     @Multipart
-    @POST("demo/getCartData.php")
+    @POST("api/getCartData.php")
     Call<cartBean> getCartData(
             @Part("json") String json,
             @Part("user_id") String user_id
     );
 
     @Multipart
-    @POST("demo/addAddress.php")
+    @POST("api/addAddress.php")
     Call<addMessageBean> addAddress(
             @Part("user_id") String user_id,
             @Part("name") String name,
@@ -49,7 +49,7 @@ public interface AllApiIneterface {
     );
 
     @Multipart
-    @POST("demo/updateAddress.php")
+    @POST("api/updateAddress.php")
     Call<addMessageBean> updateAddress(
             @Part("user_id") String user_id,
             @Part("name") String name,
@@ -62,14 +62,14 @@ public interface AllApiIneterface {
     );
 
     @Multipart
-    @POST("demo/checkPromo.php")
+    @POST("api/checkPromo.php")
     Call<checkPromoBean> checkPromoCode(
             @Part("promo") String promo,
             @Part("user_id") String user_id
     );
 
     @Multipart
-    @POST("demo/checkout.php")
+    @POST("api/checkout.php")
     Call<addMessageBean> checkout(
             @Part("user_id") String user_id,
             @Part("products") String products,
@@ -91,7 +91,7 @@ public interface AllApiIneterface {
     );
 
     @Multipart
-    @POST("demo/sendOTP.php")
+    @POST("api/sendOTP.php")
     Call<loginBean> login(
             @Part("phone") String phone,
             @Part("token") String token,
@@ -99,38 +99,38 @@ public interface AllApiIneterface {
     );
 
     @Multipart
-    @POST("demo/verifyOTP.php")
+    @POST("api/verifyOTP.php")
     Call<loginBean> verify(
             @Part("phone") String phone,
             @Part("otp") String otp
     );
 
     @Multipart
-    @POST("demo/getOrders.php")
+    @POST("api/getOrders.php")
     Call<ordersBean> getOrders(
             @Part("user_id") String user_id
     );
 
     @Multipart
-    @POST("demo/getOrderDetails.php")
+    @POST("api/getOrderDetails.php")
     Call<ordersBean> getOrderDetails(
             @Part("id") String id
     );
 
     @Multipart
-    @POST("demo/addFeedback.php")
+    @POST("api/addFeedback.php")
     Call<addMessageBean> addFeedback(
             @Part("user_id") String user_id,
             @Part("message") String message
     );
 
     @Multipart
-    @POST("demo/cancelOrder.php")
+    @POST("api/cancelOrder.php")
     Call<addMessageBean> cancelOrder(
             @Part("id") String id
     );
 
-    @GET("demo/getBanners.php")
+    @GET("api/getBanners.php")
     Call<List<bannerBean>> getBanners();
 
 }

@@ -123,7 +123,7 @@ public class Support extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-                        "mailto", "ganinesupport@gmail.com", null));
+                        "mailto", "support@grocegenie.com", null));
                 emailIntent.putExtra(Intent.EXTRA_SUBJECT, "");
                 startActivity(Intent.createChooser(emailIntent, null));
 
