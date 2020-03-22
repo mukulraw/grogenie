@@ -989,6 +989,14 @@ Log.d("otp" , message);
                             Log.d("dduucc" , String.valueOf(dis));
                             //this.textViewDiscount.setText("UP TO " + this.discount + "% OFF");
                             holder.discount.setText("UP TO " + (int)dis + "% OFF");
+                            if (dis > 0)
+                            {
+                                holder.discount.setVisibility(View.VISIBLE);
+                            }
+                            else
+                            {
+                                holder.discount.setVisibility(View.GONE);
+                            }
                         }
 
                     }
