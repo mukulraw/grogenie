@@ -8,6 +8,35 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:321316303826:android:f8881a1ca91409cf674e0b",
+        "android_client_info": {
+          "package_name": "app.grocegenie.grocery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "321316303826-4gmoe9f06nph25a6mnkh8ii69bb9q7ir.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5ewkoPJSx34XcvptXlKauUqtTC2MQRv8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "321316303826-4gmoe9f06nph25a6mnkh8ii69bb9q7ir.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:321316303826:android:6150ae0584d0cf29674e0b",
         "android_client_info": {
           "package_name": "app.tuton.grocery"
